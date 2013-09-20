@@ -35,8 +35,12 @@
     <Reference Include="Dapper">
       <HintPath>..\packages\Dapper.1.13\lib\net45\Dapper.dll</HintPath>
     </Reference>
-    <Reference Include="Illallangi.T4Database">
+    <Reference Include="Illallangi.T4Database, Version=0.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Illallangi.T4Database.0.0.0.1\lib\Illallangi.T4Database.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.5.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -84,6 +88,9 @@
     <Compile Include="PowerShell\AddCountryCmdlet.cs">
       <DependentUpon>AddCmdletClasses.tt</DependentUpon>
     </Compile>
+    <Compile Include="PowerShell\ExportCmdlet.cs">
+      <DependentUpon>BackupCmdletClasses.tt</DependentUpon>
+    </Compile>
     <Compile Include="PowerShell\GetAirlineCmdlet.cs">
       <DependentUpon>GetCmdletClasses.tt</DependentUpon>
     </Compile>
@@ -101,6 +108,9 @@
       <DependentUpon>Repositories.tt</DependentUpon>
     </Compile>
     <Compile Include="Repository\AirportRepository.cs">
+      <DependentUpon>Repositories.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\BackupRepository.cs">
       <DependentUpon>Repositories.tt</DependentUpon>
     </Compile>
     <Compile Include="Repository\CityRepository.cs">
@@ -144,6 +154,15 @@
     <None Include="PowerShell\AddCmdletClasses.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AddCmdletClasses.log</LastGenOutput>
+    </None>
+    <None Include="PowerShell\BackupCmdletClasses.log">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BackupCmdletClasses.tt</DependentUpon>
+    </None>
+    <None Include="PowerShell\BackupCmdletClasses.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>BackupCmdletClasses.log</LastGenOutput>
     </None>
     <None Include="PowerShell\GetCmdletClasses.log">
       <AutoGen>True</AutoGen>
