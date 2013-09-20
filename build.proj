@@ -1,0 +1,101 @@
+<Project ToolsVersion="4.0" DefaultTargets="All" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <Import Project="$(MSBuildProjectDirectory)\tools\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets"/>
+  
+  <PropertyGroup>
+    <Configuration Condition="'$(Configuration)'==''">Release</Configuration>
+    <Version>$(BUILD_NUMBER)</Version>
+    <GitCommitHash>$(BUILD_VCS_NUMBER)</GitCommitHash>
+    <GitCommitHash Condition=" '$(GitCommitHash)' != '' ">$(GitCommitHash.Substring(0, 8))</GitCommitHash>
+    <!-- dev config -->
+    <Version Condition=" '$(Version)' == '' ">0.0.0.1</Version>
+    <ArtifactsDir>$(MSBuildProjectDirectory)\artifacts</ArtifactsDir>
+    <ArtifactsDir32>$(ArtifactsDir)\x86</ArtifactsDir32>
+    <ArtifactsDir64>$(ArtifactsDir)\x64</ArtifactsDir64>
+    <SourceDir>$(MSBuildProjectDirectory)\src</SourceDir>
+  </PropertyGroup>
+
+  <Target Name="Version">
+
+    <GitVersion LocalPath="$(SourceDir)\..\" Condition=" '$(GitCommitHash)' == '' ">
+      <Output TaskParameter="CommitHash" PropertyName="GitCommitHash" />
+    </GitVersion>
+
+    <AssemblyInfo CodeLanguage="CS"
+                  OutputFile="$(SourceDir)\Illallangi.FlightLog\Properties\AssemblyInfo.cs"
+                  AssemblyTitle="Illallangi.FlightLog"
+                  AssemblyDescription=""
+                  AssemblyCompany="Illallangi Enterprises"
+                  AssemblyProduct="Flight Log"
+                  AssemblyCopyright="Copyright © Illallangi Enterprises 2013"
+                  ComVisible="false"
+                  AssemblyInformationalVersion="Built from hash '$(GitCommitHash)'"
+                  Guid="4560e272-e976-41a7-aee2-f7a04533c85d"
+                  AssemblyVersion="$(Version)"
+                  AssemblyFileVersion="$(Version)" />
+
+    <Message Text="Building version $(Version) from hash $(GitCommitHash)"  Importance="High" />
+
+  </Target>
+
+  <Target Name="Compile">
+    <Message Text="=========== Compile ===========" Importance="High" />
+
+    <MSBuild Projects="$(SourceDir)\Illallangi.FlightLog.sln" Properties="Configuration=$(Configuration)" Targets="Rebuild" />
+  </Target>
+
+  <Target Name="Copy32" DependsOnTargets="Compile">
+    <Message Text="=========== Copy x86 ===========" Importance="High" />
+    
+    <MakeDir Directories="$(ArtifactsDir32)" />
+
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Illallangi.FlightLog.dll"
+          DestinationFolder="$(ArtifactsDir32)" />
+
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Illallangi.T4Database.dll"
+          DestinationFolder="$(ArtifactsDir32)" />
+
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Dapper.dll"
+          DestinationFolder="$(ArtifactsDir32)" />
+
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\System.Data.SQLite.dll"
+          DestinationFolder="$(ArtifactsDir32)" />
+
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\System.Data.SQLite.Linq.dll"
+          DestinationFolder="$(ArtifactsDir32)" />
+
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\x86\SQLite.Interop.dll"
+          DestinationFolder="$(ArtifactsDir32)" />
+  </Target>
+
+  <Target Name="Copy64" DependsOnTargets="Compile">
+    <Message Text="=========== Copy x64 ===========" Importance="High" />
+
+    <MakeDir Directories="$(ArtifactsDir64)" />
+
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Illallangi.FlightLog.dll"
+          DestinationFolder="$(ArtifactsDir64)" />
+
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Illallangi.T4Database.dll"
+          DestinationFolder="$(ArtifactsDir64)" />
+
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Dapper.dll"
+          DestinationFolder="$(ArtifactsDir64)" />
+
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\System.Data.SQLite.dll"
+          DestinationFolder="$(ArtifactsDir64)" />
+
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\System.Data.SQLite.Linq.dll"
+          DestinationFolder="$(ArtifactsDir64)" />
+
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\x64\SQLite.Interop.dll"
+          DestinationFolder="$(ArtifactsDir64)" />
+  </Target>
+
+  <Target Name="All" DependsOnTargets="Copy32;Copy64">
+
+    <Message Text="=========== All Done ===========" Importance="High" />
+
+  </Target>
+
+</Project>

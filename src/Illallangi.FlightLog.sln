@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Illallangi.FlightLog", "Ill
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2DC4E3B2-F47C-4624-8B2E-432F36C8331D}"
 	ProjectSection(SolutionItems) = preProject
+		..\build.cmd = ..\build.cmd
+		..\build.proj = ..\build.proj
 		T4Database.json = T4Database.json
 	EndProjectSection
 EndProject
