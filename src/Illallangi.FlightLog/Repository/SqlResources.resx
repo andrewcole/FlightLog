@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema Id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="CountryTable" xml:space="preserve">
+    <value>CREATE TABLE &quot;Country&quot; (Id INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT NOT NULL UNIQUE);</value>
+  </data>
+  <data name="CountryView" xml:space="preserve">
+    <value>CREATE VIEW CountryView
+    AS
+    SELECT Country.Id, Country.Name, CAST(IFNULL(Citys.CityCount,0) as int64) as Citys, CAST(IFNULL(Airlines.AirlineCount,0) as int64) as Airlines
+        FROM Country
+        LEFT JOIN
+            (SELECT CountryId,
+                    Count(City.Id) AS CityCount
+                FROM City
+                GROUP BY CountryId) Citys
+            ON Country.Id = Citys.CountryId
+        LEFT JOIN
+            (SELECT CountryId,
+                    Count(Airline.Id) AS AirlineCount
+                FROM Airline
+                GROUP BY CountryId) Airlines
+            ON Country.Id = Airlines.CountryId
+        ORDER BY Country.Id;</value>
+  </data>
+  <data name="CountryCreate" xml:space="preserve">
+    <value>INSERT INTO Country (Name) VALUES (@Name); SELECT last_insert_rowId();</value>  </data>
+  <data name="CountryRetrieve" xml:space="preserve">
+    <value>SELECT * FROM CountryView;</value>
+  </data>
+  <data name="CountryRetrieveById" xml:space="preserve">
+    <value>SELECT * FROM CountryView WHERE Id = @Id;</value>
+  </data>
+  <data name="CountrySearch" xml:space="preserve">
+    <value>SELECT * FROM CountryView WHERE Name LIKE @Search;</value>  </data>
+  <data name="CityTable" xml:space="preserve">
+    <value>CREATE TABLE &quot;City&quot; (Id INTEGER PRIMARY KEY AUTOINCREMENT, CountryId INTEGER NOT NULL, Name TEXT NOT NULL, UNIQUE(Name, CountryID), CONSTRAINT CityCountry FOREIGN KEY (CountryId) REFERENCES &quot;Country&quot;);</value>
+  </data>
+  <data name="CityView" xml:space="preserve">
+    <value>CREATE VIEW CityView
+    AS
+    SELECT City.Id, City.Name, Country.Name AS CountryName, Country.Id AS CountryId, CAST(IFNULL(Airports.AirportCount,0) as int64) as Airports
+        FROM City
+        JOIN Country
+            ON City.CountryId = Country.Id
+        LEFT JOIN
+            (SELECT CityId,
+                    Count(Airport.Id) AS AirportCount
+                FROM Airport
+                GROUP BY CityId) Airports
+            ON City.Id = Airports.CityId
+        ORDER BY City.Id;</value>
+  </data>
+  <data name="CityCreate" xml:space="preserve">
+    <value>INSERT INTO City (CountryId, Name) VALUES (@CountryId, @Name); SELECT last_insert_rowId();</value>  </data>
+  <data name="CityRetrieve" xml:space="preserve">
+    <value>SELECT * FROM CityView;</value>
+  </data>
+  <data name="CityRetrieveById" xml:space="preserve">
+    <value>SELECT * FROM CityView WHERE Id = @Id;</value>
+  </data>
+  <data name="CitySearch" xml:space="preserve">
+    <value>SELECT * FROM CityView WHERE ;</value>  </data>
+  <data name="AirportTable" xml:space="preserve">
+    <value>CREATE TABLE &quot;Airport&quot; (Id INTEGER PRIMARY KEY AUTOINCREMENT, CityId INTEGER NOT NULL, Name TEXT NOT NULL, Icao TEXT NOT NULL UNIQUE, Iata TEXT NOT NULL, Latitude DOUBLE NOT NULL, Longitude DOUBLE NOT NULL, Altitude DOUBLE NOT NULL, Timezone DOUBLE NOT NULL, DST TEXT NOT NULL, OpenFlightsId INT NOT NULL UNIQUE, UNIQUE (Name, CityID), CONSTRAINT AirportCity FOREIGN KEY (CityId) REFERENCES &quot;City&quot;);</value>
+  </data>
+  <data name="AirportView" xml:space="preserve">
+    <value>CREATE VIEW AirportView
+    AS
+    SELECT Airport.Id, Airport.Name, Airport.Icao, Airport.Iata, Airport.Latitude, Airport.Longitude, Airport.Altitude, Airport.Timezone, Airport.DST, Airport.OpenFlightsId, City.Name AS CityName, City.Id AS CityId
+        FROM Airport
+        JOIN City
+            ON Airport.CityId = City.Id
+        ORDER BY Airport.Id;</value>
+  </data>
+  <data name="AirportCreate" xml:space="preserve">
+    <value>INSERT INTO Airport (CityId, Name, Icao, Iata, Latitude, Longitude, Altitude, Timezone, DST, OpenFlightsId) VALUES (@CityId, @Name, @Icao, @Iata, @Latitude, @Longitude, @Altitude, @Timezone, @DST, @OpenFlightsId); SELECT last_insert_rowId();</value>  </data>
+  <data name="AirportRetrieve" xml:space="preserve">
+    <value>SELECT * FROM AirportView;</value>
+  </data>
+  <data name="AirportRetrieveById" xml:space="preserve">
+    <value>SELECT * FROM AirportView WHERE Id = @Id;</value>
+  </data>
+  <data name="AirportSearch" xml:space="preserve">
+    <value>SELECT * FROM AirportView WHERE Icao LIKE @Search OR OpenFlightsId LIKE @Search;</value>  </data>
+  <data name="AirlineTable" xml:space="preserve">
+    <value>CREATE TABLE &quot;Airline&quot; (Id INTEGER PRIMARY KEY AUTOINCREMENT, CountryId INTEGER NOT NULL, Name TEXT NOT NULL, Alias TEXT, Iata TEXT NOT NULL, Icao TEXT NOT NULL UNIQUE, Callsign TEXT, OpenFlightsId INT NOT NULL UNIQUE, UNIQUE (Name, CountryID), CONSTRAINT AirlineCountry FOREIGN KEY (CountryId) REFERENCES &quot;Country&quot;);</value>
+  </data>
+  <data name="AirlineView" xml:space="preserve">
+    <value>CREATE VIEW AirlineView
+    AS
+    SELECT Airline.Id, Airline.Name, Airline.Alias, Airline.Iata, Airline.Icao, Airline.Callsign, Airline.OpenFlightsId, Country.Name AS CountryName, Country.Id AS CountryId
+        FROM Airline
+        JOIN Country
+            ON Airline.CountryId = Country.Id
+        ORDER BY Airline.Id;</value>
+  </data>
+  <data name="AirlineCreate" xml:space="preserve">
+    <value>INSERT INTO Airline (CountryId, Name, Alias, Iata, Icao, Callsign, OpenFlightsId) VALUES (@CountryId, @Name, @Alias, @Iata, @Icao, @Callsign, @OpenFlightsId); SELECT last_insert_rowId();</value>  </data>
+  <data name="AirlineRetrieve" xml:space="preserve">
+    <value>SELECT * FROM AirlineView;</value>
+  </data>
+  <data name="AirlineRetrieveById" xml:space="preserve">
+    <value>SELECT * FROM AirlineView WHERE Id = @Id;</value>
+  </data>
+  <data name="AirlineSearch" xml:space="preserve">
+    <value>SELECT * FROM AirlineView WHERE Icao LIKE @Search OR OpenFlightsId LIKE @Search;</value>  </data>
+  <data name="DbPath" xml:space="preserve">
+    <value>%localappdata%\Illallangi\FlightLog.db</value>
+  </data>
+  <data name="ConnectionString" xml:space="preserve">
+    <value>data source=&quot;{0}&quot;</value>
+  </data>
+</root>

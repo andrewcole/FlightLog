@@ -1,0 +1,59 @@
+{
+  "Tables" : [
+    {
+      "Name" : "Country",
+      "Fields" : [
+        {"Name":"Name","IsUnique":true},
+      ],
+    },
+    {
+      "Name" : "City",
+      "Fields" : [
+        {"Name":"Name"},
+      ],
+	  "ExtraSql" : ", UNIQUE(Name, CountryID)"
+    },
+    {
+      "Name" : "Airport",
+      "Fields" : [
+        {"Name":"Name"},
+        {"Name":"Icao","IsUnique":true},
+        {"Name":"Iata"},
+        {"Name":"Latitude","CsType":"float","SqlType":"DOUBLE"},
+        {"Name":"Longitude","CsType":"float","SqlType":"DOUBLE"},
+        {"Name":"Altitude","CsType":"float","SqlType":"DOUBLE"},
+        {"Name":"Timezone","CsType":"float","SqlType":"DOUBLE"},
+        {"Name":"DST","Arg":"DST","CsType":"string"},
+        {"Name":"OpenFlightsId","CsType":"int","SqlType":"INT","IsUnique":true},
+      ],
+	  "ExtraSql" : ", UNIQUE (Name, CityID)",
+    },
+    {
+      "Name" : "Airline",
+      "Fields" : [
+        {"Name":"Name"},
+        {"Name":"Alias","IsMandatory":false},
+        {"Name":"Iata"},
+        {"Name":"Icao","IsUnique":true},
+        {"Name":"Callsign","IsMandatory":false},
+        {"Name":"OpenFlightsId", "CsType":"int","SqlType":"INT","IsUnique":true},
+      ],
+	  "ExtraSql" : ", UNIQUE (Name, CountryID)",
+    },
+  ],
+  "Relationships" : [
+    {
+      "Parent" : "Country",
+      "Child" : "City",
+      "ChildField" : "Cities",
+    },
+    {
+      "Parent" : "Country",
+      "Child" : "Airline",
+    },
+    {
+      "Parent" : "City",
+      "Child" : "Airport",
+    },
+  ]
+}
