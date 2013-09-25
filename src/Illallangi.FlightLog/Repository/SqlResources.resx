@@ -58,80 +58,54 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CountryTable" xml:space="preserve">
-    <value>CREATE TABLE &quot;Country&quot; (Id INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT NOT NULL UNIQUE);</value>
+  <data name="FlightTable" xml:space="preserve">
+    <value>CREATE TABLE &quot;Flight&quot; (Id INTEGER PRIMARY KEY AUTOINCREMENT, AirportId INTEGER NOT NULL, AirportId INTEGER NOT NULL, Departure TEXT NOT NULL, Arrival TEXT NOT NULL, CONSTRAINT FlightAirport FOREIGN KEY (AirportId) REFERENCES &quot;Airport&quot;, CONSTRAINT FlightAirport FOREIGN KEY (AirportId) REFERENCES &quot;Airport&quot;);</value>
   </data>
-  <data name="CountryView" xml:space="preserve">
-    <value>CREATE VIEW CountryView
+  <data name="FlightView" xml:space="preserve">
+    <value>CREATE VIEW FlightView
     AS
-    SELECT Country.Id, Country.Name, CAST(IFNULL(Citys.CityCount,0) as int64) as Citys, CAST(IFNULL(Airlines.AirlineCount,0) as int64) as Airlines
-        FROM Country
-        LEFT JOIN
-            (SELECT CountryId,
-                    Count(City.Id) AS CityCount
-                FROM City
-                GROUP BY CountryId) Citys
-            ON Country.Id = Citys.CountryId
-        LEFT JOIN
-            (SELECT CountryId,
-                    Count(Airline.Id) AS AirlineCount
-                FROM Airline
-                GROUP BY CountryId) Airlines
-            ON Country.Id = Airlines.CountryId
-        ORDER BY Country.Id;</value>
+    SELECT Flight.Id, Flight.Departure, Flight.Arrival, OriginName.Name AS OriginName, OriginId.Id AS OriginId, DestinationName.Name AS DestinationName, DestinationId.Id AS DestinationId
+        FROM Flight
+        JOIN Airport
+            ON Flight.AirportId = Airport.Id
+        JOIN Airport
+            ON Flight.AirportId = Airport.Id
+        ORDER BY Flight.Id;</value>
   </data>
-  <data name="CountryCreate" xml:space="preserve">
-    <value>INSERT INTO Country (Name) VALUES (@Name); SELECT last_insert_rowId();</value>  </data>
-  <data name="CountryRetrieve" xml:space="preserve">
-    <value>SELECT * FROM CountryView;</value>
+  <data name="FlightCreate" xml:space="preserve">
+    <value>INSERT INTO Flight (AirportId, AirportId, Departure, Arrival) VALUES (@AirportId, @AirportId, @Departure, @Arrival); SELECT last_insert_rowId();</value>  </data>
+  <data name="FlightRetrieve" xml:space="preserve">
+    <value>SELECT * FROM FlightView;</value>
   </data>
-  <data name="CountryRetrieveById" xml:space="preserve">
-    <value>SELECT * FROM CountryView WHERE Id = @Id;</value>
+  <data name="FlightRetrieveById" xml:space="preserve">
+    <value>SELECT * FROM FlightView WHERE Id = @Id;</value>
   </data>
-  <data name="CountrySearch" xml:space="preserve">
-    <value>SELECT * FROM CountryView WHERE Name LIKE @Search;</value>  </data>
-  <data name="CityTable" xml:space="preserve">
-    <value>CREATE TABLE &quot;City&quot; (Id INTEGER PRIMARY KEY AUTOINCREMENT, CountryId INTEGER NOT NULL, Name TEXT NOT NULL, UNIQUE(Name, CountryID), CONSTRAINT CityCountry FOREIGN KEY (CountryId) REFERENCES &quot;Country&quot;);</value>
-  </data>
-  <data name="CityView" xml:space="preserve">
-    <value>CREATE VIEW CityView
-    AS
-    SELECT City.Id, City.Name, Country.Name AS CountryName, Country.Id AS CountryId, CAST(IFNULL(Airports.AirportCount,0) as int64) as Airports
-        FROM City
-        JOIN Country
-            ON City.CountryId = Country.Id
-        LEFT JOIN
-            (SELECT CityId,
-                    Count(Airport.Id) AS AirportCount
-                FROM Airport
-                GROUP BY CityId) Airports
-            ON City.Id = Airports.CityId
-        ORDER BY City.Id;</value>
-  </data>
-  <data name="CityCreate" xml:space="preserve">
-    <value>INSERT INTO City (CountryId, Name) VALUES (@CountryId, @Name); SELECT last_insert_rowId();</value>  </data>
-  <data name="CityRetrieve" xml:space="preserve">
-    <value>SELECT * FROM CityView;</value>
-  </data>
-  <data name="CityRetrieveById" xml:space="preserve">
-    <value>SELECT * FROM CityView WHERE Id = @Id;</value>
-  </data>
-  <data name="CitySearch" xml:space="preserve">
-    <value>SELECT * FROM CityView WHERE ;</value>  </data>
+  <data name="FlightSearch" xml:space="preserve">
+    <value>SELECT * FROM FlightView WHERE ;</value>  </data>
   <data name="AirportTable" xml:space="preserve">
-    <value>CREATE TABLE &quot;Airport&quot; (Id INTEGER PRIMARY KEY AUTOINCREMENT, CityId INTEGER NOT NULL, Name TEXT NOT NULL, Icao TEXT NOT NULL UNIQUE, Iata TEXT NOT NULL, Latitude DOUBLE NOT NULL, Longitude DOUBLE NOT NULL, Altitude DOUBLE NOT NULL, Timezone DOUBLE NOT NULL, DST TEXT NOT NULL, OpenFlightsId INT NOT NULL UNIQUE, UNIQUE (Name, CityID), CONSTRAINT AirportCity FOREIGN KEY (CityId) REFERENCES &quot;City&quot;);</value>
+    <value>CREATE TABLE &quot;Airport&quot; (Id INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT NOT NULL, City TEXT NOT NULL, Country TEXT NOT NULL, Iata TEXT, Icao TEXT, Latitude DOUBLE NOT NULL, Longitude DOUBLE NOT NULL, Altitude DOUBLE NOT NULL, Timezone DOUBLE NOT NULL, DST TEXT NOT NULL);</value>
   </data>
   <data name="AirportView" xml:space="preserve">
     <value>CREATE VIEW AirportView
     AS
-    SELECT Airport.Id, Airport.Name, Airport.Icao, Airport.Iata, Airport.Latitude, Airport.Longitude, Airport.Altitude, Airport.Timezone, Airport.DST, Airport.OpenFlightsId, City.Name AS CityName, City.Id AS CityId
+    SELECT Airport.Id, Airport.Name, Airport.City, Airport.Country, Airport.Iata, Airport.Icao, Airport.Latitude, Airport.Longitude, Airport.Altitude, Airport.Timezone, Airport.DST, CAST(IFNULL(Flights.FlightCount,0) as int64) as Flights, CAST(IFNULL(Flights.FlightCount,0) as int64) as Flights
         FROM Airport
-        JOIN City
-            ON Airport.CityId = City.Id
+        LEFT JOIN
+            (SELECT AirportId,
+                    Count(Flight.Id) AS FlightCount
+                FROM Flight
+                GROUP BY AirportId) Flights
+            ON Airport.Id = Flights.AirportId
+        LEFT JOIN
+            (SELECT AirportId,
+                    Count(Flight.Id) AS FlightCount
+                FROM Flight
+                GROUP BY AirportId) Flights
+            ON Airport.Id = Flights.AirportId
         ORDER BY Airport.Id;</value>
   </data>
   <data name="AirportCreate" xml:space="preserve">
-    <value>INSERT INTO Airport (CityId, Name, Icao, Iata, Latitude, Longitude, Altitude, Timezone, DST, OpenFlightsId) VALUES (@CityId, @Name, @Icao, @Iata, @Latitude, @Longitude, @Altitude, @Timezone, @DST, @OpenFlightsId); SELECT last_insert_rowId();</value>  </data>
+    <value>INSERT INTO Airport (Name, City, Country, Iata, Icao, Latitude, Longitude, Altitude, Timezone, DST) VALUES (@Name, @City, @Country, @Iata, @Icao, @Latitude, @Longitude, @Altitude, @Timezone, @DST); SELECT last_insert_rowId();</value>  </data>
   <data name="AirportRetrieve" xml:space="preserve">
     <value>SELECT * FROM AirportView;</value>
   </data>
@@ -139,21 +113,19 @@
     <value>SELECT * FROM AirportView WHERE Id = @Id;</value>
   </data>
   <data name="AirportSearch" xml:space="preserve">
-    <value>SELECT * FROM AirportView WHERE Icao LIKE @Search OR OpenFlightsId LIKE @Search;</value>  </data>
+    <value>SELECT * FROM AirportView WHERE ;</value>  </data>
   <data name="AirlineTable" xml:space="preserve">
-    <value>CREATE TABLE &quot;Airline&quot; (Id INTEGER PRIMARY KEY AUTOINCREMENT, CountryId INTEGER NOT NULL, Name TEXT NOT NULL, Alias TEXT, Iata TEXT NOT NULL, Icao TEXT NOT NULL UNIQUE, Callsign TEXT, OpenFlightsId INT NOT NULL UNIQUE, UNIQUE (Name, CountryID), CONSTRAINT AirlineCountry FOREIGN KEY (CountryId) REFERENCES &quot;Country&quot;);</value>
+    <value>CREATE TABLE &quot;Airline&quot; (Id INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT NOT NULL, Alias TEXT, Iata TEXT, Icao TEXT, Callsign TEXT, Country TEXT, Active TEXT NOT NULL);</value>
   </data>
   <data name="AirlineView" xml:space="preserve">
     <value>CREATE VIEW AirlineView
     AS
-    SELECT Airline.Id, Airline.Name, Airline.Alias, Airline.Iata, Airline.Icao, Airline.Callsign, Airline.OpenFlightsId, Country.Name AS CountryName, Country.Id AS CountryId
+    SELECT Airline.Id, Airline.Name, Airline.Alias, Airline.Iata, Airline.Icao, Airline.Callsign, Airline.Country, Airline.Active
         FROM Airline
-        JOIN Country
-            ON Airline.CountryId = Country.Id
         ORDER BY Airline.Id;</value>
   </data>
   <data name="AirlineCreate" xml:space="preserve">
-    <value>INSERT INTO Airline (CountryId, Name, Alias, Iata, Icao, Callsign, OpenFlightsId) VALUES (@CountryId, @Name, @Alias, @Iata, @Icao, @Callsign, @OpenFlightsId); SELECT last_insert_rowId();</value>  </data>
+    <value>INSERT INTO Airline (Name, Alias, Iata, Icao, Callsign, Country, Active) VALUES (@Name, @Alias, @Iata, @Icao, @Callsign, @Country, @Active); SELECT last_insert_rowId();</value>  </data>
   <data name="AirlineRetrieve" xml:space="preserve">
     <value>SELECT * FROM AirlineView;</value>
   </data>
@@ -161,9 +133,9 @@
     <value>SELECT * FROM AirlineView WHERE Id = @Id;</value>
   </data>
   <data name="AirlineSearch" xml:space="preserve">
-    <value>SELECT * FROM AirlineView WHERE Icao LIKE @Search OR OpenFlightsId LIKE @Search;</value>  </data>
+    <value>SELECT * FROM AirlineView WHERE ;</value>  </data>
   <data name="DbPath" xml:space="preserve">
-    <value>%localappdata%\Illallangi\FlightLog.db</value>
+    <value>%localappdata%\Illallangi\FlightLog\T4Database.db</value>
   </data>
   <data name="ConnectionString" xml:space="preserve">
     <value>data source=&quot;{0}&quot;</value>

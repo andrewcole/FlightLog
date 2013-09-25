@@ -81,6 +81,11 @@
       <Component Id="SystemDataSQLiteLinqDllC" Directory="SOFTWAREDIR" Guid="{AFD94AA5-5CA2-41C4-B2D3-65969213A6E2}" Permanent="yes" >
         <File Id="SystemDataSQLiteLinqDllF" KeyPath="yes" Source="$(var.source)\System.Data.SQLite.Linq.dll" />
       </Component>
+      <Component Id="NewtonsoftJsonDllC" Directory="SOFTWAREDIR" Guid="{E2843235-A02B-4C8F-8737-E1A82847B325}" Permanent="yes" >
+        <File Id="NewtonsoftJsonDllF" KeyPath="yes" Source="$(var.source)\Newtonsoft.Json.dll" />
+      </Component>
+      
+    
       <ComponentRef Id="Empty" />
     </Feature>
 
@@ -103,7 +108,7 @@
       <DialogRef Id="VerifyReadyDlg" />
       <Publish Dialog="WelcomeDlg" Control="Next" Event="NewDialog" Value="VerifyReadyDlg">1</Publish>
       <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="WelcomeDlg">1</Publish>
-      <Publish Dialog="ExitDialog" Control="Finish" Event="EndDialog" Value="Return" Order="999">1</Publish>
+      <Publish Dialog='ExitDialog' Control='Finish' Event='EndDialog' Value='Return'>1</Publish>
     </UI>
 
     <UIRef Id="WixUI_Common" />
@@ -118,6 +123,5 @@
     <InstallUISequence>
       <Custom Action="PreventDowngrading" After="FindRelatedProducts">NEWPRODUCTFOUND</Custom>
     </InstallUISequence>
-
   </Product>
 </Wix>

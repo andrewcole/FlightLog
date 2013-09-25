@@ -13,35 +13,32 @@ namespace Illallangi.FlightLog.Repository
     public sealed class AirportRepository : BaseRepository<Airport, SqlResources>, IAirportRepository
     {
         /// <summary>Creates a <see cref="Airport"/> object and persists it in the repository.</summary>
-        /// <param name="cityId">The id of the <see cref="City"/> of the <see cref="Airport"/> under construction.</param>
         /// <param name="name">The Name of the <see cref="Airport"/> under construction.</param>
-        /// <param name="icao">The Icao of the <see cref="Airport"/> under construction.</param>
+        /// <param name="city">The City of the <see cref="Airport"/> under construction.</param>
+        /// <param name="country">The Country of the <see cref="Airport"/> under construction.</param>
         /// <param name="iata">The Iata of the <see cref="Airport"/> under construction.</param>
+        /// <param name="icao">The Icao of the <see cref="Airport"/> under construction.</param>
         /// <param name="latitude">The Latitude of the <see cref="Airport"/> under construction.</param>
         /// <param name="longitude">The Longitude of the <see cref="Airport"/> under construction.</param>
         /// <param name="altitude">The Altitude of the <see cref="Airport"/> under construction.</param>
         /// <param name="timezone">The Timezone of the <see cref="Airport"/> under construction.</param>
         /// <param name="DST">The DST of the <see cref="Airport"/> under construction.</param>
-        /// <param name="openFlightsId">The OpenFlightsId of the <see cref="Airport"/> under construction.</param>
-        /// <param name="recurse">An optional value indicating whether to create parent objects if not found.</param>
         /// <returns>The created <see cref="Airport"/> object.</returns>
-        public Airport Create(int cityId, string name, string icao, string iata, float latitude, float longitude, float altitude, float timezone, string DST, int openFlightsId, bool recurse = false)
+        public Airport Create(string name, string city, string country, string iata, string icao, float latitude, float longitude, float altitude, float timezone, string DST, bool recurse = false)
         {
-            var city = this.RetrieveById<City>(cityId);
 
             return this.Create<Airport>(new Airport
                 {
-                    CityId = (int)city.Id,
-                    CityName = (string)city.Name,
                     Name = (string)name,
-                    Icao = (string)icao,
+                    City = (string)city,
+                    Country = (string)country,
                     Iata = (string)iata,
+                    Icao = (string)icao,
                     Latitude = (float)latitude,
                     Longitude = (float)longitude,
                     Altitude = (float)altitude,
                     Timezone = (float)timezone,
                     DST = (string)DST,
-                    OpenFlightsId = (int)openFlightsId,
                 });
         }
 
@@ -51,16 +48,17 @@ namespace Illallangi.FlightLog.Repository
             {
                 Id = (int)o.Id,
                 Name = (string)o.Name,
-                Icao = (string)o.Icao,
+                City = (string)o.City,
+                Country = (string)o.Country,
                 Iata = (string)o.Iata,
+                Icao = (string)o.Icao,
                 Latitude = (float)o.Latitude,
                 Longitude = (float)o.Longitude,
                 Altitude = (float)o.Altitude,
                 Timezone = (float)o.Timezone,
                 DST = (string)o.DST,
-                OpenFlightsId = (int)o.OpenFlightsId,
-                CityId = (int)o.CityId,
-                CityName = (string)o.CityName,
+                Departures = (int)(o.Departures ?? 0),
+                Arrivals = (int)(o.Arrivals ?? 0),
             });
         }
 
@@ -70,16 +68,17 @@ namespace Illallangi.FlightLog.Repository
             {
                 Id = (int)o.Id,
                 Name = (string)o.Name,
-                Icao = (string)o.Icao,
+                City = (string)o.City,
+                Country = (string)o.Country,
                 Iata = (string)o.Iata,
+                Icao = (string)o.Icao,
                 Latitude = (float)o.Latitude,
                 Longitude = (float)o.Longitude,
                 Altitude = (float)o.Altitude,
                 Timezone = (float)o.Timezone,
                 DST = (string)o.DST,
-                OpenFlightsId = (int)o.OpenFlightsId,
-                CityId = (int)o.CityId,
-                CityName = (string)o.CityName,
+                Departures = (int)(o.Departures ?? 0),
+                Arrivals = (int)(o.Arrivals ?? 0),
             });
         }
     }

@@ -103,8 +103,7 @@ namespace Illallangi.FlightLog.Repository
         {
             get
             {
-                yield return "Country";
-                yield return "City";
+                yield return "Flight";
                 yield return "Airport";
                 yield return "Airline";
             }

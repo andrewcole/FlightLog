@@ -11,16 +11,21 @@ namespace Illallangi.FlightLog.Powershell
     public sealed class AddAirportCmdlet : BaseCmdlet<Airport, IAirportRepository, AirportRepository>
     {
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
-        public int CityId { get; set; }
-
-        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
         public string Name { get; set; }
 
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
-        public string Icao { get; set; }
+        public string City { get; set; }
 
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
+        public string Country { get; set; }
+
+        [Parameter(ValueFromPipelineByPropertyName = true)]
+        [AllowEmptyString]
         public string Iata { get; set; }
+
+        [Parameter(ValueFromPipelineByPropertyName = true)]
+        [AllowEmptyString]
+        public string Icao { get; set; }
 
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
         public float Latitude { get; set; }
@@ -37,12 +42,9 @@ namespace Illallangi.FlightLog.Powershell
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
         public string DST { get; set; }
 
-        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
-        public int OpenFlightsId { get; set; }
-
         protected override void ProcessRecord()
         {
-            this.WriteObject(this.Repository.Create(this.CityId, this.Name, this.Icao, this.Iata, this.Latitude, this.Longitude, this.Altitude, this.Timezone, this.DST, this.OpenFlightsId));
+            this.WriteObject(this.Repository.Create(this.Name, this.City, this.Country, this.Iata, this.Icao, this.Latitude, this.Longitude, this.Altitude, this.Timezone, this.DST));
         }
     }
 }

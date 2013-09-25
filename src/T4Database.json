@@ -1,59 +1,130 @@
 {
   "Tables" : [
-    {
-      "Name" : "Country",
-      "Fields" : [
-        {"Name":"Name","IsUnique":true},
-      ],
-    },
-    {
-      "Name" : "City",
-      "Fields" : [
-        {"Name":"Name"},
-      ],
-	  "ExtraSql" : ", UNIQUE(Name, CountryID)"
-    },
+	{
+	  "Name" : "Flight",
+	  "Comment" : "Flights",
+	  "Fields" : [
+	    {
+		  "Name":"Departure",
+		  "Comment":"Time and Date of the flights departure at the origin",
+		},
+		{
+		  "Name":"Arrival",
+		  "Comment":"Time and Date of the flights arrival at the destination",
+		}
+	  ],
+	},
     {
       "Name" : "Airport",
+	  "Comment" : "Data from OpenFlights.org (http://http://openflights.org/data.html)",
       "Fields" : [
-        {"Name":"Name"},
-        {"Name":"Icao","IsUnique":true},
-        {"Name":"Iata"},
-        {"Name":"Latitude","CsType":"float","SqlType":"DOUBLE"},
-        {"Name":"Longitude","CsType":"float","SqlType":"DOUBLE"},
-        {"Name":"Altitude","CsType":"float","SqlType":"DOUBLE"},
-        {"Name":"Timezone","CsType":"float","SqlType":"DOUBLE"},
-        {"Name":"DST","Arg":"DST","CsType":"string"},
-        {"Name":"OpenFlightsId","CsType":"int","SqlType":"INT","IsUnique":true},
+        {
+		  "Name":"Name",
+		  "Comment":"Name of airport. May or may not contain the City name.",
+		},
+        {
+	      "Name":"City",
+		  "Comment":"Main city served by airport. May be spelled differently from Name.",
+		},
+        {
+		  "Name":"Country",
+		  "Comment":"Country or territory where airport is located.",
+		},
+        {
+		  "Name":"Iata",
+		  "IsMandatory":"False",
+		  "Comment":"3-letter FAA code, for airports located in Country 'United States of America'. 3-letter IATA code, for all other airports. Blank if not assigned.",
+		},
+        {
+		  "Name":"Icao",
+		  "IsMandatory":"false",
+		  "Comment":"4-letter ICAO code. Blank if not assigned.",
+		},
+        {
+		  "Name":"Latitude",
+		  "CsType":"float",
+		  "SqlType":"DOUBLE",
+		  "Comment":"Decimal degrees, usually to six significant digits. Negative is South, positive is North.",
+		},
+        {
+		  "Name":"Longitude",
+		  "CsType":"float",
+		  "SqlType":"DOUBLE",
+		  "Comment":"Decimal degrees, usually to six significant digits. Negative is West, positive is East.",
+		},
+        {
+		  "Name":"Altitude",
+		  "CsType":"float",
+		  "SqlType":"DOUBLE",
+		  "Comment":"In feet.",
+		},
+        {
+		  "Name":"Timezone",
+		  "CsType":"float",
+		  "SqlType":"DOUBLE",
+		  "Comment":"Hours offset from UTC. Fractional hours are expressed as decimals, eg. India is 5.5.",
+		},
+        {
+		  "Name":"DST",
+		  "Arg":"DST",
+		  "CsType":"string",
+		  "Comment":"Daylight savings time. One of E (Europe), A (US/Canada), S (South America), O (Australia), Z (New Zealand), N (None) or U (Unknown) (http://openflights.org/help/time.html)",
+		},
       ],
-	  "ExtraSql" : ", UNIQUE (Name, CityID)",
     },
     {
       "Name" : "Airline",
       "Fields" : [
-        {"Name":"Name"},
-        {"Name":"Alias","IsMandatory":false},
-        {"Name":"Iata"},
-        {"Name":"Icao","IsUnique":true},
-        {"Name":"Callsign","IsMandatory":false},
-        {"Name":"OpenFlightsId", "CsType":"int","SqlType":"INT","IsUnique":true},
+        {
+		  "Name":"Name",
+		  "Comment":"Name of the airline.",
+		},
+        {
+		  "Name":"Alias",
+		  "IsMandatory":false,
+		  "Comment":"Alias of the airline. For example, All Nippon Airways is commonly known as ANA.",
+		},
+        {
+		  "Name":"Iata",
+		  "IsMandatory":false,
+		  "Comment":"2-letter IATA code, if available.",
+		},
+        {
+		  "Name":"Icao",
+		  "IsMandatory":false,
+		  "Comment":"3-letter ICAO code, if available.",
+		},
+        {
+		  "Name":"Callsign",
+		  "IsMandatory":false,
+		  "Comment":"Airline callsign.",
+		},
+		{
+		  "Name":"Country",
+		  "IsMandatory":false,
+		  "Comment":"Country or territory where airline is incorporated.",
+		},
+		{
+		  "Name":"Active",
+		  "Comment":"Y if the airline is or has until recently been operational, N if it is defunct. This field is not reliable: in particular, major airlines that stopped flying long ago, but have not had their IATA code reassigned (eg. Ansett/AN), will incorrectly show as Y.",
+		},
       ],
-	  "ExtraSql" : ", UNIQUE (Name, CountryID)",
     },
   ],
   "Relationships" : [
     {
-      "Parent" : "Country",
-      "Child" : "City",
-      "ChildField" : "Cities",
-    },
+	  "Parent" : "Airport",
+	  "Child" : "Flight",
+	  "ChildField" : "Departures",
+	  "ParentIdField" : "OriginId",
+	  "ParentNameField" : "OriginName",
+	},
     {
-      "Parent" : "Country",
-      "Child" : "Airline",
-    },
-    {
-      "Parent" : "City",
-      "Child" : "Airport",
-    },
-  ]
+	  "Parent" : "Airport",
+	  "Child" : "Flight",
+	  "ChildField" : "Arrivals",
+	  "ParentIdField" : "DestinationId",
+	  "ParentNameField" : "DestinationName",
+	},
+  ],
 }

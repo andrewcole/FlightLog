@@ -11,29 +11,34 @@ namespace Illallangi.FlightLog.Powershell
     public sealed class AddAirlineCmdlet : BaseCmdlet<Airline, IAirlineRepository, AirlineRepository>
     {
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
-        public int CountryId { get; set; }
-
-        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
         public string Name { get; set; }
 
         [Parameter(ValueFromPipelineByPropertyName = true)]
+        [AllowEmptyString]
         public string Alias { get; set; }
 
-        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
+        [Parameter(ValueFromPipelineByPropertyName = true)]
+        [AllowEmptyString]
         public string Iata { get; set; }
 
-        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
+        [Parameter(ValueFromPipelineByPropertyName = true)]
+        [AllowEmptyString]
         public string Icao { get; set; }
 
         [Parameter(ValueFromPipelineByPropertyName = true)]
+        [AllowEmptyString]
         public string Callsign { get; set; }
 
+        [Parameter(ValueFromPipelineByPropertyName = true)]
+        [AllowEmptyString]
+        public string Country { get; set; }
+
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
-        public int OpenFlightsId { get; set; }
+        public string Active { get; set; }
 
         protected override void ProcessRecord()
         {
-            this.WriteObject(this.Repository.Create(this.CountryId, this.Name, this.Alias, this.Iata, this.Icao, this.Callsign, this.OpenFlightsId));
+            this.WriteObject(this.Repository.Create(this.Name, this.Alias, this.Iata, this.Icao, this.Callsign, this.Country, this.Active));
         }
     }
 }

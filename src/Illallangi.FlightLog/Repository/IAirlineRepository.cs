@@ -10,15 +10,14 @@ namespace Illallangi.FlightLog.Repository
     public interface IAirlineRepository : IRepository<Airline>
     {
         /// <summary>Creates a <see cref="Airline"/> object and persists it in the repository.</summary>
-        /// <param name="countryId">The id of the <see cref="Country"/> of the <see cref="Airline"/> under construction.</param>
         /// <param name="name">The Name of the <see cref="Airline"/> under construction.</param>
         /// <param name="alias">The Alias of the <see cref="Airline"/> under construction.</param>
         /// <param name="iata">The Iata of the <see cref="Airline"/> under construction.</param>
         /// <param name="icao">The Icao of the <see cref="Airline"/> under construction.</param>
         /// <param name="callsign">The Callsign of the <see cref="Airline"/> under construction.</param>
-        /// <param name="openFlightsId">The OpenFlightsId of the <see cref="Airline"/> under construction.</param>
-        /// <param name="recurse">An optional value indicating whether to create parent objects if not found.</param>
+        /// <param name="country">The Country of the <see cref="Airline"/> under construction.</param>
+        /// <param name="active">The Active of the <see cref="Airline"/> under construction.</param>
         /// <returns>The created <see cref="Airline"/> object.</returns>
-        Airline Create(int countryId, string name, string alias, string iata, string icao, string callsign, int openFlightsId, bool recurse = false);
+        Airline Create(string name, string alias, string iata, string icao, string callsign, string country, string active, bool recurse = false);
     }
 }

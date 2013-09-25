@@ -11,14 +11,13 @@ namespace Illallangi.FlightLog.Repository
         #region Constructor
 
         public BackupRepository()
-            : this(new List<Country>(), new List<City>(), new List<Airport>(), new List<Airline>())
+            : this(new List<Flight>(), new List<Airport>(), new List<Airline>())
         {
         }
 
-        public BackupRepository(List<Country> Country, List<City> City, List<Airport> Airport, List<Airline> Airline)
+        public BackupRepository(List<Flight> Flight, List<Airport> Airport, List<Airline> Airline)
         {
-            this.Country = Country;
-            this.City = City;
+            this.Flight = Flight;
             this.Airport = Airport;
             this.Airline = Airline;
         }
@@ -29,17 +28,22 @@ namespace Illallangi.FlightLog.Repository
 
         public override string ToString()
         {
-            return JsonConvert.SerializeObject(this);
+            return this.ToString(true);
         }
 
-        public void ToFile(string fileName)
+        public string ToString(bool indent)
         {
-            File.WriteAllText(this.ToString(), fileName);
+            return JsonConvert.SerializeObject(this, indent ? Formatting.Indented : Formatting.None);
+        }
+
+        public void ToFile(string fileName, bool indent = true)
+        {
+            File.WriteAllText(fileName, this.ToString(indent));
         }
 
         public static BackupRepository FromDatabase()
         {
-            return new BackupRepository(new CountryRepository().Retrieve().ToList(), new CityRepository().Retrieve().ToList(), new AirportRepository().Retrieve().ToList(), new AirlineRepository().Retrieve().ToList());
+            return new BackupRepository(new FlightRepository().Retrieve().ToList(), new AirportRepository().Retrieve().ToList(), new AirlineRepository().Retrieve().ToList());
         }
 
         public static BackupRepository FromString(string value)
@@ -56,9 +60,7 @@ namespace Illallangi.FlightLog.Repository
 
         #region Properties
 
-        public List<Country> Country { get; private set; }
-
-        public List<City> City { get; private set; }
+        public List<Flight> Flight { get; private set; }
 
         public List<Airport> Airport { get; private set; }
 

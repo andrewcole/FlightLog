@@ -10,18 +10,17 @@ namespace Illallangi.FlightLog.Repository
     public interface IAirportRepository : IRepository<Airport>
     {
         /// <summary>Creates a <see cref="Airport"/> object and persists it in the repository.</summary>
-        /// <param name="cityId">The id of the <see cref="City"/> of the <see cref="Airport"/> under construction.</param>
         /// <param name="name">The Name of the <see cref="Airport"/> under construction.</param>
-        /// <param name="icao">The Icao of the <see cref="Airport"/> under construction.</param>
+        /// <param name="city">The City of the <see cref="Airport"/> under construction.</param>
+        /// <param name="country">The Country of the <see cref="Airport"/> under construction.</param>
         /// <param name="iata">The Iata of the <see cref="Airport"/> under construction.</param>
+        /// <param name="icao">The Icao of the <see cref="Airport"/> under construction.</param>
         /// <param name="latitude">The Latitude of the <see cref="Airport"/> under construction.</param>
         /// <param name="longitude">The Longitude of the <see cref="Airport"/> under construction.</param>
         /// <param name="altitude">The Altitude of the <see cref="Airport"/> under construction.</param>
         /// <param name="timezone">The Timezone of the <see cref="Airport"/> under construction.</param>
         /// <param name="DST">The DST of the <see cref="Airport"/> under construction.</param>
-        /// <param name="openFlightsId">The OpenFlightsId of the <see cref="Airport"/> under construction.</param>
-        /// <param name="recurse">An optional value indicating whether to create parent objects if not found.</param>
         /// <returns>The created <see cref="Airport"/> object.</returns>
-        Airport Create(int cityId, string name, string icao, string iata, float latitude, float longitude, float altitude, float timezone, string DST, int openFlightsId, bool recurse = false);
+        Airport Create(string name, string city, string country, string iata, string icao, float latitude, float longitude, float altitude, float timezone, string DST, bool recurse = false);
     }
 }

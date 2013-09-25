@@ -67,10 +67,7 @@
     <Compile Include="Model\Airport.cs">
       <DependentUpon>Entities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\City.cs">
-      <DependentUpon>Entities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Country.cs">
+    <Compile Include="Model\Flight.cs">
       <DependentUpon>Entities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\ModelObject.cs">
@@ -82,13 +79,10 @@
     <Compile Include="PowerShell\AddAirportCmdlet.cs">
       <DependentUpon>AddCmdletClasses.tt</DependentUpon>
     </Compile>
-    <Compile Include="PowerShell\AddCityCmdlet.cs">
+    <Compile Include="PowerShell\AddFlightCmdlet.cs">
       <DependentUpon>AddCmdletClasses.tt</DependentUpon>
     </Compile>
-    <Compile Include="PowerShell\AddCountryCmdlet.cs">
-      <DependentUpon>AddCmdletClasses.tt</DependentUpon>
-    </Compile>
-    <Compile Include="PowerShell\ExportCmdlet.cs">
+    <Compile Include="PowerShell\ExportFlightLogDatabaseCmdlet.cs">
       <DependentUpon>BackupCmdletClasses.tt</DependentUpon>
     </Compile>
     <Compile Include="PowerShell\GetAirlineCmdlet.cs">
@@ -97,10 +91,7 @@
     <Compile Include="PowerShell\GetAirportCmdlet.cs">
       <DependentUpon>GetCmdletClasses.tt</DependentUpon>
     </Compile>
-    <Compile Include="PowerShell\GetCityCmdlet.cs">
-      <DependentUpon>GetCmdletClasses.tt</DependentUpon>
-    </Compile>
-    <Compile Include="PowerShell\GetCountryCmdlet.cs">
+    <Compile Include="PowerShell\GetFlightCmdlet.cs">
       <DependentUpon>GetCmdletClasses.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -111,12 +102,9 @@
       <DependentUpon>Repositories.tt</DependentUpon>
     </Compile>
     <Compile Include="Repository\BackupRepository.cs">
-      <DependentUpon>Repositories.tt</DependentUpon>
+      <DependentUpon>Backup.tt</DependentUpon>
     </Compile>
-    <Compile Include="Repository\CityRepository.cs">
-      <DependentUpon>Repositories.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Repository\CountryRepository.cs">
+    <Compile Include="Repository\FlightRepository.cs">
       <DependentUpon>Repositories.tt</DependentUpon>
     </Compile>
     <Compile Include="Repository\IAirlineRepository.cs">
@@ -125,10 +113,7 @@
     <Compile Include="Repository\IAirportRepository.cs">
       <DependentUpon>Interfaces.tt</DependentUpon>
     </Compile>
-    <Compile Include="Repository\ICityRepository.cs">
-      <DependentUpon>Interfaces.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Repository\ICountryRepository.cs">
+    <Compile Include="Repository\IFlightRepository.cs">
       <DependentUpon>Interfaces.tt</DependentUpon>
     </Compile>
     <Compile Include="Repository\SqlResources.cs">
@@ -136,6 +121,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Illallangi.FlightLog.psm1">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Model\Entities.log">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -146,6 +134,9 @@
       <LastGenOutput>Entities.log</LastGenOutput>
     </None>
     <None Include="packages.config" />
+    <None Include="Illallangi.FlightLog.psd1">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="PowerShell\AddCmdletClasses.log">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -172,6 +163,15 @@
     <None Include="PowerShell\GetCmdletClasses.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>GetCmdletClasses.log</LastGenOutput>
+    </None>
+    <None Include="Repository\Backup.log">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Backup.tt</DependentUpon>
+    </None>
+    <None Include="Repository\Backup.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Backup.log</LastGenOutput>
     </None>
     <None Include="Repository\Interfaces.log">
       <AutoGen>True</AutoGen>
