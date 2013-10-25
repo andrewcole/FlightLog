@@ -11,13 +11,12 @@ namespace Illallangi.FlightLog.Repository
         #region Constructor
 
         public BackupRepository()
-            : this(new List<Flight>(), new List<Airport>(), new List<Airline>())
+            : this(new List<Airport>(), new List<Airline>())
         {
         }
 
-        public BackupRepository(List<Flight> Flight, List<Airport> Airport, List<Airline> Airline)
+        public BackupRepository(List<Airport> Airport, List<Airline> Airline)
         {
-            this.Flight = Flight;
             this.Airport = Airport;
             this.Airline = Airline;
         }
@@ -43,7 +42,7 @@ namespace Illallangi.FlightLog.Repository
 
         public static BackupRepository FromDatabase()
         {
-            return new BackupRepository(new FlightRepository().Retrieve().ToList(), new AirportRepository().Retrieve().ToList(), new AirlineRepository().Retrieve().ToList());
+            return new BackupRepository(new AirportRepository().Retrieve().ToList(), new AirlineRepository().Retrieve().ToList());
         }
 
         public static BackupRepository FromString(string value)
@@ -59,8 +58,6 @@ namespace Illallangi.FlightLog.Repository
         #endregion
 
         #region Properties
-
-        public List<Flight> Flight { get; private set; }
 
         public List<Airport> Airport { get; private set; }
 

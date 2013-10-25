@@ -57,8 +57,6 @@ namespace Illallangi.FlightLog.Repository
                 Altitude = (float)o.Altitude,
                 Timezone = (float)o.Timezone,
                 DST = (string)o.DST,
-                Departures = (int)(o.Departures ?? 0),
-                Arrivals = (int)(o.Arrivals ?? 0),
             });
         }
 
@@ -77,8 +75,6 @@ namespace Illallangi.FlightLog.Repository
                 Altitude = (float)o.Altitude,
                 Timezone = (float)o.Timezone,
                 DST = (string)o.DST,
-                Departures = (int)(o.Departures ?? 0),
-                Arrivals = (int)(o.Arrivals ?? 0),
             });
         }
     }

@@ -1,19 +1,5 @@
 {
   "Tables" : [
-	{
-	  "Name" : "Flight",
-	  "Comment" : "Flights",
-	  "Fields" : [
-	    {
-		  "Name":"Departure",
-		  "Comment":"Time and Date of the flights departure at the origin",
-		},
-		{
-		  "Name":"Arrival",
-		  "Comment":"Time and Date of the flights arrival at the destination",
-		}
-	  ],
-	},
     {
       "Name" : "Airport",
 	  "Comment" : "Data from OpenFlights.org (http://http://openflights.org/data.html)",
@@ -110,21 +96,5 @@
 		},
       ],
     },
-  ],
-  "Relationships" : [
-    {
-	  "Parent" : "Airport",
-	  "Child" : "Flight",
-	  "ChildField" : "Departures",
-	  "ParentIdField" : "OriginId",
-	  "ParentNameField" : "OriginName",
-	},
-    {
-	  "Parent" : "Airport",
-	  "Child" : "Flight",
-	  "ChildField" : "Arrivals",
-	  "ParentIdField" : "DestinationId",
-	  "ParentNameField" : "DestinationName",
-	},
   ],
 }

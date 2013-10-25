@@ -17,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{98345F
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Illallangi.FlightLogPS", "Illallangi.FlightLogPS\Illallangi.FlightLogPS.csproj", "{67E9FA77-DAD3-47A5-A229-9069F2DEFD63}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{EB7C2B7C-B7C1-467B-AD12-B0E15A7602D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EB7C2B7C-B7C1-467B-AD12-B0E15A7602D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EB7C2B7C-B7C1-467B-AD12-B0E15A7602D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67E9FA77-DAD3-47A5-A229-9069F2DEFD63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67E9FA77-DAD3-47A5-A229-9069F2DEFD63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67E9FA77-DAD3-47A5-A229-9069F2DEFD63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67E9FA77-DAD3-47A5-A229-9069F2DEFD63}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

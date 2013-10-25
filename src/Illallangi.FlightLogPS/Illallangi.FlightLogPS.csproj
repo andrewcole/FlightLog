@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{EB7C2B7C-B7C1-467B-AD12-B0E15A7602D4}</ProjectGuid>
+    <ProjectGuid>{67E9FA77-DAD3-47A5-A229-9069F2DEFD63}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Illallangi.FlightLog</RootNamespace>
@@ -67,9 +67,6 @@
     <Compile Include="Model\Airport.cs">
       <DependentUpon>Entities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Flight.cs">
-      <DependentUpon>Entities.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\ModelObject.cs">
       <DependentUpon>Entities.tt</DependentUpon>
     </Compile>
@@ -79,9 +76,6 @@
     <Compile Include="PowerShell\AddAirportCmdlet.cs">
       <DependentUpon>AddCmdletClasses.tt</DependentUpon>
     </Compile>
-    <Compile Include="PowerShell\AddFlightCmdlet.cs">
-      <DependentUpon>AddCmdletClasses.tt</DependentUpon>
-    </Compile>
     <Compile Include="PowerShell\ExportFlightLogDatabaseCmdlet.cs">
       <DependentUpon>BackupCmdletClasses.tt</DependentUpon>
     </Compile>
@@ -89,9 +83,6 @@
       <DependentUpon>GetCmdletClasses.tt</DependentUpon>
     </Compile>
     <Compile Include="PowerShell\GetAirportCmdlet.cs">
-      <DependentUpon>GetCmdletClasses.tt</DependentUpon>
-    </Compile>
-    <Compile Include="PowerShell\GetFlightCmdlet.cs">
       <DependentUpon>GetCmdletClasses.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -104,16 +95,10 @@
     <Compile Include="Repository\BackupRepository.cs">
       <DependentUpon>Backup.tt</DependentUpon>
     </Compile>
-    <Compile Include="Repository\FlightRepository.cs">
-      <DependentUpon>Repositories.tt</DependentUpon>
-    </Compile>
     <Compile Include="Repository\IAirlineRepository.cs">
       <DependentUpon>Interfaces.tt</DependentUpon>
     </Compile>
     <Compile Include="Repository\IAirportRepository.cs">
-      <DependentUpon>Interfaces.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Repository\IFlightRepository.cs">
       <DependentUpon>Interfaces.tt</DependentUpon>
     </Compile>
     <Compile Include="Repository\SqlResources.cs">
@@ -121,7 +106,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Illallangi.FlightLog.psm1">
+    <None Include="Illallangi.FlightLogPS.psd1">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Illallangi.FlightLogPS.psm1">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Model\Entities.log">
@@ -134,9 +122,6 @@
       <LastGenOutput>Entities.log</LastGenOutput>
     </None>
     <None Include="packages.config" />
-    <None Include="Illallangi.FlightLog.psd1">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="PowerShell\AddCmdletClasses.log">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

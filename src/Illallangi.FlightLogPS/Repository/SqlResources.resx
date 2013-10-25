@@ -58,50 +58,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="FlightTable" xml:space="preserve">
-    <value>CREATE TABLE &quot;Flight&quot; (Id INTEGER PRIMARY KEY AUTOINCREMENT, AirportId INTEGER NOT NULL, AirportId INTEGER NOT NULL, Departure TEXT NOT NULL, Arrival TEXT NOT NULL, CONSTRAINT FlightAirport FOREIGN KEY (AirportId) REFERENCES &quot;Airport&quot;, CONSTRAINT FlightAirport FOREIGN KEY (AirportId) REFERENCES &quot;Airport&quot;);</value>
-  </data>
-  <data name="FlightView" xml:space="preserve">
-    <value>CREATE VIEW FlightView
-    AS
-    SELECT Flight.Id, Flight.Departure, Flight.Arrival, OriginName.Name AS OriginName, OriginId.Id AS OriginId, DestinationName.Name AS DestinationName, DestinationId.Id AS DestinationId
-        FROM Flight
-        JOIN Airport
-            ON Flight.AirportId = Airport.Id
-        JOIN Airport
-            ON Flight.AirportId = Airport.Id
-        ORDER BY Flight.Id;</value>
-  </data>
-  <data name="FlightCreate" xml:space="preserve">
-    <value>INSERT INTO Flight (AirportId, AirportId, Departure, Arrival) VALUES (@AirportId, @AirportId, @Departure, @Arrival); SELECT last_insert_rowId();</value>  </data>
-  <data name="FlightRetrieve" xml:space="preserve">
-    <value>SELECT * FROM FlightView;</value>
-  </data>
-  <data name="FlightRetrieveById" xml:space="preserve">
-    <value>SELECT * FROM FlightView WHERE Id = @Id;</value>
-  </data>
-  <data name="FlightSearch" xml:space="preserve">
-    <value>SELECT * FROM FlightView WHERE ;</value>  </data>
   <data name="AirportTable" xml:space="preserve">
     <value>CREATE TABLE &quot;Airport&quot; (Id INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT NOT NULL, City TEXT NOT NULL, Country TEXT NOT NULL, Iata TEXT, Icao TEXT, Latitude DOUBLE NOT NULL, Longitude DOUBLE NOT NULL, Altitude DOUBLE NOT NULL, Timezone DOUBLE NOT NULL, DST TEXT NOT NULL);</value>
   </data>
   <data name="AirportView" xml:space="preserve">
     <value>CREATE VIEW AirportView
     AS
-    SELECT Airport.Id, Airport.Name, Airport.City, Airport.Country, Airport.Iata, Airport.Icao, Airport.Latitude, Airport.Longitude, Airport.Altitude, Airport.Timezone, Airport.DST, CAST(IFNULL(Flights.FlightCount,0) as int64) as Flights, CAST(IFNULL(Flights.FlightCount,0) as int64) as Flights
+    SELECT Airport.Id, Airport.Name, Airport.City, Airport.Country, Airport.Iata, Airport.Icao, Airport.Latitude, Airport.Longitude, Airport.Altitude, Airport.Timezone, Airport.DST
         FROM Airport
-        LEFT JOIN
-            (SELECT AirportId,
-                    Count(Flight.Id) AS FlightCount
-                FROM Flight
-                GROUP BY AirportId) Flights
-            ON Airport.Id = Flights.AirportId
-        LEFT JOIN
-            (SELECT AirportId,
-                    Count(Flight.Id) AS FlightCount
-                FROM Flight
-                GROUP BY AirportId) Flights
-            ON Airport.Id = Flights.AirportId
         ORDER BY Airport.Id;</value>
   </data>
   <data name="AirportCreate" xml:space="preserve">

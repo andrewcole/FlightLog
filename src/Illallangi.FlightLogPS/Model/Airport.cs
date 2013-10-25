@@ -57,9 +57,5 @@ namespace Illallangi.FlightLog.Model
         /// Daylight savings time. One of E (Europe), A (US/Canada), S (South America), O (Australia), Z (New Zealand), N (None) or U (Unknown) (http://openflights.org/help/time.html)
         /// </summary>
         public string DST { get; set; }
-
-        public int Departures { get; set; }
-
-        public int Arrivals { get; set; }
     }
 }
