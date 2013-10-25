@@ -6,7 +6,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		..\build.cmd = ..\build.cmd
 		..\build.proj = ..\build.proj
 		..\build.wxs = ..\build.wxs
-		T4Database.json = T4Database.json
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{98345F46-DB3D-4CA9-92F2-ABAAA6BA224A}"

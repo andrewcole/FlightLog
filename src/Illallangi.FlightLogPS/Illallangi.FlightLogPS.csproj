@@ -43,6 +43,7 @@
       <HintPath>..\packages\Newtonsoft.Json.5.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.SQLite, Version=1.0.88.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -63,6 +64,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Config\FlightLogConfig.cs" />
+    <Compile Include="Config\IConfig.cs" />
+    <Compile Include="Config\ValueElement.cs" />
+    <Compile Include="Config\ValueElementCollection.cs" />
     <Compile Include="Model\Airline.cs">
       <SubType>Code</SubType>
     </Compile>
