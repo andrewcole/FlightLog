@@ -101,6 +101,15 @@
     <Compile Include="Repository\SqlResources.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="SQLite\IConnectionSource.cs" />
+    <Compile Include="SQLite\SQLiteConnectionExtensions.cs" />
+    <Compile Include="SQLite\SQLiteConnectionSource.cs" />
+    <Compile Include="SQLite\SQLiteDeleteCommand.cs" />
+    <Compile Include="SQLite\SQLiteDeleteCommandExtensions.cs" />
+    <Compile Include="SQLite\SQLiteInsertCommand.cs" />
+    <Compile Include="SQLite\SQLiteInsertCommandExtensions.cs" />
+    <Compile Include="SQLite\SQLiteSelectCommand.cs" />
+    <Compile Include="SQLite\SQLiteSelectCommandExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Illallangi.FlightLogPS.psd1">
