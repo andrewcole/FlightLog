@@ -1,9 +1,9 @@
 ﻿@{
-    ModuleToProcess = 'Illallangi.FlightLog.dll'
-    NestedModules = 'Illallangi.FlightLog.psm1'
+    ModuleToProcess = 'Illallangi.FlightLogPS.dll'
+    NestedModules = 'Illallangi.FlightLogPS.psm1'
     ModuleVersion = '1.0'
-    GUID = 'bb0ae680-5c5f-414c-961a-dce366144546'
-    Author = 'Me'
-    CompanyName = 'ACME'
-    Copyright = '© ACME'
+    GUID = '48808C0A-8493-4DA3-A160-C35E9D9DF984'
+    Author = 'Andrew Cole'
+    CompanyName = 'Illallangi Enterprises'
+    Copyright = '© Illallangi Enterprises'
 }
