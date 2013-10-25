@@ -1,4 +1,4 @@
-namespace Illallangi.FlightLog.Model
+namespace Illallangi.FlightLogPS.Model
 {
     public class ModelObject
     {

@@ -2,9 +2,9 @@
 // <summary>A repository of Airline objects.</summary>
 
 using Illallangi.T4Database.Repository;
-using Illallangi.FlightLog.Model;
+using Illallangi.FlightLogPS.Model;
 
-namespace Illallangi.FlightLog.Repository
+namespace Illallangi.FlightLogPS.Repository
 {
     /// <summary>A repository of Airline objects.</summary>
     public interface IAirlineRepository : IRepository<Airline>

@@ -1,7 +1,7 @@
 // <copyright file="AirportRepository.cs" company="Illallangi Enterprises">Copyright Illallangi Enterprises 2013</copyright>
 // <summary>A repository of Airport objects.</summary>
 
-namespace Illallangi.FlightLog.Model
+namespace Illallangi.FlightLogPS.Model
 {
     /// <summary>Represents a Airport entity.</summary>
     public sealed class Airport

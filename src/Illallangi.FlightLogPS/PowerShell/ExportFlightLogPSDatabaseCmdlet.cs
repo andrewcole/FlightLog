@@ -1,13 +1,13 @@
-// <copyright file="ExportFlightLogDatabaseCmdlet.cs" company="Illallangi Enterprises">Copyright Illallangi Enterprises 2013</copyright>
+// <copyright file="ExportFlightLogPSDatabaseCmdlet.cs" company="Illallangi Enterprises">Copyright Illallangi Enterprises 2013</copyright>
 
 using System.IO;
 using System.Management.Automation;
-using Illallangi.FlightLog.Repository;
+using Illallangi.FlightLogPS.Repository;
 
-namespace Illallangi.FlightLog.Powershell
+namespace Illallangi.FlightLogPS.Powershell
 {
-    [Cmdlet(VerbsData.Export, "FlightLogDatabase")]
-    public sealed class ExportFlightLogDatabaseCmdlet : Cmdlet
+    [Cmdlet(VerbsData.Export, "FlightLogPSDatabase")]
+    public sealed class ExportFlightLogPSDatabaseCmdlet : Cmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
         public string FileName { get; set; }

@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Newtonsoft.Json;
-using Illallangi.FlightLog.Model;
+using Illallangi.FlightLogPS.Model;
 
-namespace Illallangi.FlightLog.Repository
+namespace Illallangi.FlightLogPS.Repository
 {
     public class BackupRepository
     {

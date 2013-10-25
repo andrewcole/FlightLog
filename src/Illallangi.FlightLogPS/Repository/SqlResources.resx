@@ -99,7 +99,7 @@
   <data name="AirlineSearch" xml:space="preserve">
     <value>SELECT * FROM AirlineView WHERE ;</value>  </data>
   <data name="DbPath" xml:space="preserve">
-    <value>%localappdata%\Illallangi\FlightLog\T4Database.db</value>
+    <value>%localappdata%\Illallangi\FlightLogPS\T4Database.db</value>
   </data>
   <data name="ConnectionString" xml:space="preserve">
     <value>data source=&quot;{0}&quot;</value>

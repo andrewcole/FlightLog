@@ -7,8 +7,8 @@
     <ProjectGuid>{67E9FA77-DAD3-47A5-A229-9069F2DEFD63}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Illallangi.FlightLog</RootNamespace>
-    <AssemblyName>Illallangi.FlightLog</AssemblyName>
+    <RootNamespace>Illallangi.FlightLogPS</RootNamespace>
+    <AssemblyName>Illallangi.FlightLogPS</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
@@ -76,7 +76,7 @@
     <Compile Include="PowerShell\AddAirportCmdlet.cs">
       <DependentUpon>AddCmdletClasses.tt</DependentUpon>
     </Compile>
-    <Compile Include="PowerShell\ExportFlightLogDatabaseCmdlet.cs">
+    <Compile Include="PowerShell\ExportFlightLogPSDatabaseCmdlet.cs">
       <DependentUpon>BackupCmdletClasses.tt</DependentUpon>
     </Compile>
     <Compile Include="PowerShell\GetAirlineCmdlet.cs">

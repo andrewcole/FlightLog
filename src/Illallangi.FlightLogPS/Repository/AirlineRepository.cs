@@ -4,10 +4,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Illallangi.FlightLog.Model;
+using Illallangi.FlightLogPS.Model;
 using Illallangi.T4Database.Repository;
 
-namespace Illallangi.FlightLog.Repository
+namespace Illallangi.FlightLogPS.Repository
 {
     /// <summary>A repository of Airline objects.</summary>
     public sealed class AirlineRepository : BaseRepository<Airline, SqlResources>, IAirlineRepository

@@ -2,9 +2,9 @@
 // <summary>A repository of Airport objects.</summary>
 
 using Illallangi.T4Database.Repository;
-using Illallangi.FlightLog.Model;
+using Illallangi.FlightLogPS.Model;
 
-namespace Illallangi.FlightLog.Repository
+namespace Illallangi.FlightLogPS.Repository
 {
     /// <summary>A repository of Airport objects.</summary>
     public interface IAirportRepository : IRepository<Airport>

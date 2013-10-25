@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Resources;
 using Illallangi.T4Database.Repository;
 
-namespace Illallangi.FlightLog.Repository
+namespace Illallangi.FlightLogPS.Repository
 {
     public sealed class SqlResources : ISqlResources
     {
@@ -22,7 +22,7 @@ namespace Illallangi.FlightLog.Repository
         {
             get
             {
-                return SqlResources.staticResourceManager ?? (SqlResources.staticResourceManager = new ResourceManager("Illallangi.FlightLog.Repository.SqlResources", typeof(SqlResources).Assembly));
+                return SqlResources.staticResourceManager ?? (SqlResources.staticResourceManager = new ResourceManager("Illallangi.FlightLogPS.Repository.SqlResources", typeof(SqlResources).Assembly));
             }
         }
 

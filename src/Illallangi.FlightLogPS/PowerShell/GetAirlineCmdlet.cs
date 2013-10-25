@@ -2,10 +2,10 @@
 
 using System.Management.Automation;
 using Illallangi.T4Database.PowerShell;
-using Illallangi.FlightLog.Model;
-using Illallangi.FlightLog.Repository;
+using Illallangi.FlightLogPS.Model;
+using Illallangi.FlightLogPS.Repository;
 
-namespace Illallangi.FlightLog.Powershell
+namespace Illallangi.FlightLogPS.Powershell
 {
     [Cmdlet(VerbsCommon.Get, ModelObject.Airline)]
     public sealed class GetAirlineCmdlet : BaseCmdlet<Airline, IAirlineRepository, AirlineRepository>
