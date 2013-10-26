@@ -108,6 +108,7 @@
     <Compile Include="SQLite\SQLiteInsertCommandExtensions.cs" />
     <Compile Include="SQLite\SQLiteSelectCommand.cs" />
     <Compile Include="SQLite\SQLiteSelectCommandExtensions.cs" />
+    <Compile Include="ZumeroModule.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
