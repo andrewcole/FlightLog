@@ -1,5 +1,0 @@
-﻿<#@ Template language="C#" inherits="Illallangi.T4Database.DatabaseTextTransformation" hostspecific="trueFromBase" #>
-<#@ assembly name="$(SolutionDir)Packages\Illallangi.T4Database.0.0.0.1\tool\Illallangi.T4Database.DatabaseTextTransformation.dll" #>
-<#@ import namespace="Illallangi.T4Database.PowerShell" #>
-<#@ output extension="log" #>
-<# this.TransformAddCmdlets(); #>
