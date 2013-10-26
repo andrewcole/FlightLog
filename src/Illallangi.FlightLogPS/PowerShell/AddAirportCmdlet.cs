@@ -1,50 +1,51 @@
-// <copyright file="AddAirportCmdlet.cs" company="Illallangi Enterprises">Copyright Illallangi Enterprises 2013</copyright>
-
 using System.Management.Automation;
-using Illallangi.T4Database.PowerShell;
 using Illallangi.FlightLogPS.Model;
-using Illallangi.FlightLogPS.Repository;
 
-namespace Illallangi.FlightLogPS.Powershell
+namespace Illallangi.FlightLogPS.PowerShell
 {
-    [Cmdlet(VerbsCommon.Add, ModelObject.Airport)]
-    public sealed class AddAirportCmdlet : BaseCmdlet<Airport, IAirportRepository, AirportRepository>
+    [Cmdlet(VerbsCommon.Add, Nouns.Airport)]
+    public sealed class AddAirportCmdlet : ZumeroCmdlet<IAirportSource>
     {
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
         public string Name { get; set; }
 
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
-        public string City { get; set; }
+        public string CityName { get; set; }
 
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
-        public string Country { get; set; }
-
-        [Parameter(ValueFromPipelineByPropertyName = true)]
-        [AllowEmptyString]
-        public string Iata { get; set; }
-
-        [Parameter(ValueFromPipelineByPropertyName = true)]
-        [AllowEmptyString]
-        public string Icao { get; set; }
+        public string CountryName { get; set; }
 
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
-        public float Latitude { get; set; }
-
-        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
-        public float Longitude { get; set; }
-
-        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
-        public float Altitude { get; set; }
+        public string Dst { get; set; }
 
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
         public float Timezone { get; set; }
 
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
-        public string DST { get; set; }
+        public float Altitude { get; set; }
 
+        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
+        public float Longitude { get; set; }
+
+        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
+        public float Latitude { get; set; }
+
+        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
+        public string Icao { get; set; }
+
+        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
+        public string Iata { get; set; }
+        
+        protected override void BeginProcessing()
+        {
+//            this.WriteObject(this.Repository.RetrieveAirport(this.Id, this.Name, this.CityName, 
+  //              this.CountryName, this.Iata, this.Icao, this.Latitude, this.Longitude, this.Altitude, this.Timezone, this.Dst), true);
+        }
         protected override void ProcessRecord()
         {
-            this.WriteObject(this.Repository.Create(this.Name, this.City, this.Country, this.Iata, this.Icao, this.Latitude, this.Longitude, this.Altitude, this.Timezone, this.DST));
+            this.WriteObject(this.Repository.CreateAirport(this.Name, this.CityName, this.CountryName, this.Iata, this.Icao,
+                this.Latitude, this.Longitude, this.Altitude, this.Timezone, this.Dst));
         }
+
     }
 }

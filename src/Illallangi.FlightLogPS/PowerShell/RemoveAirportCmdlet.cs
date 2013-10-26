@@ -1,10 +1,11 @@
+using System.Linq;
 using System.Management.Automation;
 using Illallangi.FlightLogPS.Model;
 
 namespace Illallangi.FlightLogPS.PowerShell
 {
-    [Cmdlet(VerbsCommon.Get, Nouns.Airport, DefaultParameterSetName = "Id")]
-    public sealed class GetAirportCmdlet : ZumeroCmdlet<IAirportSource>
+    [Cmdlet(VerbsCommon.Remove, Nouns.Airport, DefaultParameterSetName = "Id", SupportsShouldProcess = true, ConfirmImpact = ConfirmImpact.High)]
+    public sealed class RemoveAirportCmdlet : ZumeroCmdlet<IAirportSource>
     {
         [Parameter(Mandatory = false, ValueFromPipelineByPropertyName = true, ParameterSetName = "Id")]
         public int? Id { get; set; }
@@ -38,11 +39,15 @@ namespace Illallangi.FlightLogPS.PowerShell
 
         [Parameter(Mandatory = false, ValueFromPipelineByPropertyName = true, ParameterSetName = "Value")]
         public string Iata { get; set; }
-        
+
         protected override void BeginProcessing()
         {
-            this.WriteObject(this.Repository.RetrieveAirport(this.Id, this.Name, this.CityName, 
-                this.CountryName, this.Iata, this.Icao, this.Latitude, this.Longitude, this.Altitude, this.Timezone, this.Dst), true);
+            foreach (var o in this.Repository.RetrieveAirport(this.Id, this.Name, this.CityName,
+                this.CountryName, this.Iata, this.Icao, this.Latitude, this.Longitude, this.Altitude, this.Timezone,
+                this.Dst).ToList().Where(o => this.ShouldProcess(o.ToString(), VerbsCommon.Remove)))
+            {
+                this.Repository.DeleteAirport(o);
+            }
         }
 
     }
