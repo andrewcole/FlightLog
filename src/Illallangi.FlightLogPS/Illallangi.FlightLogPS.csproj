@@ -113,6 +113,7 @@
     <Compile Include="SQLite\SQLiteSelectCommandExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="Illallangi.FlightLogPS.psd1">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
