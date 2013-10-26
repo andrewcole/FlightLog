@@ -31,8 +31,8 @@
     </GitVersion>
 
     <AssemblyInfo CodeLanguage="CS"
-                  OutputFile="$(SourceDir)\Illallangi.FlightLog\Properties\AssemblyInfo.cs"
-                  AssemblyTitle="Illallangi.FlightLog"
+                  OutputFile="$(SourceDir)\Illallangi.FlightLogPS\Properties\AssemblyInfo.cs"
+                  AssemblyTitle="Illallangi.FlightLogPS"
                   AssemblyDescription=""
                   AssemblyCompany="Illallangi Enterprises"
                   AssemblyProduct="Flight Log"
@@ -50,7 +50,7 @@
   <Target Name="Compile">
     <Message Text="=========== Compile ===========" Importance="High" />
 
-    <MSBuild Projects="$(SourceDir)\Illallangi.FlightLog.sln" Properties="Configuration=$(Configuration)" Targets="Rebuild" />
+    <MSBuild Projects="$(SourceDir)\Illallangi.FlightLogPS.sln" Properties="Configuration=$(Configuration)" Targets="Rebuild" />
   </Target>
 
   <Target Name="Copy32" DependsOnTargets="Compile">
@@ -58,25 +58,34 @@
 
     <MakeDir Directories="$(BuildDir32)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Illallangi.FlightLog.dll"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLogPS\bin\$(Configuration)\Illallangi.FlightLogPS.dll"
           DestinationFolder="$(BuildDir32)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Illallangi.T4Database.dll"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLogPS\bin\$(Configuration)\Illallangi.FlightLogPS.dll.config"
           DestinationFolder="$(BuildDir32)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Dapper.dll"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLogPS\bin\$(Configuration)\Illallangi.FlightLogPS.psd1"
           DestinationFolder="$(BuildDir32)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\System.Data.SQLite.dll"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLogPS\bin\$(Configuration)\Illallangi.FlightLogPS.psm1"
           DestinationFolder="$(BuildDir32)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\System.Data.SQLite.Linq.dll"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLogPS\bin\$(Configuration)\Illallangi.FlightLogPS.sql"
           DestinationFolder="$(BuildDir32)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\x86\SQLite.Interop.dll"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLogPS\bin\$(Configuration)\System.Data.SQLite.dll"
           DestinationFolder="$(BuildDir32)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Newtonsoft.Json.dll"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLogPS\bin\$(Configuration)\Ninject.dll"
+          DestinationFolder="$(BuildDir32)\bin" />
+
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLogPS\bin\$(Configuration)\System.Data.SQLite.Linq.dll"
+          DestinationFolder="$(BuildDir32)\bin" />
+
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLogPS\bin\$(Configuration)\x86\SQLite.Interop.dll"
+          DestinationFolder="$(BuildDir32)\bin" />
+
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLogPS\bin\$(Configuration)\x86\zumero.dll"
           DestinationFolder="$(BuildDir32)\bin" />
   </Target>
   
@@ -85,26 +94,35 @@
 
     <MakeDir Directories="$(BuildDir64)\bin" />
     
-    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Illallangi.FlightLog.dll"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLogPS\bin\$(Configuration)\Illallangi.FlightLogPS.dll"
           DestinationFolder="$(BuildDir64)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Illallangi.T4Database.dll"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLogPS\bin\$(Configuration)\Illallangi.FlightLogPS.dll.config"
           DestinationFolder="$(BuildDir64)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Dapper.dll"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLogPS\bin\$(Configuration)\Illallangi.FlightLogPS.psd1"
           DestinationFolder="$(BuildDir64)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\System.Data.SQLite.dll"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLogPS\bin\$(Configuration)\Illallangi.FlightLogPS.psm1"
           DestinationFolder="$(BuildDir64)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\System.Data.SQLite.Linq.dll"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLogPS\bin\$(Configuration)\Illallangi.FlightLogPS.sql"
           DestinationFolder="$(BuildDir64)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\x64\SQLite.Interop.dll"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLogPS\bin\$(Configuration)\Ninject.dll"
           DestinationFolder="$(BuildDir64)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Newtonsoft.Json.dll"
-              DestinationFolder="$(BuildDir64)\bin" />
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLogPS\bin\$(Configuration)\System.Data.SQLite.dll"
+          DestinationFolder="$(BuildDir64)\bin" />
+
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLogPS\bin\$(Configuration)\System.Data.SQLite.Linq.dll"
+          DestinationFolder="$(BuildDir64)\bin" />
+
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLogPS\bin\$(Configuration)\x64\SQLite.Interop.dll"
+          DestinationFolder="$(BuildDir64)\bin" />
+
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLogPS\bin\$(Configuration)\x64\zumero.dll"
+          DestinationFolder="$(BuildDir64)\bin" />
   </Target>
 
   <Target Name="Zip32" DependsOnTargets="Copy32">
@@ -114,7 +132,7 @@
       <Output ItemName="ZipFiles32" TaskParameter="Include"/>
     </CreateItem>
 
-    <Zip ZipFileName="$(ArtifactsDir)\Illallangi Enterprises Flight Log x86 v$(Version).zip" WorkingDirectory="$(BuildDir32)\bin" Files="@(ZipFiles32)" />
+    <Zip ZipFileName="$(ArtifactsDir)\Illallangi Enterprises Flight Log PowerShell Module x86 v$(Version).zip" WorkingDirectory="$(BuildDir32)\bin" Files="@(ZipFiles32)" />
   </Target>
 
   <Target Name="Zip64" DependsOnTargets="Copy64">
@@ -124,7 +142,7 @@
       <Output ItemName="ZipFiles64" TaskParameter="Include"/>
     </CreateItem>
 
-    <Zip ZipFileName="$(ArtifactsDir)\Illallangi Enterprises Flight Log x64 v$(Version).zip" WorkingDirectory="$(BuildDir64)\bin" Files="@(ZipFiles64)" />
+    <Zip ZipFileName="$(ArtifactsDir)\Illallangi Enterprises Flight Log PowerShell Module x64 v$(Version).zip" WorkingDirectory="$(BuildDir64)\bin" Files="@(ZipFiles64)" />
   </Target>
 
   <Target Name="MSI32" DependsOnTargets="Copy32">
@@ -134,7 +152,7 @@
 
     <Exec Command='"@(Candle)" -nologo -wx -dsource="$(BuildDir32)\bin" -out "$(BuildDir32)\wix\build.wixobj" "$(MSBuildProjectDirectory)\build.wxs"' />
 
-    <Exec Command='"@(Light)" -nologo -wx -ext WixUIExtension -out "$(ArtifactsDir)\Illallangi Enterprises Flight Log x86 v$(Version).msi" -pdbout "$(BuildDir32)\wix\build.wixpdb" "$(BuildDir32)\wix\build.wixobj"' />
+    <Exec Command='"@(Light)" -nologo -wx -ext WixUIExtension -out "$(ArtifactsDir)\Illallangi Enterprises Flight Log PowerShell Module x86 v$(Version).msi" -pdbout "$(BuildDir32)\wix\build.wixpdb" "$(BuildDir32)\wix\build.wixobj"' />
   </Target>
 
   <Target Name="MSI64" DependsOnTargets="Copy64">
@@ -144,7 +162,7 @@
 
     <Exec Command='"@(Candle)" -nologo -wx -arch x64 -dsource="$(BuildDir64)\bin" -out "$(BuildDir64)\wix\build.wixobj" "$(MSBuildProjectDirectory)\build.wxs"' />
 
-    <Exec Command='"@(Light)" -nologo -wx -ext WixUIExtension -out "$(ArtifactsDir)\Illallangi Enterprises Flight Log x64 v$(Version).msi" -pdbout "$(BuildDir64)\wix\build.wixpdb" "$(BuildDir64)\wix\build.wixobj"' />
+    <Exec Command='"@(Light)" -nologo -wx -ext WixUIExtension -out "$(ArtifactsDir)\Illallangi Enterprises Flight Log PowerShell Module x64 v$(Version).msi" -pdbout "$(BuildDir64)\wix\build.wixpdb" "$(BuildDir64)\wix\build.wixobj"' />
   </Target>
   
   <Target Name="All" DependsOnTargets="Zip32;Zip64;MSI32;MSI64">

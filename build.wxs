@@ -63,29 +63,30 @@
     <Property Id="ARPNOMODIFY" Value="1" />
 
     <Feature Id="Complete" Level="1" Title="$(var.AppName)">
-      <Component Id="DapperDllC" Directory="SOFTWAREDIR" Guid="{9ABB2603-9D98-4D90-8EB4-872B99475A47}" Permanent="yes" >
-        <File Id="DapperDllF" KeyPath="yes" Source="$(var.source)\Dapper.dll" />
-      </Component>
       <Component Id="IllallangiFlightLogDllC" Directory="SOFTWAREDIR" Guid="{21165B21-1DD8-443B-BD5A-0031FFA138A9}" Permanent="yes" >
-        <File Id="IllallangiFlightLogDllF" KeyPath="yes" Source="$(var.source)\Illallangi.FlightLog.dll" />
+        <File Id="IllallangiFlightLogPSDllF" KeyPath="yes" Source="$(var.source)\Illallangi.FlightLogPS.dll" />
+        <File Id="IllallangiFlightLogPSDllConfigF" KeyPath="no" Source="$(var.source)\Illallangi.FlightLogPS.dll.config" />
+        <File Id="IllallangiFlightLogPSPsd1F" KeyPath="no" Source="$(var.source)\Illallangi.FlightLogPS.psd1" />
+        <File Id="IllallangiFlightLogPSPsm1F" KeyPath="no" Source="$(var.source)\Illallangi.FlightLogPS.psm1" />
+        <File Id="IllallangiFlightLogPSSql1F" KeyPath="no" Source="$(var.source)\Illallangi.FlightLogPS.sql" />
       </Component>
-      <Component Id="IllallangiT4DatabaseDllC" Directory="SOFTWAREDIR" Guid="{3E97561C-B68F-4072-BFBB-0067EBBE3C22}" Permanent="yes" >
-        <File Id="IllallangiT4DatabaseDllF" KeyPath="yes" Source="$(var.source)\Illallangi.T4Database.dll" />
-      </Component>
-      <Component Id="SQLiteInteropDllC" Directory="SOFTWAREDIR" Guid="{BAD4C637-C327-4B7A-9775-DB37A56BA505}" Permanent="yes" >
-        <File Id="SQLiteInteropDllF" KeyPath="yes" Source="$(var.source)\SQLite.Interop.dll" />
-      </Component>
+
       <Component Id="SystemDataSQLiteDllC" Directory="SOFTWAREDIR" Guid="{F7D45499-2682-49CB-B591-E72DEA61D974}" Permanent="yes" >
         <File Id="SystemDataSQLiteDllF" KeyPath="yes" Source="$(var.source)\System.Data.SQLite.dll" />
       </Component>
       <Component Id="SystemDataSQLiteLinqDllC" Directory="SOFTWAREDIR" Guid="{AFD94AA5-5CA2-41C4-B2D3-65969213A6E2}" Permanent="yes" >
         <File Id="SystemDataSQLiteLinqDllF" KeyPath="yes" Source="$(var.source)\System.Data.SQLite.Linq.dll" />
       </Component>
-      <Component Id="NewtonsoftJsonDllC" Directory="SOFTWAREDIR" Guid="{E2843235-A02B-4C8F-8737-E1A82847B325}" Permanent="yes" >
-        <File Id="NewtonsoftJsonDllF" KeyPath="yes" Source="$(var.source)\Newtonsoft.Json.dll" />
+      <Component Id="SQLiteInteropDllC" Directory="SOFTWAREDIR" Guid="{BAD4C637-C327-4B7A-9775-DB37A56BA505}" Permanent="yes" >
+        <File Id="SQLiteInteropDllF" KeyPath="yes" Source="$(var.source)\SQLite.Interop.dll" />
       </Component>
-      
-    
+      <Component Id="ZumeroDllC" Directory="SOFTWAREDIR" Guid="{92A0DF57-A5CB-4EFD-B312-81D8515B6DCA}" Permanent="yes" >
+        <File Id="ZumeroDllF" KeyPath="yes" Source="$(var.source)\zumero.dll" />
+      </Component>
+
+      <Component Id="NinjectDllC" Directory="SOFTWAREDIR" Guid="{89E2AF78-FC82-4A10-AF1C-3B86AF060680}" Permanent="yes" >
+        <File Id="NinjectDllF" KeyPath="yes" Source="$(var.source)\ninject.dll" />
+      </Component>
       <ComponentRef Id="Empty" />
     </Feature>
 
