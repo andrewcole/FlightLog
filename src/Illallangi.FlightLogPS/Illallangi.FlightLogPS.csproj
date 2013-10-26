@@ -69,15 +69,14 @@
     <Compile Include="Config\IConfig.cs" />
     <Compile Include="Config\ValueElement.cs" />
     <Compile Include="Config\ValueElementCollection.cs" />
-    <Compile Include="Model\Airline.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Model\Airport.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Model\ModelObject.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Model\City.cs" />
+    <Compile Include="Model\Country.cs" />
+    <Compile Include="Model\IAirportSource.cs" />
+    <Compile Include="Model\ICitySource.cs" />
+    <Compile Include="Model\ICountrySource.cs" />
     <Compile Include="PowerShell\AddAirlineCmdlet.cs" />
     <Compile Include="PowerShell\AddAirportCmdlet.cs" />
     <Compile Include="PowerShell\ExportFlightLogPSDatabaseCmdlet.cs" />

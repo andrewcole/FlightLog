@@ -1,10 +1,6 @@
-// <copyright file="AirportRepository.cs" company="Illallangi Enterprises">Copyright Illallangi Enterprises 2013</copyright>
-// <summary>A repository of Airport objects.</summary>
-
 namespace Illallangi.FlightLogPS.Model
 {
-    /// <summary>Represents a Airport entity.</summary>
-    public sealed class Airport
+    public class Airport
     {
         public int Id { get; set; }
 
@@ -12,16 +8,6 @@ namespace Illallangi.FlightLogPS.Model
         /// Name of airport. May or may not contain the City name.
         /// </summary>
         public string Name { get; set; }
-
-        /// <summary>
-        /// Main city served by airport. May be spelled differently from Name.
-        /// </summary>
-        public string City { get; set; }
-
-        /// <summary>
-        /// Country or territory where airport is located.
-        /// </summary>
-        public string Country { get; set; }
 
         /// <summary>
         /// 3-letter FAA code, for airports located in Country 'United States of America'. 3-letter IATA code, for all other airports. Blank if not assigned.
@@ -56,6 +42,19 @@ namespace Illallangi.FlightLogPS.Model
         /// <summary>
         /// Daylight savings time. One of E (Europe), A (US/Canada), S (South America), O (Australia), Z (New Zealand), N (None) or U (Unknown) (http://openflights.org/help/time.html)
         /// </summary>
-        public string DST { get; set; }
+        public string Dst { get; set; }
+
+        public int CityId { get; set; }
+
+        public string CityName { get; set; }
+
+        public int CountryId { get; set; }
+
+        public string CountryName { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format(@"{0} ({1}, {2})", this.Name, this.CityName, this.CountryName);
+        }
     }
 }
