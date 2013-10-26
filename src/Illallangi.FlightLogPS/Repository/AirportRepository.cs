@@ -1,81 +1,88 @@
-// <copyright file="AirportRepository.cs" company="Illallangi Enterprises">Copyright Illallangi Enterprises 2013</copyright>
-// <summary>A repository of Airport objects.</summary>
-
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Illallangi.FlightLogPS.Model;
-using Illallangi.T4Database.Repository;
+using Illallangi.FlightLogPS.SQLite;
 
 namespace Illallangi.FlightLogPS.Repository
 {
-    /// <summary>A repository of Airport objects.</summary>
-    public sealed class AirportRepository : BaseRepository<Airport, SqlResources>, IAirportRepository
+    public sealed class AirportRepository : ZumeroRepository, IAirportSource
     {
-        /// <summary>Creates a <see cref="Airport"/> object and persists it in the repository.</summary>
-        /// <param name="name">The Name of the <see cref="Airport"/> under construction.</param>
-        /// <param name="city">The City of the <see cref="Airport"/> under construction.</param>
-        /// <param name="country">The Country of the <see cref="Airport"/> under construction.</param>
-        /// <param name="iata">The Iata of the <see cref="Airport"/> under construction.</param>
-        /// <param name="icao">The Icao of the <see cref="Airport"/> under construction.</param>
-        /// <param name="latitude">The Latitude of the <see cref="Airport"/> under construction.</param>
-        /// <param name="longitude">The Longitude of the <see cref="Airport"/> under construction.</param>
-        /// <param name="altitude">The Altitude of the <see cref="Airport"/> under construction.</param>
-        /// <param name="timezone">The Timezone of the <see cref="Airport"/> under construction.</param>
-        /// <param name="DST">The DST of the <see cref="Airport"/> under construction.</param>
-        /// <returns>The created <see cref="Airport"/> object.</returns>
-        public Airport Create(string name, string city, string country, string iata, string icao, float latitude, float longitude, float altitude, float timezone, string DST, bool recurse = false)
-        {
+        private readonly ICitySource currentCitySource;
 
-            return this.Create<Airport>(new Airport
-                {
-                    Name = (string)name,
-                    City = (string)city,
-                    Country = (string)country,
-                    Iata = (string)iata,
-                    Icao = (string)icao,
-                    Latitude = (float)latitude,
-                    Longitude = (float)longitude,
-                    Altitude = (float)altitude,
-                    Timezone = (float)timezone,
-                    DST = (string)DST,
-                });
+        public AirportRepository(IConnectionSource connectionSource, ICitySource citySource)
+            : base(connectionSource)
+        {
+            this.currentCitySource = citySource;
         }
 
-        public override IEnumerable<Airport> Retrieve()
+        private ICitySource CitySource
         {
-            return this.Retrieve<Airport>().Select(o => new Airport()
+            get
             {
-                Id = (int)o.Id,
-                Name = (string)o.Name,
-                City = (string)o.City,
-                Country = (string)o.Country,
-                Iata = (string)o.Iata,
-                Icao = (string)o.Icao,
-                Latitude = (float)o.Latitude,
-                Longitude = (float)o.Longitude,
-                Altitude = (float)o.Altitude,
-                Timezone = (float)o.Timezone,
-                DST = (string)o.DST,
-            });
+                return this.currentCitySource;
+            }
         }
 
-        public override IEnumerable<Airport> Search(string search)
+        public Airport CreateAirport(string name, string cityName, string countryName, string iata, string icao, float latitude,
+            float longitude, float altitude, float timezone, string dst)
         {
-            return this.Search<Airport>(search).Select(o => new Airport()
-            {
-                Id = (int)o.Id,
-                Name = (string)o.Name,
-                City = (string)o.City,
-                Country = (string)o.Country,
-                Iata = (string)o.Iata,
-                Icao = (string)o.Icao,
-                Latitude = (float)o.Latitude,
-                Longitude = (float)o.Longitude,
-                Altitude = (float)o.Altitude,
-                Timezone = (float)o.Timezone,
-                DST = (string)o.DST,
-            });
+            var city = this.CitySource.RetrieveCity(name: cityName, countryName: countryName).Single();
+
+            this.GetConnection()
+                .InsertInto("Airport")
+                .Values("AirportName", name)
+                .Values("CityId", city.Id)
+                .Values("Iata", iata)
+                .Values("Icao", icao)
+                .Values("Latitude", latitude)
+                .Values("Longitude", longitude)
+                .Values("Altitude", altitude)
+                .Values("Timezone", timezone)
+                .Values("Dst", dst)
+                .CreateCommand()
+                .ExecuteNonQuery();
+
+            return null;
+        }
+
+        public IEnumerable<Airport> RetrieveAirport(int? id, string name = null, string cityName = null, string countryName = null,
+                    string iata = null, string icao = null, float? latitude = null, float? longitude = null, float? altitude = null,
+                    float? timezone = null, string dst = null)
+        {
+            return this.GetConnection()
+                .Select<Airport>("Airports")
+                .Column("CountryId", (input, value) => input.CountryId = value)
+                .Column("CountryName", (input, value) => input.CountryName = value, countryName)
+                .Column("CityId", (input, value) => input.CityId = value)
+                .Column("CityName", (input, value) => input.CityName = value, cityName)
+                .Column("AirportId", (input, value) => input.Id = value, id)
+                .Column("AirportName", (input, value) => input.Name = value, name)
+                .Column("Iata", (input, value) => input.Iata = value, iata)
+                .Column("Icao", (input, value) => input.Icao = value, icao)
+                .FloatColumn("Latitude", (input, value) => input.Latitude = value, latitude)
+                .FloatColumn("Longitude", (input, value) => input.Longitude = value, longitude)
+                .FloatColumn("Altitude", (input, value) => input.Altitude = value, altitude)
+                .FloatColumn("Timezone", (input, value) => input.Timezone = value, timezone)
+                .Column("Dst", (input, value) => input.Dst = value, dst)
+                .Go();
+        }
+
+        public void DeleteAirport(Airport airport)
+        {
+            this.GetConnection()
+                .DeleteFrom("Airport")
+                .Where("AirportId", airport.Id)
+                .Where("CityId", airport.CityId)
+                .Where("AirportName", airport.Name)
+                .Where("Iata", airport.Iata)
+                .Where("Icao", airport.Icao)
+                .Where("Latitude", airport.Latitude)
+                .Where("Longitude", airport.Longitude)
+                .Where("Altitude", airport.Altitude)
+                .Where("Timezone", airport.Timezone)
+                .Where("Dst", airport.Dst)
+                .CreateCommand()
+                .ExecuteNonQuery();
         }
     }
 }
