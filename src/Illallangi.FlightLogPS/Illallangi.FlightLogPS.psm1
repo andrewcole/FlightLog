@@ -1,54 +1,160 @@
-﻿Function Get-SampleData
+﻿Function Get-OpenFlightsSampleData
+{
+	Begin
+	{
+		$source = "http://sourceforge.net/p/openflights/code/HEAD/tree/openflights/data/airports.dat?format=raw"
+		$destination = "$($env:temp)\airports.dat"
+
+		if ((Test-Path $destination) -ne $true)
+		{
+			Write-Host "Downloading $($source)"
+			$wc = New-Object System.Net.WebClient
+			$wc.DownloadFile($source, $destination)
+			$Airports = (import-csv $destination -Header ("Id","Name","City","Country","IATA","ICAO","Latitude","Longitude","Altitude","Timezone","DST"))
+			$Airports | export-csv $destination
+		}
+
+		import-csv $destination
+	}
+}
+
+Function Get-FlightSampleData
+{
+	Begin
+	{
+		$source = "https://gist.github.com/andrewcole/b9aa3ee4eaf0199ca181/raw/54961f6f2dae139a0f7d99fc9e83b1e7cceb9d5d/flights.csv"
+		$destination = "$($env:temp)\flights.csv"
+
+		if ((Test-Path $destination) -ne $true)
+		{
+			Write-Host "Downloading $($source)"
+			$wc = New-Object System.Net.WebClient
+			$wc.DownloadFile($source, $destination)
+			$Flights = (import-csv $destination)
+			$Flights | export-csv $destination
+		}
+
+		import-csv $destination
+	}
+}
+
+Function Get-CountrySampleData
+{
+	Begin
+	{
+		$destination = "$($env:temp)\countries.csv"
+
+		if ((Test-Path $destination) -ne $true)
+		{
+			$airports = (Get-OpenFlightsSampleData)
+			Write-Host "Calculating Unique Countries"
+			$Airports | Select-Object Country -Unique | Export-Csv $destination
+		}
+
+		import-csv $destination
+	}
+}
+
+
+Function Get-CitySampleData
+{
+	Begin
+	{
+		$destination = "$($env:temp)\cities.csv"
+
+		if ((Test-Path $destination) -ne $true)
+		{
+			$airports = (Get-OpenFlightsSampleData)
+			Write-Host "Calculating Unique Cities"
+			$Airports | Select-Object Country, City -Unique | Export-Csv $destination
+		}
+
+		import-csv $destination
+	}
+}
+
+Function Get-AirportSampleData
+{
+	Begin
+	{
+		$destination = "$($env:temp)\airports.csv"
+
+		if ((Test-Path $destination) -ne $true)
+		{
+			$airports = (Get-OpenFlightsSampleData)
+			Write-Host "Calculating Unique Airports"
+			$Airports | Export-Csv $destination
+		}
+
+		import-csv $destination
+	}
+}
+
+Function Import-CountrySampleData
 {
 	param(
-		[string]$Href,
-		[string]$Cache,
-		[string[]]$Header,
-		[System.Net.WebClient]$WebClient = (New-Object System.Net.WebClient)
+		[int]$ParentProgressId = $null,
+		[int]$MyProgressId = $ParentProgressId + 1
 	)
-
 	Begin
 	{
-		If (Test-Path $cache)
+		$i = 0
+		$countries = (Get-CountrySampleData)
+		$countryCount = $countries.Count
+		foreach ($country in $countries)
 		{
-			Write-Host "Using cached copy of $($href)"
+			$i += 1
+			Write-Progress -Id $MyProgressId -ParentId $ParentProgressId -Activity "Importing Countries" -status "$($country.Country) ($($i) / $($countryCount))" -PercentComplete (($i / $countryCount) * 100)
+			Add-Country -Name $country.Country
 		}
-		else
+	}
+}
+
+Function Import-CitySampleData
+{
+	param(
+		[int]$ParentProgressId = $null,
+		[int]$MyProgressId = $ParentProgressId + 1
+	)
+	Begin
+	{
+		$i = 0
+		$cities = (Get-CitySampleData)
+		$cityCount = $cities.Count
+		foreach ($city in $cities)
 		{
-			Write-Host "Downloading $($href)"
-			$WebClient.DownloadFile($href,$cache)
+			$i += 1
+			Write-Progress -Id $MyProgressId -ParentId $ParentProgressId -Activity "Importing Cities" -status "$($city.City), $($city.Country) ($($i) / $($cityCount))" -PercentComplete (($i / $cityCount) * 100)
+			Add-City -Name $city.City -CountryName $city.Country
 		}
-
-		Import-Csv -Path $cache -Header $Header
 	}
 }
 
-Function Get-SampleAirports
+Function Import-AirportSampleData
 {
+	param(
+		[int]$ParentProgressId = $null,
+		[int]$MyProgressId = $ParentProgressId + 1
+	)
 	Begin
 	{
-		$Href = "http://sourceforge.net/p/openflights/code/HEAD/tree/openflights/data/airports.dat?format=raw"
-		$Cache = "$($env:LocalAppData)\Illallangi\FlightLog\airports.dat"
-		Get-SampleData -Href $Href -Cache $Cache -Header "ID","Name","City","Country","Iata","Icao","Latitude","Longitude","Altitude","Timezone","Dst"
+		Get-AirportSampleData |%{ Add-Airport -Name $_.Name -CityName $_.City -CountryName $_.Country -Dst $_.DST -Timezone $_.Timezone -Altitude $_.Altitude -Longitude $_.Longitude -Latitude $_.Latitude -Icao $_.Icao -Iata $_.Iata  }
 	}
 }
 
-Function Get-SampleAirlines
+Function Import-OpenFlightsSampleData
 {
+	param(
+		[int]$ParentProgressId = $null,
+		[int]$MyProgressId = $ParentProgressId + 1
+	)
 	Begin
 	{
-		$Href = "http://sourceforge.net/p/openflights/code/HEAD/tree/openflights/data/airlines.dat?format=raw"
-		$Cache = "$($env:LocalAppData)\Illallangi\FlightLog\airlines.dat"
-		Get-SampleData -Href $Href -Cache $Cache -Header "ID","Name","Alias","Iata","ICAO","Callsign","Country","Active"
-	}
-}
-
-
-Function Import-SampleFlightLogData
-{
-	Begin
-	{
-		Get-SampleAirlines | Add-Airline
-		Get-SampleAirports | Add-Airport
+		Write-Progress -Id $MyProgressId -ParentId $ParentProgressId -Activity "Importing Sample Data" -Status "Importing Countries" -PercentComplete 0
+		Import-CountrySampleData -ParentProgressId $MyProgressId
+		Write-Progress -Id $MyProgressId -ParentId $ParentProgressId -Activity "Importing Sample Data" -Status "Importing Cities" -PercentComplete 33
+		Import-CitySampleData -ParentProgressId $MyProgressId
+		Write-Progress -Id $MyProgressId -ParentId $ParentProgressId -Activity "Importing Sample Data" -Status "Importing Airports" -PercentComplete 67
+		Import-AirportSampleData -ParentProgressId $MyProgressId
 	}
 }
