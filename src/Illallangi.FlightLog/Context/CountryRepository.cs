@@ -4,7 +4,7 @@ using Illallangi.LiteOrm;
 
 namespace Illallangi.FlightLog.Context
 {
-    public sealed class CountryRepository : ZumeroRepository, ICountrySource
+    public sealed class CountryRepository : SourceBase, ICountrySource
     {
         public CountryRepository(IConnectionSource connectionSource)
             : base(connectionSource)

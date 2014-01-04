@@ -3,11 +3,11 @@ using Illallangi.LiteOrm;
 
 namespace Illallangi.FlightLog.Context
 {
-    public abstract class ZumeroRepository
+    public abstract class SourceBase
     {
         private readonly IConnectionSource currentConnectionSource;
 
-        protected ZumeroRepository(IConnectionSource connectionSource)
+        protected SourceBase(IConnectionSource connectionSource)
         {
             this.currentConnectionSource = connectionSource;
         }

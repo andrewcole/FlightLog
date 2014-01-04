@@ -5,7 +5,7 @@ using Illallangi.LiteOrm;
 
 namespace Illallangi.FlightLog.Context
 {
-    public sealed class CityRepository : ZumeroRepository, ICitySource
+    public sealed class CityRepository : SourceBase, ICitySource
     {
         private readonly ICountrySource currentCountrySource;
 
