@@ -112,6 +112,9 @@
     </None>
     <EmbeddedResource Include="Log4Net.config" />
     <None Include="packages.config" />
+    <None Include="SampleData.ps1">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="Illallangi.FlightLog.sql">
