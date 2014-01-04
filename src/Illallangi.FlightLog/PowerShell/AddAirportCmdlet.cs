@@ -43,11 +43,11 @@ namespace Illallangi.FlightLog.PowerShell
         {
             this.WriteObject(this.Repository.Create(new Airport
                     { 
-                Country = this.Country, 
-                City = this.City, 
+                        Country = this.Country, 
+                        City = this.City, 
                         Iata = this.Iata, 
                         Icao = this.Icao, 
-                Name = this.Name,
+                        Name = this.Name,
                         Latitude = this.Latitude, 
                         Longitude = this.Longitude, 
                         Altitude = this.Altitude, 
