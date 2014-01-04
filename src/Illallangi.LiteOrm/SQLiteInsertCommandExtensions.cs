@@ -1,4 +1,5 @@
-﻿using System.Data.SQLite;
+﻿using System;
+using System.Data.SQLite;
 using System.Linq;
 
 namespace Illallangi.LiteOrm
@@ -38,6 +39,16 @@ namespace Illallangi.LiteOrm
                 cm.Parameters.Add(new SQLiteParameter(string.Concat("@", value.Key), value.Value));
             }
             return cm;
+        }
+
+        public static int Go(this SQLiteInsertCommand insert)
+        {
+            insert.CreateCommand().ExecuteNonQuery();
+            using (var command = insert.Connection.CreateCommand())
+            {
+                command.CommandText = "SELECT last_insert_rowid() AS id";
+                return Convert.ToInt32(command.ExecuteScalar());
+            }
         }
     }
 }
