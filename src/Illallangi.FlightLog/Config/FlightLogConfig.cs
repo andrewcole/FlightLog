@@ -42,6 +42,7 @@ namespace Illallangi.FlightLog.Config
                        new ValueElementCollection();
             }
         }
+
         [ConfigurationProperty("Pragma")]
         public ValueElementCollection PragmaCollection
         {
@@ -67,7 +68,6 @@ namespace Illallangi.FlightLog.Config
                 return this.PragmaCollection.Cast<ValueElement>().Select(element => element.Value);
             }
         }
-
 
         public IEnumerable<string> SqlSchema
         {

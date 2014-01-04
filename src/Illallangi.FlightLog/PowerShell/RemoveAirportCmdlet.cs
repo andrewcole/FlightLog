@@ -28,12 +28,19 @@ namespace Illallangi.FlightLog.PowerShell
 
         protected override void BeginProcessing()
         {
-            foreach (var o in this.Repository.Retrieve(new Airport { Id = this.Id, Name = this.Name, 
-                City = this.CityName, Country = this.CountryName, Iata = this.Iata, Icao = this.Icao } ).ToList().Where(o => this.ShouldProcess(o.ToString(), VerbsCommon.Remove)))
+            foreach (var o in this.Repository.Retrieve(
+                new Airport 
+                { 
+                    Id = this.Id, 
+                    Name = this.Name, 
+                    City = this.CityName, 
+                    Country = this.CountryName, 
+                    Iata = this.Iata, 
+                    Icao = this.Icao 
+                }).ToList().Where(o => this.ShouldProcess(o.ToString(), VerbsCommon.Remove)))
             {
                 this.Repository.Delete(o);
             }
         }
-
     }
 }

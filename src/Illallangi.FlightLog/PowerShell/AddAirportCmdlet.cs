@@ -34,19 +34,22 @@ namespace Illallangi.FlightLog.PowerShell
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
         public string Iata { get; set; }
         
-        protected override void BeginProcessing()
-        {
-//            this.WriteObject(this.Repository.Retrieve(this.Id, this.Name, this.City, 
-  //              this.Country, this.Iata, this.Icao, this.Latitude, this.Longitude, this.Altitude, this.Timezone, this.Dst), true);
-        }
-
         protected override void ProcessRecord()
         {
             this.WriteObject(
-                this.Repository.Create(new Airport { Name = this.Name, City = this.CityName, Country = this.CountryName, Iata = this.Iata, 
-                    Icao = this.Icao, Latitude = this.Latitude, Longitude = this.Longitude, Altitude = this.Altitude, Timezone = this.Timezone,
-                    } ));
+                this.Repository.Create(
+                    new Airport 
+                    { 
+                        Name = this.Name, 
+                        City = this.CityName, 
+                        Country = this.CountryName, 
+                        Iata = this.Iata, 
+                        Icao = this.Icao, 
+                        Latitude = this.Latitude, 
+                        Longitude = this.Longitude, 
+                        Altitude = this.Altitude, 
+                        Timezone = this.Timezone,
+                    }));
         }
-
     }
 }

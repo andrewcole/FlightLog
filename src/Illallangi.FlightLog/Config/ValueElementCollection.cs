@@ -8,14 +8,16 @@ namespace Illallangi.FlightLog.Config
         {
             get
             {
-                return base.BaseGet(index) as ValueElement;
+                return this.BaseGet(index) as ValueElement;
             }
+
             set
             {
-                if (base.BaseGet(index) != null)
+                if (this.BaseGet(index) != null)
                 {
-                    base.BaseRemoveAt(index);
+                    this.BaseRemoveAt(index);
                 }
+
                 this.BaseAdd(index, value);
             }
         }

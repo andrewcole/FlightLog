@@ -27,9 +27,18 @@ namespace Illallangi.FlightLog.PowerShell
         
         protected override void BeginProcessing()
         {
-            this.WriteObject(this.Repository.Retrieve(new Airport { Id = this.Id, Name = this.Name, 
-                City = this.CityName, Country = this.CountryName, Iata = this.Iata, Icao = this.Icao } ), true);
+            this.WriteObject(
+                this.Repository.Retrieve(
+                    new Airport 
+                    { 
+                        Id = this.Id, 
+                        Name = this.Name, 
+                        City = this.CityName, 
+                        Country = this.CountryName, 
+                        Iata = this.Iata, 
+                        Icao = this.Icao 
+                    }), 
+                true);
         }
-
     }
 }

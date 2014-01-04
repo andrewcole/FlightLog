@@ -8,7 +8,7 @@ namespace Illallangi.FlightLog.Config
         [ConfigurationProperty("Value", IsRequired = true)]
         public string Value
         {
-            get { return (String) this["Value"]; }
+            get { return (string)this["Value"]; }
             set { this["Value"] = value; }
         }
     }

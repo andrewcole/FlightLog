@@ -1,16 +1,35 @@
 ﻿using System.Management.Automation;
-using Illallangi.FlightLog.Context;
 using Ninject;
 
 namespace Illallangi.FlightLog.PowerShell
 {
     [Cmdlet(VerbsCommon.Get, Nouns.Null)]
-    public abstract class ZumeroCmdlet<T> : PSCmdlet where T: class
+    public abstract class ZumeroCmdlet<T> : PSCmdlet where T : class
     {
+        #region Fields
+
         private StandardKernel currentKernel;
         private FlightLogModule currentModule;
         private T currentRepository;
-        
+
+        #endregion
+
+        #region Properties
+
+        #region Protected Properties
+
+        protected T Repository
+        {
+            get
+            {
+                return this.currentRepository ?? (this.currentRepository = this.GetRepository());
+            }
+        }
+
+        #endregion
+
+        #region Private Properties
+
         private FlightLogModule Module
         {
             get
@@ -27,13 +46,11 @@ namespace Illallangi.FlightLog.PowerShell
             }
         }
 
-        protected T Repository
-        {
-            get
-            {
-                return this.currentRepository ?? (this.currentRepository = this.GetRepository());
-            }
-        }
+        #endregion
+        
+        #endregion
+
+        #region Methods
 
         private FlightLogModule GetModule()
         {
@@ -50,5 +67,7 @@ namespace Illallangi.FlightLog.PowerShell
             var repository = this.Kernel.Get<T>();
             return repository;
         }
+
+        #endregion
     }
 }

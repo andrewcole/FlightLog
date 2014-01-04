@@ -14,7 +14,7 @@ namespace Illallangi.FlightLog.Context
             : base(logger, connectionSource)
         {
             this.Logger.Debug(@"AirportSource(""{0}"",""{1}"",""{2}"")", logger, connectionSource, citySource);
-            currentCitySource = citySource;
+            this.currentCitySource = citySource;
         }
 
         private ISource<City> CitySource
