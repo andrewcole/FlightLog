@@ -49,9 +49,24 @@ namespace Illallangi.LiteOrm
             }
         }
 
-        public IDictionary<string, Action<T, float>> FloatMap { get { return this.currentFloatMap; } }
-        public IDictionary<string, Action<T, int>> IntMap { get { return this.currentIntMap; } }
-        public IDictionary<string, Action<T, string>> StringMap { get { return this.currentStringMap; } }
-        public IDictionary<string, Action<T, DateTime>> DateMap { get { return this.currentDateMap; } }
+        public IDictionary<string, Action<T, float>> FloatMap
+        {
+            get { return this.currentFloatMap; }
+        }
+
+        public IDictionary<string, Action<T, int>> IntMap
+        {
+            get { return this.currentIntMap; }
+        }
+
+        public IDictionary<string, Action<T, string>> StringMap
+        {
+            get { return this.currentStringMap; }
+        }
+
+        public IDictionary<string, Action<T, DateTime>> DateMap
+        {
+            get { return this.currentDateMap; }
+        }
     }
 }

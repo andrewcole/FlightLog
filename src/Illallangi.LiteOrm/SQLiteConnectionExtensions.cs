@@ -38,6 +38,7 @@ namespace Illallangi.LiteOrm
             {
                 new SQLiteCommand(string.Format("pragma {0};", pragma), cx).ExecuteNonQuery();
             }
+
             return cx;
         }
 

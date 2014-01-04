@@ -30,7 +30,8 @@ namespace Illallangi.LiteOrm
 
         public static string GetSql(this SQLiteInsertCommand insert)
         {
-            return string.Format("INSERT INTO {0}({1}) VALUES ({2});",
+            return string.Format(
+                "INSERT INTO {0}({1}) VALUES ({2});",
                 insert.Table,
                 insert.GetColumnNames(),
                 insert.GetNamedArguments());
@@ -44,6 +45,7 @@ namespace Illallangi.LiteOrm
             {
                 cm.Parameters.Add(new SQLiteParameter(string.Concat("@", value.Key), value.Value));
             }
+
             return cm;
         }
 

@@ -21,7 +21,7 @@ namespace Illallangi.LiteOrm
         public SQLiteConnectionSource(ILiteOrmConfig liteOrmConfig, ILogger logger)
         {
             this.currentLiteOrmConfig = liteOrmConfig;
-            currentLogger = logger;
+            this.currentLogger = logger;
         }
 
         #endregion
@@ -44,28 +44,8 @@ namespace Illallangi.LiteOrm
         #endregion
 
         #region Methods
-
-        private string GetDbPath()
-        {
-            var dbPath = Path.GetFullPath(Environment.ExpandEnvironmentVariables(this.LiteOrmConfig.DbPath));
-            Debug.Assert(dbPath != null, "dbPath != null");
-
-            var dbDirectory = Path.GetDirectoryName(dbPath);
-            Debug.Assert(dbDirectory != null, "dbDirectory != null");
-
-            if (!Directory.Exists(dbDirectory))
-            {
-                Directory.CreateDirectory(dbDirectory);
-            }
-
-            return dbPath;
-        }
-
-        private string GetConnectionString()
-        {
-            return string.Format(this.LiteOrmConfig.ConnectionString, this.GetDbPath());
-        }
-
+        
+        #region Public Methods
 
         public SQLiteConnection GetConnection()
         {
@@ -78,7 +58,7 @@ namespace Illallangi.LiteOrm
                     .WithLogger(this.Logger))
                 {
                     foreach (
-                        var line in 
+                        var line in
                             this.LiteOrmConfig
                                 .SqlSchema
                                 .Select(f => Path.GetFullPath(Environment.ExpandEnvironmentVariables(f)))
@@ -96,6 +76,33 @@ namespace Illallangi.LiteOrm
                 .SetAllPragmas(this.LiteOrmConfig.Pragmas)
                 .WithLogger(this.Logger);
         }
+
+        #endregion
+        
+        #region Private Methods
+
+        private string GetDbPath()
+        {
+            var path = Path.GetFullPath(Environment.ExpandEnvironmentVariables(this.LiteOrmConfig.DbPath));
+            Debug.Assert(path != null, "dbPath != null");
+
+            var dir = Path.GetDirectoryName(path);
+            Debug.Assert(dir != null, "dbDirectory != null");
+
+            if (!Directory.Exists(dir))
+            {
+                Directory.CreateDirectory(dir);
+            }
+
+            return path;
+        }
+
+        private string GetConnectionString()
+        {
+            return string.Format(this.LiteOrmConfig.ConnectionString, this.GetDbPath());
+        }
+
+        #endregion
 
         #endregion
     }

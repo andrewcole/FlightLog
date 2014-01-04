@@ -7,15 +7,13 @@ namespace Illallangi.LiteOrm
 {
     public static class SQLiteSelectCommandExtensions
     {
+        #region Methods
+
+        #region Public Methods
+
         public static SQLiteSelectCommand<T> Column<T>(this SQLiteSelectCommand<T> select, string column, object value = null) where T : new()
         {
             select.Columns.Add(column, null == value ? null : value.ToString());
-            return select;
-        }
-
-        private static SQLiteSelectCommand<T> Column<T>(this SQLiteSelectCommand<T> select, string column, string value = null) where T : new()
-        {
-            select.Columns.Add(column, string.IsNullOrWhiteSpace(value) ? null : value.Replace('*', '%'));
             return select;
         }
 
@@ -36,18 +34,18 @@ namespace Illallangi.LiteOrm
             select.DateMap.Add(column, func);
             return select.Column(column, value);
         }
-        
+
         public static SQLiteSelectCommand<T> Column<T>(this SQLiteSelectCommand<T> select, string column, Action<T, string> func, string value = null) where T : new()
         {
             select.StringMap.Add(column, func);
             return select.Column(column, value);
         }
-
+        
         public static IEnumerable<T> Go<T>(this SQLiteSelectCommand<T> select) where T : new()
         {
-            using (var sqLiteCommand = select.CreateCommand())
+            using (var command = select.CreateCommand())
             {
-                using (var reader = sqLiteCommand.ExecuteReader())
+                using (var reader = command.ExecuteReader())
                 {
                     while (reader.HasRows && reader.Read())
                     {
@@ -57,10 +55,12 @@ namespace Illallangi.LiteOrm
                             var int32 = reader.GetInt32(reader.GetOrdinal(kvm.Key));
                             kvm.Value(result, int32);
                         }
+
                         foreach (var kvm in select.FloatMap)
                         {
                             kvm.Value(result, reader.GetFloat(reader.GetOrdinal(kvm.Key)));
                         }
+
                         foreach (var kvm in select.StringMap)
                         {
                             var ordinal = reader.GetOrdinal(kvm.Key);
@@ -69,10 +69,12 @@ namespace Illallangi.LiteOrm
                                 kvm.Value(result, reader.GetString(ordinal));
                             }
                         }
+
                         foreach (var kvm in select.DateMap)
                         {
                             kvm.Value(result, reader.GetDateTime(reader.GetOrdinal(kvm.Key)));
                         }
+
                         yield return result;
                     }
                 }
@@ -87,16 +89,20 @@ namespace Illallangi.LiteOrm
         public static string GetWhereClause<T>(this SQLiteSelectCommand<T> select) where T : new()
         {
             return select.Columns.Any(kvp => null != kvp.Value)
-                ? string.Concat(" WHERE ",
-                                string.Join(" AND ", select.Columns
-                                    .Where(kvp => null != kvp.Value)
-                                    .Select(kvp => string.Format("[{0}].[{1}]{2}@{1}", select.Table, kvp.Key, kvp.Value.Contains('%') ? " LIKE " : "="))))
+                ? string.Concat(
+                    " WHERE ",
+                    string.Join(
+                        " AND ",
+                        select.Columns
+                              .Where(kvp => null != kvp.Value)
+                              .Select(kvp => string.Format("[{0}].[{1}]{2}@{1}", select.Table, kvp.Key, kvp.Value.Contains('%') ? " LIKE " : "="))))
                 : string.Empty;
         }
 
         public static string GetSql<T>(this SQLiteSelectCommand<T> select) where T : new()
         {
-            return string.Format("SELECT {0} FROM {1}{2};",
+            return string.Format(
+                "SELECT {0} FROM {1}{2};",
                 select.GetColumnNames(),
                 select.Table,
                 select.GetWhereClause());
@@ -110,7 +116,22 @@ namespace Illallangi.LiteOrm
             {
                 cm.Parameters.Add(new SQLiteParameter(string.Concat("@", column.Key), column.Value));
             }
+
             return cm;
         }
+
+        #endregion
+
+        #region Private Methods
+
+        private static SQLiteSelectCommand<T> Column<T>(this SQLiteSelectCommand<T> select, string column, string value = null) where T : new()
+        {
+            select.Columns.Add(column, string.IsNullOrWhiteSpace(value) ? null : value.Replace('*', '%'));
+            return select;
+        }
+
+        #endregion
+
+        #endregion
     }
 }
