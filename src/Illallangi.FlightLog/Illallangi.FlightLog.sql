@@ -55,10 +55,9 @@ CREATE VIEW Airports
 CREATE VIEW Cities
 	AS
 		SELECT
-            Country.CountryId as CountryId,
 			Country.CountryName as CountryName,
             City.CityId as CityId,
-            City.CityName as CityName,
+            City.CityName as Name,
             Count (Airport.AirportId) as Airports
         FROM
             z$Country as Country

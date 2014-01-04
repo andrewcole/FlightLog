@@ -25,7 +25,7 @@ namespace Illallangi.FlightLog.Context
 
         public override City Create(City obj)
         {
-            var country = this.CountrySource.Retrieve(new Country { Name = obj.CountryName }).Single();
+            var country = this.CountrySource.Retrieve(new Country { Name = obj.Country }).Single();
 
             this.GetConnection()
                 .InsertInto("City")
@@ -43,9 +43,8 @@ namespace Illallangi.FlightLog.Context
                         .Select<City>("Cities")
                         .Column("CityId", (input, value) => input.Id = value, null == obj ? null : obj.Id)
                         .Column("City", (input, value) => input.Name = value, null == obj ? null : obj.Name)
-                        .Column("CountryId", (input, value) => input.CountryId = value, null == obj ? null : obj.CountryId)
-                        .Column("Country", (input, value) => input.CountryName = value, null == obj ? null : obj.CountryName)
-                        .Column("Airports", (input, value) => input.Airports = value, null == obj ? null : obj.Airports)
+                        .Column("Country", (input, value) => input.Country = value, null == obj ? null : obj.Country)
+                        .Column("AirportCount", (input, value) => input.AirportCount = value)
                         .Go();
         }
 
@@ -55,7 +54,6 @@ namespace Illallangi.FlightLog.Context
                 .DeleteFrom("City")
                 .Where("CityId", obj.Id)
                 .Where("City", obj.Name)
-                .Where("CountryId", obj.CountryId)
                 .CreateCommand()
                 .ExecuteNonQuery();
         }

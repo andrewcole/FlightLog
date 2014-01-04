@@ -14,11 +14,11 @@ namespace Illallangi.FlightLog.PowerShell
         public string Name { get; set; }
 
         [Parameter(Mandatory = false, ValueFromPipelineByPropertyName = true, ParameterSetName = "Value")]
-        public string CountryName { get; set; }
+        public string Country { get; set; }
 
         protected override void BeginProcessing()
         {
-            this.WriteObject(this.Repository.Retrieve(new City { Id = this.Id, Name = this.Name, CountryName = this.CountryName } ), true);
+            this.WriteObject(this.Repository.Retrieve(new City { Id = this.Id, Name = this.Name, Country = this.Country } ), true);
         }
     }
 }

@@ -8,14 +8,14 @@ namespace Illallangi.FlightLog.PowerShell
     public sealed class AddCityCmdlet : ZumeroCmdlet<ISource<City>>
     {
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
-        public string CountryName { get; set; }
+        public string Country { get; set; }
 
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
         public string Name { get; set; }
 
         protected override void ProcessRecord()
         {
-            this.WriteObject(this.Repository.Create(new City {Name = this.Name, CountryName = this.CountryName}));
+            this.WriteObject(this.Repository.Create(new City {Name = this.Name, Country = this.Country }));
         }
     }
 }

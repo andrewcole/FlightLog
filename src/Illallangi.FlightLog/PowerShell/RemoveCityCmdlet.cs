@@ -15,11 +15,11 @@ namespace Illallangi.FlightLog.PowerShell
         public string Name { get; set; }
 
         [Parameter(Mandatory = false, ValueFromPipelineByPropertyName = true, ParameterSetName = "Value")]
-        public string CountryName { get; set; }
+        public string Country { get; set; }
 
         protected override void BeginProcessing()
         {
-            foreach (var o in this.Repository.Retrieve(new City { Id = this.Id, Name = this.Name, CountryName = this.CountryName }).ToList().Where(o => this.ShouldProcess(o.ToString(), VerbsCommon.Remove)))
+            foreach (var o in this.Repository.Retrieve(new City { Id = this.Id, Name = this.Name, Country = this.Country }).ToList().Where(o => this.ShouldProcess(o.ToString(), VerbsCommon.Remove)))
             {
                 this.Repository.Delete(o);
             }

@@ -25,7 +25,7 @@ namespace Illallangi.FlightLog.Context
 
         public override Airport Create(Airport obj)
         {
-            var city = this.CitySource.Retrieve(new City { Name = obj.City, CountryName = obj.Country }).Single();
+            var city = this.CitySource.Retrieve(new City { Name = obj.City, Country = obj.Country }).Single();
 
             this.GetConnection()
                 .InsertInto("Airport")
