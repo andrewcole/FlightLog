@@ -1,71 +1,33 @@
 ﻿using System.Management.Automation;
-using Ninject;
 
 namespace Illallangi.FlightLog.PowerShell
 {
     [Cmdlet(VerbsCommon.Get, Nouns.Null)]
-    public abstract class FlightLogCmdlet<T> : PSCmdlet where T : class
+    public abstract class FlightLogCmdlet<T> : NinjectCmdlet where T : class
     {
         #region Fields
 
-        private StandardKernel currentKernel;
-        private FlightLogModule currentModule;
-        private T currentRepository;
+        private ISource<T> currentRepository;
 
         #endregion
 
         #region Properties
 
-        #region Protected Properties
-
-        protected T Repository
+        protected ISource<T> Repository
         {
             get
             {
                 return this.currentRepository ?? (this.currentRepository = this.GetRepository());
             }
         }
-
-        #endregion
-
-        #region Private Properties
-
-        private FlightLogModule Module
-        {
-            get
-            {
-                return this.currentModule ?? (this.currentModule = this.GetModule());
-            }
-        }
-
-        private StandardKernel Kernel
-        {
-            get
-            {
-                return this.currentKernel ?? (this.currentKernel = this.GetKernel());
-            }
-        }
-
-        #endregion
         
         #endregion
 
         #region Methods
 
-        private FlightLogModule GetModule()
+        private ISource<T> GetRepository()
         {
-            return new FlightLogModule();
-        }
-
-        private StandardKernel GetKernel()
-        {
-            return new StandardKernel(this.Module);
-        }
-
-        private T GetRepository()
-        {
-            var repository = this.Kernel.Get<T>();
-            return repository;
+            return this.Get<ISource<T>>();
         }
 
         #endregion

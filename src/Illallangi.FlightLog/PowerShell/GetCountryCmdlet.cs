@@ -5,7 +5,7 @@ using Illallangi.FlightLog.Model;
 namespace Illallangi.FlightLog.PowerShell
 {
     [Cmdlet(VerbsCommon.Get, Nouns.Country, DefaultParameterSetName = "Id")]
-    public sealed class GetCountryCmdlet : FlightLogCmdlet<ISource<Country>>
+    public sealed class GetCountryCmdlet : FlightLogCmdlet<Country>
     {
         [Parameter(Mandatory = false, ValueFromPipelineByPropertyName = true, ParameterSetName = "Id")]
         public int? Id { get; set; }

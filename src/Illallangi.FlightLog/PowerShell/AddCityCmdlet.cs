@@ -5,7 +5,7 @@ using Illallangi.FlightLog.Model;
 namespace Illallangi.FlightLog.PowerShell
 {
     [Cmdlet(VerbsCommon.Add, Nouns.City)]
-    public sealed class AddCityCmdlet : FlightLogCmdlet<ISource<City>>
+    public sealed class AddCityCmdlet : FlightLogCmdlet<City>
     {
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
         public string Country { get; set; }
