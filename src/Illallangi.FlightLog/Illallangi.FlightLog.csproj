@@ -80,9 +80,15 @@
     <Compile Include="PowerShell\AddAirportCmdlet.cs" />
     <Compile Include="PowerShell\AddCityCmdlet.cs" />
     <Compile Include="PowerShell\AddCountryCmdlet.cs" />
+    <Compile Include="PowerShell\AddFlightCmdlet.cs" />
+    <Compile Include="PowerShell\AddTripCmdlet.cs" />
+    <Compile Include="PowerShell\AddYearCmdlet.cs" />
     <Compile Include="PowerShell\GetAirportCmdlet.cs" />
     <Compile Include="PowerShell\GetCityCmdlet.cs" />
     <Compile Include="PowerShell\GetCountryCmdlet.cs" />
+    <Compile Include="PowerShell\GetFlightCmdlet.cs" />
+    <Compile Include="PowerShell\GetTripCmdlet.cs" />
+    <Compile Include="PowerShell\GetYearCmdlet.cs" />
     <Compile Include="PowerShell\NinjectCmdlet.cs" />
     <Compile Include="PowerShell\Nouns.cs" />
     <Compile Include="PowerShell\RemoveAirportCmdlet.cs" />
