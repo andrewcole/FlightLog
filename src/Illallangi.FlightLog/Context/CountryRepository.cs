@@ -15,7 +15,7 @@ namespace Illallangi.FlightLog.Context
         {
             this.GetConnection()
                 .InsertInto("Country")
-                .Values("CountryName", obj.Name)
+                .Values("Country", obj.Name)
                 .CreateCommand()
                 .ExecuteNonQuery();
 
@@ -27,7 +27,7 @@ namespace Illallangi.FlightLog.Context
             return this.GetConnection()
                         .Select<Country>("Countries")
                         .Column("CountryId", (input, value) => input.Id = value, null == obj ? null : obj.Id)
-                        .Column("CountryName", (input, value) => input.Name = value, null == obj ? null : obj.Name)
+                        .Column("Country", (input, value) => input.Name = value, null == obj ? null : obj.Name)
                         .Column("Cities", (input, value) => input.Cities = value)
                         .Column("Airports", (input, value) => input.Airports = value)
                         .Go();
@@ -38,7 +38,7 @@ namespace Illallangi.FlightLog.Context
             this.GetConnection()
                 .DeleteFrom("Country")
                 .Where("CountryId", country.Id)
-                .Where("CountryName", country.Name)
+                .Where("Country", country.Name)
                 .CreateCommand()
                 .ExecuteNonQuery();
         }

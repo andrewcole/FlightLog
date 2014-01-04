@@ -2,7 +2,21 @@ namespace Illallangi.FlightLog.Model
 {
     public class Airport
     {
+        #region Primary Key Property
+
         public int? Id { get; set; }
+
+        #endregion
+
+        #region Parent Properties
+
+        public string Country { get; set; }
+        
+        public string City { get; set; }
+
+        #endregion
+
+        #region Instance Properties
 
         /// <summary>
         /// Name of airport. May or may not contain the City name.
@@ -22,39 +36,36 @@ namespace Illallangi.FlightLog.Model
         /// <summary>
         /// Decimal degrees, usually to six significant digits. Negative is South, positive is North.
         /// </summary>
-        public float? Latitude { get; set; }
+        public float Latitude { get; set; }
 
         /// <summary>
         /// Decimal degrees, usually to six significant digits. Negative is West, positive is East.
         /// </summary>
-        public float? Longitude { get; set; }
+        public float Longitude { get; set; }
 
         /// <summary>
         /// In feet.
         /// </summary>
-        public float? Altitude { get; set; }
+        public float Altitude { get; set; }
 
         /// <summary>
-        /// Hours offset from UTC. Fractional hours are expressed as decimals, eg. India is 5.5.
+        /// IANA Time Zone Database designation for the local time zone of the airport.
         /// </summary>
-        public float? Timezone { get; set; }
+        public string Timezone { get; set; }
 
-        /// <summary>
-        /// Daylight savings time. One of E (Europe), A (US/Canada), S (South America), O (Australia), Z (New Zealand), N (None) or U (Unknown) (http://openflights.org/help/time.html)
-        /// </summary>
-        public string Dst { get; set; }
+        #endregion
 
-        public int CityId { get; set; }
+        #region Child Properties
 
-        public string CityName { get; set; }
+        #endregion
 
-        public int CountryId { get; set; }
+        #region Calculated Properties
 
-        public string CountryName { get; set; }
+        #endregion
 
         public override string ToString()
         {
-            return string.Format(@"{0} ({1}, {2})", this.Name, this.CityName, this.CountryName);
+            return string.Format(@"{0} ({1}, {2})", this.Name, this.City, this.Country);
         }
     }
 }

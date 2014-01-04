@@ -17,10 +17,7 @@ namespace Illallangi.FlightLog.PowerShell
         public string CountryName { get; set; }
 
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
-        public string Dst { get; set; }
-
-        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
-        public float Timezone { get; set; }
+        public string Timezone { get; set; }
 
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
         public float Altitude { get; set; }
@@ -39,16 +36,16 @@ namespace Illallangi.FlightLog.PowerShell
         
         protected override void BeginProcessing()
         {
-//            this.WriteObject(this.Repository.Retrieve(this.Id, this.Name, this.CityName, 
-  //              this.CountryName, this.Iata, this.Icao, this.Latitude, this.Longitude, this.Altitude, this.Timezone, this.Dst), true);
+//            this.WriteObject(this.Repository.Retrieve(this.Id, this.Name, this.City, 
+  //              this.Country, this.Iata, this.Icao, this.Latitude, this.Longitude, this.Altitude, this.Timezone, this.Dst), true);
         }
 
         protected override void ProcessRecord()
         {
             this.WriteObject(
-                this.Repository.Create(new Airport { Name = this.Name, CityName = this.CityName, CountryName = this.CountryName, Iata = this.Iata, 
+                this.Repository.Create(new Airport { Name = this.Name, City = this.CityName, Country = this.CountryName, Iata = this.Iata, 
                     Icao = this.Icao, Latitude = this.Latitude, Longitude = this.Longitude, Altitude = this.Altitude, Timezone = this.Timezone,
-                    Dst = this.Dst } ));
+                    } ));
         }
 
     }

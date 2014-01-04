@@ -29,7 +29,7 @@ namespace Illallangi.FlightLog.Context
 
             this.GetConnection()
                 .InsertInto("City")
-                .Values("CityName", obj.Name)
+                .Values("City", obj.Name)
                 .Values("CountryId", country.Id)
                 .CreateCommand()
                 .ExecuteNonQuery();
@@ -42,9 +42,9 @@ namespace Illallangi.FlightLog.Context
             return this.GetConnection()
                         .Select<City>("Cities")
                         .Column("CityId", (input, value) => input.Id = value, null == obj ? null : obj.Id)
-                        .Column("CityName", (input, value) => input.Name = value, null == obj ? null : obj.Name)
+                        .Column("City", (input, value) => input.Name = value, null == obj ? null : obj.Name)
                         .Column("CountryId", (input, value) => input.CountryId = value, null == obj ? null : obj.CountryId)
-                        .Column("CountryName", (input, value) => input.CountryName = value, null == obj ? null : obj.CountryName)
+                        .Column("Country", (input, value) => input.CountryName = value, null == obj ? null : obj.CountryName)
                         .Column("Airports", (input, value) => input.Airports = value, null == obj ? null : obj.Airports)
                         .Go();
         }
@@ -54,7 +54,7 @@ namespace Illallangi.FlightLog.Context
             this.GetConnection()
                 .DeleteFrom("City")
                 .Where("CityId", obj.Id)
-                .Where("CityName", obj.Name)
+                .Where("City", obj.Name)
                 .Where("CountryId", obj.CountryId)
                 .CreateCommand()
                 .ExecuteNonQuery();

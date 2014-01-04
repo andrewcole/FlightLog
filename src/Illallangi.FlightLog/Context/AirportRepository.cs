@@ -25,7 +25,7 @@ namespace Illallangi.FlightLog.Context
 
         public override Airport Create(Airport obj)
         {
-            var city = this.CitySource.Retrieve(new City { Name = obj.CityName, CountryName = obj.CountryName }).Single();
+            var city = this.CitySource.Retrieve(new City { Name = obj.City, CountryName = obj.Country }).Single();
 
             this.GetConnection()
                 .InsertInto("Airport")
@@ -37,7 +37,6 @@ namespace Illallangi.FlightLog.Context
                 .Values("Longitude", obj.Longitude)
                 .Values("Altitude", obj.Altitude)
                 .Values("Timezone", obj.Timezone)
-                .Values("Dst", obj.Dst)
                 .CreateCommand()
                 .ExecuteNonQuery();
 
@@ -48,10 +47,8 @@ namespace Illallangi.FlightLog.Context
         {
             return this.GetConnection()
                 .Select<Airport>("Airports")
-                .Column("CountryId", (input, value) => input.CountryId = value)
-                .Column("CountryName", (input, value) => input.CountryName = value, null == obj ? null : obj.CountryName)
-                .Column("CityId", (input, value) => input.CityId = value)
-                .Column("CityName", (input, value) => input.CityName = value, null == obj ? null : obj.CityName)
+                .Column("Country", (input, value) => input.Country = value, null == obj ? null : obj.Country)
+                .Column("City", (input, value) => input.City = value, null == obj ? null : obj.City)
                 .Column("AirportId", (input, value) => input.Id = value, null == obj ? null : obj.Id)
                 .Column("AirportName", (input, value) => input.Name = value, null == obj ? null : obj.Name)
                 .Column("Iata", (input, value) => input.Iata = value, null == obj ? null : obj.Iata)
@@ -59,8 +56,7 @@ namespace Illallangi.FlightLog.Context
                 .FloatColumn("Latitude", (input, value) => input.Latitude = value)
                 .FloatColumn("Longitude", (input, value) => input.Longitude = value)
                 .FloatColumn("Altitude", (input, value) => input.Altitude = value)
-                .FloatColumn("Timezone", (input, value) => input.Timezone = value)
-                .Column("Dst", (input, value) => input.Dst = value, null == obj ? null : obj.Dst)
+                .Column("Timezone", (input, value) => input.Timezone = value)
                 .Go();
         }
 
@@ -69,7 +65,6 @@ namespace Illallangi.FlightLog.Context
             this.GetConnection()
                 .DeleteFrom("Airport")
                 .Where("AirportId", airport.Id)
-                .Where("CityId", airport.CityId)
                 .Where("AirportName", airport.Name)
                 .Where("Iata", airport.Iata)
                 .Where("Icao", airport.Icao)
@@ -77,7 +72,6 @@ namespace Illallangi.FlightLog.Context
                 .Where("Longitude", airport.Longitude)
                 .Where("Altitude", airport.Altitude)
                 .Where("Timezone", airport.Timezone)
-                .Where("Dst", airport.Dst)
                 .CreateCommand()
                 .ExecuteNonQuery();
         }
