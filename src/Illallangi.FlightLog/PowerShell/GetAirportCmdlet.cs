@@ -5,7 +5,7 @@ using Illallangi.FlightLog.Model;
 namespace Illallangi.FlightLog.PowerShell
 {
     [Cmdlet(VerbsCommon.Get, Nouns.Airport, DefaultParameterSetName = "Id")]
-    public sealed class GetAirportCmdlet : ZumeroCmdlet<IAirportSource>
+    public sealed class GetAirportCmdlet : ZumeroCmdlet<ISource<Airport>>
     {
         [Parameter(Mandatory = false, ValueFromPipelineByPropertyName = true, ParameterSetName = "Id")]
         public int? Id { get; set; }

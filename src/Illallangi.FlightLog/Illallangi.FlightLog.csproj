@@ -65,9 +65,6 @@
     <Compile Include="Model\Airport.cs" />
     <Compile Include="Model\City.cs" />
     <Compile Include="Model\Country.cs" />
-    <Compile Include="Context\IAirportSource.cs" />
-    <Compile Include="Context\ICitySource.cs" />
-    <Compile Include="Context\ICountrySource.cs" />
     <Compile Include="PowerShell\AddAirportCmdlet.cs" />
     <Compile Include="PowerShell\AddCityCmdlet.cs" />
     <Compile Include="PowerShell\AddCountryCmdlet.cs" />

@@ -5,17 +5,17 @@ using Illallangi.LiteOrm;
 
 namespace Illallangi.FlightLog.Context
 {
-    public sealed class CityRepository : SourceBase, ICitySource
+    public sealed class CityRepository : SourceBase<City>
     {
-        private readonly ICountrySource currentCountrySource;
+        private readonly ISource<Country> currentCountrySource;
 
-        public CityRepository(IConnectionSource connectionSource, ICountrySource countrySource)
+        public CityRepository(IConnectionSource connectionSource, ISource<Country> countrySource)
             : base(connectionSource)
         {
             this.currentCountrySource = countrySource;
         }
 
-        private ICountrySource CountrySource
+        private ISource<Country> CountrySource
         {
             get
             {
@@ -23,7 +23,7 @@ namespace Illallangi.FlightLog.Context
             }
         }
 
-        public City Create(City obj)
+        public override City Create(City obj)
         {
             var country = this.CountrySource.Retrieve(new Country { Name = obj.CountryName }).Single();
 
@@ -37,7 +37,7 @@ namespace Illallangi.FlightLog.Context
             return null;
         }
 
-        public IEnumerable<City> Retrieve(City obj)
+        public override IEnumerable<City> Retrieve(City obj)
         {
             return this.GetConnection()
                         .Select<City>("Cities")
@@ -49,7 +49,7 @@ namespace Illallangi.FlightLog.Context
                         .Go();
         }
 
-        public void Delete(City obj)
+        public override void Delete(City obj)
         {
             this.GetConnection()
                 .DeleteFrom("City")

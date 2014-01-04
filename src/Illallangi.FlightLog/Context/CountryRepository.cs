@@ -4,14 +4,14 @@ using Illallangi.LiteOrm;
 
 namespace Illallangi.FlightLog.Context
 {
-    public sealed class CountryRepository : SourceBase, ICountrySource
+    public sealed class CountryRepository : SourceBase<Country>
     {
         public CountryRepository(IConnectionSource connectionSource)
             : base(connectionSource)
         {
         }
 
-        public Country Create(Country obj)
+        public override Country Create(Country obj)
         {
             this.GetConnection()
                 .InsertInto("Country")
@@ -22,7 +22,7 @@ namespace Illallangi.FlightLog.Context
             return null;
         }
 
-        public IEnumerable<Country> Retrieve(Country obj)
+        public override IEnumerable<Country> Retrieve(Country obj)
         {
             return this.GetConnection()
                         .Select<Country>("Countries")
@@ -33,7 +33,7 @@ namespace Illallangi.FlightLog.Context
                         .Go();
         }
 
-        public void Delete(Country country)
+        public override void Delete(Country country)
         {
             this.GetConnection()
                 .DeleteFrom("Country")

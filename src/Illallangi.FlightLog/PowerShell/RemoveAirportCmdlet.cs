@@ -6,7 +6,7 @@ using Illallangi.FlightLog.Model;
 namespace Illallangi.FlightLog.PowerShell
 {
     [Cmdlet(VerbsCommon.Remove, Nouns.Airport, DefaultParameterSetName = "Id", SupportsShouldProcess = true, ConfirmImpact = ConfirmImpact.High)]
-    public sealed class RemoveAirportCmdlet : ZumeroCmdlet<IAirportSource>
+    public sealed class RemoveAirportCmdlet : ZumeroCmdlet<ISource<Airport>>
     {
         [Parameter(Mandatory = false, ValueFromPipelineByPropertyName = true, ParameterSetName = "Id")]
         public int? Id { get; set; }
