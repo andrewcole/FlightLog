@@ -1,9 +1,18 @@
 ﻿using System;
+using NodaTime;
 
 namespace Illallangi.FlightLog.Model
 {
     public class Flight
     {
+        #region Fields
+
+        private ZonedDateTime? currentDepartureZoned;
+
+        private ZonedDateTime? currentArrivalZoned;
+
+        #endregion
+
         #region Properties
 
         #region Primary Key Property
@@ -51,6 +60,32 @@ namespace Illallangi.FlightLog.Model
         #endregion
 
         #region Calculated Properties
+
+        public ZonedDateTime DepartureZoned
+        {
+            get
+            {
+                return (this.currentDepartureZoned.HasValue ?
+                            this.currentDepartureZoned :
+                            this.currentDepartureZoned =
+                                DateTimeZoneProviders.Tzdb[this.OriginTimezone].ResolveLocal(
+                                    LocalDateTime.FromDateTime(this.Departure),
+                                NodaTime.TimeZones.Resolvers.LenientResolver)).Value;
+            }
+        }
+
+        public ZonedDateTime ArrivalZoned
+        {
+            get
+            {
+                return (this.currentArrivalZoned.HasValue ?
+                            this.currentArrivalZoned :
+                            this.currentArrivalZoned =
+                                DateTimeZoneProviders.Tzdb[this.DestinationTimezone].ResolveLocal(
+                                    LocalDateTime.FromDateTime(this.Arrival),
+                                    NodaTime.TimeZones.Resolvers.LenientResolver)).Value;
+            }
+        }
 
         #endregion
 
