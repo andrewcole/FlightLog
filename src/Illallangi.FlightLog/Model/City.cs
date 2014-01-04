@@ -6,11 +6,11 @@ namespace Illallangi.FlightLog.Model
 
         public string Name { get; set; }
         
-        public int CountryId { get; set; }
+        public int? CountryId { get; set; }
 
         public string CountryName { get; set; }
         
-        public int Airports { get; set; }
+        public int? Airports { get; set; }
 
         public override string ToString()
         {

@@ -26,7 +26,7 @@ namespace Illallangi.FlightLog.Context
         public Airport Create(string name, string cityName, string countryName, string iata, string icao, float latitude,
             float longitude, float altitude, float timezone, string dst)
         {
-            var city = this.CitySource.Retrieve(name: cityName, countryName: countryName).Single();
+            var city = this.CitySource.Retrieve(new City { Name = cityName, CountryName = countryName }).Single();
 
             this.GetConnection()
                 .InsertInto("Airport")

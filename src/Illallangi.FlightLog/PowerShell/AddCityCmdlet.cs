@@ -15,7 +15,7 @@ namespace Illallangi.FlightLog.PowerShell
 
         protected override void ProcessRecord()
         {
-            this.WriteObject(this.Repository.Create(this.Name, this.CountryName));
+            this.WriteObject(this.Repository.Create(new City {Name = this.Name, CountryName = this.CountryName}));
         }
     }
 }

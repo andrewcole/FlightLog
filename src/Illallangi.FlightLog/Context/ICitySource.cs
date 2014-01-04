@@ -5,8 +5,8 @@ namespace Illallangi.FlightLog.Context
 {
     public interface ICitySource : IDebugHooks
     {
-        City Create(string name, string countryName);
-        IEnumerable<City> Retrieve(int? id = null, string name = null, string countryName = null);
-        void Delete(City city);
+        City Create(City obj);
+        IEnumerable<City> Retrieve(City obj);
+        void Delete(City obj);
     }
 }
