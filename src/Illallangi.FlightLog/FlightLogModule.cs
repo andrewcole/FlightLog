@@ -4,6 +4,7 @@ using Illallangi.FlightLog.Config;
 using Illallangi.FlightLog.Context;
 using Illallangi.FlightLog.Model;
 using Illallangi.LiteOrm;
+using log4net.Config;
 using Ninject.Modules;
 
 namespace Illallangi.FlightLog
@@ -12,6 +13,14 @@ namespace Illallangi.FlightLog
     {
         public override void Load()
         {
+            XmlConfigurator.Configure(
+                Assembly
+                    .GetExecutingAssembly()
+                    .GetManifestResourceStream(
+                        string.Format(
+                            "{0}.Log4Net.config",
+                            Assembly.GetExecutingAssembly().GetName().Name)));
+
             this.Bind<ILiteOrmConfig>()
                 .ToMethod(
                     cx =>
