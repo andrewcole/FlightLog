@@ -8,10 +8,10 @@ namespace Illallangi.FlightLog.PowerShell
     public abstract class ZumeroCmdlet<T> : PSCmdlet where T: class, IDebugHooks
     {
         private StandardKernel currentKernel;
-        private ZumeroModule currentModule;
+        private FlightLogModule currentModule;
         private T currentRepository;
         
-        private ZumeroModule Module
+        private FlightLogModule Module
         {
             get
             {
@@ -35,9 +35,9 @@ namespace Illallangi.FlightLog.PowerShell
             }
         }
 
-        private ZumeroModule GetModule()
+        private FlightLogModule GetModule()
         {
-            return new ZumeroModule();
+            return new FlightLogModule();
         }
 
         private StandardKernel GetKernel()

@@ -9,7 +9,7 @@ using Ninject.Modules;
 
 namespace Illallangi.FlightLog
 {
-    public sealed class ZumeroModule : NinjectModule
+    public sealed class FlightLogModule : NinjectModule
     {
         public override void Load()
         {
@@ -19,13 +19,10 @@ namespace Illallangi.FlightLog
                         (FlightLogConfig)
                             ConfigurationManager.OpenExeConfiguration(Assembly.GetExecutingAssembly().Location)
                                 .GetSection("FlightLogConfig")).InSingletonScope();
-
-
-            this.Bind<IConnectionSource>().To<SQLiteConnectionSource>().InTransientScope();
-
             this.Bind<ICountrySource>().To<CountryRepository>().InTransientScope();
             this.Bind<ICitySource>().To<CityRepository>().InTransientScope();
             this.Bind<IAirportSource>().To<AirportRepository>().InTransientScope();
+            this.Bind<IConnectionSource>().To<SQLiteConnectionSource>().InSingletonScope();
         }
     }
 }

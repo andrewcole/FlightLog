@@ -83,7 +83,7 @@
     <Compile Include="Repository\CityRepository.cs" />
     <Compile Include="Repository\CountryRepository.cs" />
     <Compile Include="Repository\ZumeroRepository.cs" />
-    <Compile Include="ZumeroModule.cs" />
+    <Compile Include="FlightLogModule.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
