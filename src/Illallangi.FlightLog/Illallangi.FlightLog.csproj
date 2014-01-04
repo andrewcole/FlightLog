@@ -81,7 +81,7 @@
     <Compile Include="PowerShell\RemoveAirportCmdlet.cs" />
     <Compile Include="PowerShell\RemoveCityCmdlet.cs" />
     <Compile Include="PowerShell\RemoveCountryCmdlet.cs" />
-    <Compile Include="PowerShell\ZumeroCmdlet.cs" />
+    <Compile Include="PowerShell\FlightLogCmdlet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Context\AirportRepository.cs" />
     <Compile Include="Context\CityRepository.cs" />

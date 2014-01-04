@@ -4,7 +4,7 @@ using Ninject;
 namespace Illallangi.FlightLog.PowerShell
 {
     [Cmdlet(VerbsCommon.Get, Nouns.Null)]
-    public abstract class ZumeroCmdlet<T> : PSCmdlet where T : class
+    public abstract class FlightLogCmdlet<T> : PSCmdlet where T : class
     {
         #region Fields
 
