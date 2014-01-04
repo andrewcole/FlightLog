@@ -1,5 +1,5 @@
 ﻿using System.Data.SQLite;
-using Illallangi.FlightLogPS.SQLite;
+using Illallangi.LiteOrm;
 
 namespace Illallangi.FlightLogPS.Repository
 {

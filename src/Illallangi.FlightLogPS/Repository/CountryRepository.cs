@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Illallangi.FlightLogPS.Model;
-using Illallangi.FlightLogPS.SQLite;
+using Illallangi.LiteOrm;
+
 
 namespace Illallangi.FlightLogPS.Repository
 {

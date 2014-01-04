@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Linq;
 
-namespace Illallangi.FlightLogPS.SQLite
+namespace Illallangi.LiteOrm
 {
     public static class SQLiteSelectCommandExtensions
     {

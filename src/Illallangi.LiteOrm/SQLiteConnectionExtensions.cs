@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Data.SQLite;
 using System.IO;
+using Ninject.Extensions.Logging;
 
-namespace Illallangi.FlightLogPS.SQLite
+namespace Illallangi.LiteOrm
 {
     public static class SQLiteConnectionExtensions
     {
@@ -37,6 +38,12 @@ namespace Illallangi.FlightLogPS.SQLite
             {
                 new SQLiteCommand(string.Format("pragma {0};", pragma), cx).ExecuteNonQuery();
             }
+            return cx;
+        }
+
+        public static SQLiteConnection WithLogger(this SQLiteConnection cx, ILogger logger)
+        {
+            cx.Trace += (o, a) => logger.Debug(@"Executing ""{0}""", a.Statement);
             return cx;
         }
     }

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Data.SQLite;
 
-namespace Illallangi.FlightLogPS.SQLite
+namespace Illallangi.LiteOrm
 {
     public sealed class SQLiteDeleteCommand
     {

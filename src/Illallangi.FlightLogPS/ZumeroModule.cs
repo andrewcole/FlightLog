@@ -2,8 +2,9 @@ using System.Configuration;
 using System.Reflection;
 using Illallangi.FlightLogPS.Config;
 using Illallangi.FlightLogPS.Model;
-using Illallangi.FlightLogPS.SQLite;
+
 using Illallangi.FlightLogPS.Repository;
+using Illallangi.LiteOrm;
 using Ninject.Modules;
 
 namespace Illallangi.FlightLogPS

@@ -1,6 +1,6 @@
 ﻿using System.Data.SQLite;
 
-namespace Illallangi.FlightLogPS.SQLite
+namespace Illallangi.LiteOrm
 {
     public interface IConnectionSource
     {

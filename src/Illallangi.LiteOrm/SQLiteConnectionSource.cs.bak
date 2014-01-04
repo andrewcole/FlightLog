@@ -2,10 +2,8 @@
 using System.Data.SQLite;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using Illallangi.FlightLogPS.Config;
 
-namespace Illallangi.FlightLogPS.SQLite
+namespace Illallangi.LiteOrm
 {
     public sealed class SQLiteConnectionSource : IConnectionSource
     {
