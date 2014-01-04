@@ -2,29 +2,29 @@
 using System.Linq;
 using Illallangi.FlightLog.Model;
 using Illallangi.LiteOrm;
+using Ninject.Extensions.Logging;
 
 namespace Illallangi.FlightLog.Context
 {
-    public sealed class AirportRepository : SourceBase<Airport>
+    public class AirportRepository : SourceBase<Airport>
     {
         private readonly ISource<City> currentCitySource;
 
-        public AirportRepository(IConnectionSource connectionSource, ISource<City> citySource)
-            : base(connectionSource)
+        public AirportRepository(ILogger logger, IConnectionSource connectionSource, ISource<City> citySource)
+            : base(logger, connectionSource)
         {
-            this.currentCitySource = citySource;
+            this.Logger.Debug(@"AirportSource(""{0}"",""{1}"",""{2}"")", logger, connectionSource, citySource);
+            currentCitySource = citySource;
         }
 
         private ISource<City> CitySource
         {
-            get
-            {
-                return this.currentCitySource;
-            }
+            get { return this.currentCitySource; }
         }
 
         public override Airport Create(Airport obj)
         {
+            this.Logger.Debug(@"AirportSource.Create(""{0}"")", obj);
             var city = this.CitySource.Retrieve(new City { Name = obj.City, Country = obj.Country }).Single();
 
             this.GetConnection()

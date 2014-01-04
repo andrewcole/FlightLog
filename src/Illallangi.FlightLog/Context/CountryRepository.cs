@@ -1,18 +1,21 @@
 ﻿using System.Collections.Generic;
 using Illallangi.FlightLog.Model;
 using Illallangi.LiteOrm;
+using Ninject.Extensions.Logging;
 
 namespace Illallangi.FlightLog.Context
 {
     public sealed class CountryRepository : SourceBase<Country>
     {
-        public CountryRepository(IConnectionSource connectionSource)
-            : base(connectionSource)
+        public CountryRepository(ILogger logger, IConnectionSource connectionSource) : base(logger, connectionSource)
         {
+            this.Logger.Debug(@"CountrySource(""{0}"",""{1}"")", logger, connectionSource);
         }
 
         public override Country Create(Country obj)
         {
+            this.Logger.Debug(@"CountrySource.Create(""{0}"")", obj);
+            
             this.GetConnection()
                 .InsertInto("Country")
                 .Values("Country", obj.Name)

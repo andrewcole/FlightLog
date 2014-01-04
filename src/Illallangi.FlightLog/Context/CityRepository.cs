@@ -2,6 +2,7 @@
 using System.Linq;
 using Illallangi.FlightLog.Model;
 using Illallangi.LiteOrm;
+using Ninject.Extensions.Logging;
 
 namespace Illallangi.FlightLog.Context
 {
@@ -9,9 +10,9 @@ namespace Illallangi.FlightLog.Context
     {
         private readonly ISource<Country> currentCountrySource;
 
-        public CityRepository(IConnectionSource connectionSource, ISource<Country> countrySource)
-            : base(connectionSource)
+        public CityRepository(ILogger logger, IConnectionSource connectionSource, ISource<Country> countrySource) : base(logger, connectionSource)
         {
+            this.Logger.Debug(@"CityRepository(""{0}"",""{1}"",""{2}"")", logger, connectionSource, countrySource);
             this.currentCountrySource = countrySource;
         }
 
@@ -25,6 +26,7 @@ namespace Illallangi.FlightLog.Context
 
         public override City Create(City obj)
         {
+            this.Logger.Debug(@"CityRepository.Create(""{0}"")", obj);
             var country = this.CountrySource.Retrieve(new Country { Name = obj.Country }).Single();
 
             this.GetConnection()
