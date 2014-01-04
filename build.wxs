@@ -71,6 +71,9 @@
         <File Id="IllallangiFlightLogPSSql1F" KeyPath="no" Source="$(var.source)\Illallangi.FlightLogPS.sql" />
       </Component>
 
+      <Component Id="IllallangiLiteOrmC" Directory="SOFTWAREDIR" Guid="{4386B7A3-0F92-4684-B2DE-63FADCE31C94}" Permanent="yes" >
+        <File Id="IllallangiLiteOrmF" KeyPath="yes" Source="$(var.source)\Illallangi.LiteOrm.dll" />
+      </Component>
       <Component Id="SystemDataSQLiteDllC" Directory="SOFTWAREDIR" Guid="{F7D45499-2682-49CB-B591-E72DEA61D974}" Permanent="yes" >
         <File Id="SystemDataSQLiteDllF" KeyPath="yes" Source="$(var.source)\System.Data.SQLite.dll" />
       </Component>

@@ -43,6 +43,19 @@
                   AssemblyVersion="$(Version)"
                   AssemblyFileVersion="$(Version)" />
 
+    <AssemblyInfo CodeLanguage="CS"
+              OutputFile="$(SourceDir)\Illallangi.LiteOrm\Properties\AssemblyInfo.cs"
+              AssemblyTitle="Illallangi.LiteOrm"
+              AssemblyDescription=""
+              AssemblyCompany="Illallangi Enterprises"
+              AssemblyProduct="Lite ORM"
+              AssemblyCopyright="Copyright © Illallangi Enterprises 2013"
+              ComVisible="false"
+              AssemblyInformationalVersion="Built from hash '$(GitCommitHash)'"
+              Guid="f8f3fcdc-9320-4a06-8d80-2ffdba8a6fab"
+              AssemblyVersion="$(Version)"
+              AssemblyFileVersion="$(Version)" />
+
     <Message Text="Building version $(Version) from hash $(GitCommitHash)"  Importance="High" />
 
   </Target>
@@ -59,6 +72,9 @@
     <MakeDir Directories="$(BuildDir32)\bin" />
 
     <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLogPS\bin\$(Configuration)\Illallangi.FlightLogPS.dll"
+          DestinationFolder="$(BuildDir32)\bin" />
+
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLogPS\bin\$(Configuration)\Illallangi.LiteOrm.dll"
           DestinationFolder="$(BuildDir32)\bin" />
 
     <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLogPS\bin\$(Configuration)\Illallangi.FlightLogPS.dll.config"
@@ -95,6 +111,9 @@
     <MakeDir Directories="$(BuildDir64)\bin" />
     
     <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLogPS\bin\$(Configuration)\Illallangi.FlightLogPS.dll"
+          DestinationFolder="$(BuildDir64)\bin" />
+
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLogPS\bin\$(Configuration)\Illallangi.LiteOrm.dll"
           DestinationFolder="$(BuildDir64)\bin" />
 
     <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLogPS\bin\$(Configuration)\Illallangi.FlightLogPS.dll.config"
