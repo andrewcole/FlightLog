@@ -1,12 +1,8 @@
-﻿using System.Collections.Generic;
-using Illallangi.FlightLog.Model;
+﻿using Illallangi.FlightLog.Model;
 
 namespace Illallangi.FlightLog.Context
 {
-    public interface ICountrySource
+    public interface ICountrySource : ISource<Country>
     {
-        Country Create(Country obj);
-        IEnumerable<Country> Retrieve(Country obj);
-        void Delete(Country obj);
     }
 }
