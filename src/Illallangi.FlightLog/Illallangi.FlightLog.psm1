@@ -1,4 +1,37 @@
-﻿Function Get-OpenFlightsSampleData
+﻿$DebugPreference = "Continue"
+
+if ($null -eq (Get-Module PSCompletion))
+{
+	Write-Debug "Import-Module PSCompletion -Global"
+	Import-Module PSCompletion -Global
+}
+
+if ($null -ne (Get-Module PSCompletion))
+{
+	Register-ParameterCompleter Add-City Country {
+		param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameter)
+		Get-Country -Name "$wordToComplete*" | Sort-Object { $_.Name } |%{ New-CompletionResult """$($_.Name)""" }
+	}
+
+	Register-ParameterCompleter Add-Trip Year {
+		param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameter)
+		Get-Year -Name "$wordToComplete*" | Sort-Object { $_.Name } |%{ New-CompletionResult """$($_.Name)""" }
+	}
+
+	Write-Debug "Register-ParameterCompleter Add-Flight Year {}"
+	Register-ParameterCompleter Add-Flight Year {
+		param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameter)
+		Get-Year -Name "$wordToComplete*" | Sort-Object { $_.Name } |%{ New-CompletionResult """$($_.Name)""" }
+	}
+
+	Write-Debug "Register-ParameterCompleter Add-Flight Trip {}"
+	Register-ParameterCompleter Add-Flight Trip {
+		param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameter)
+		Get-Trip | Where-Object { $_.Name -Like "$wordToComplete*" } | Sort-Object { $_.Name } |%{ New-CompletionResult """$($_.Name)""" }
+	}
+}
+
+Function Get-OpenFlightsSampleData
 {
 	Begin
 	{
