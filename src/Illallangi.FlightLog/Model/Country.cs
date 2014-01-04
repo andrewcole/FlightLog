@@ -1,15 +1,32 @@
-﻿
-namespace Illallangi.FlightLog.Model
+﻿namespace Illallangi.FlightLog.Model
 {
     public class Country
     {
+        #region Primary Key Property
+
         public int? Id { get; set; }
+
+        #endregion
+
+        #region Parent Properties
+
+        #endregion
+
+        #region Instance Properties
 
         public string Name { get; set; }
 
-        public int Cities { get; set; }
-        
-        public int Airports { get; set; }
+        #endregion
+
+        #region Child Properties
+
+        public int CityCount { get; set; }
+
+        #endregion
+
+        #region Calculated Properties
+
+        #endregion
 
         public override string ToString()
         {

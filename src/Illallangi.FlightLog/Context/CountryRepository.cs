@@ -28,8 +28,7 @@ namespace Illallangi.FlightLog.Context
                         .Select<Country>("Countries")
                         .Column("CountryId", (input, value) => input.Id = value, null == obj ? null : obj.Id)
                         .Column("Country", (input, value) => input.Name = value, null == obj ? null : obj.Name)
-                        .Column("Cities", (input, value) => input.Cities = value)
-                        .Column("Airports", (input, value) => input.Airports = value)
+                        .Column("Cities", (input, value) => input.CityCount = value)
                         .Go();
         }
 
