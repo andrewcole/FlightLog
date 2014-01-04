@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using Illallangi.LiteOrm;
 
 namespace Illallangi.FlightLog.Config
 {
-    public sealed class FlightLogConfig : ConfigurationSection, IConfig
+    public sealed class FlightLogConfig : ConfigurationSection, ILiteOrmConfig
     {
         #region Properties
 

@@ -12,7 +12,7 @@ namespace Illallangi.FlightLog
     {
         public override void Load()
         {
-            this.Bind<IConfig>()
+            this.Bind<ILiteOrmConfig>()
                 .ToMethod(
                     cx =>
                         (FlightLogConfig)
