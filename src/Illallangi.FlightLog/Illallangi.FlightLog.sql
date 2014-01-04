@@ -26,8 +26,7 @@ CREATE VIRTUAL TABLE Airport
 		Latitude DOUBLE NOT NULL,
 		Longitude DOUBLE NOT NULL,
 		Altitude DOUBLE NOT NULL,
-		Timezone DOUBLE NOT NULL,
-		Dst TEXT NOT NULL,
+		Timezone TEXT NOT NULL,
 		Unique(AirportName, CityId)
     );
 
@@ -45,8 +44,7 @@ CREATE VIEW Airports
 		    Airport.Latitude as Latitude,
 		    Airport.Longitude as Longitude,
 		    Airport.Altitude as Altitude,
-		    Airport.Timezone as Timezone,
-		    Airport.Dst as Dst
+		    Airport.Timezone as Timezone
         FROM
             z$Country as Country
             INNER JOIN z$City as City
