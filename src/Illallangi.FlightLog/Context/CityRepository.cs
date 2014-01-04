@@ -25,7 +25,7 @@ namespace Illallangi.FlightLog.Context
 
         public City Create(string name, string countryName)
         {
-            var country = this.CountrySource.Retrieve(name: countryName).Single();
+            var country = this.CountrySource.Retrieve(new Country { Name = countryName }).Single();
 
             this.GetConnection()
                 .InsertInto("City")

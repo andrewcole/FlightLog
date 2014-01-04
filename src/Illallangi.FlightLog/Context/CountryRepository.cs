@@ -11,23 +11,23 @@ namespace Illallangi.FlightLog.Context
         {
         }
 
-        public Country Create(string name)
+        public Country Create(Country obj)
         {
             this.GetConnection()
                 .InsertInto("Country")
-                .Values("CountryName", name)
+                .Values("CountryName", obj.Name)
                 .CreateCommand()
                 .ExecuteNonQuery();
 
             return null;
         }
 
-        public IEnumerable<Country> Retrieve(int? id = null, string name = null)
+        public IEnumerable<Country> Retrieve(Country obj)
         {
             return this.GetConnection()
                         .Select<Country>("Countries")
-                        .Column("CountryId", (input, value) => input.Id = value, id)
-                        .Column("CountryName", (input, value) => input.Name = value, name)
+                        .Column("CountryId", (input, value) => input.Id = value, null == obj ? null : obj.Id)
+                        .Column("CountryName", (input, value) => input.Name = value, null == obj ? null : obj.Name)
                         .Column("Cities", (input, value) => input.Cities = value)
                         .Column("Airports", (input, value) => input.Airports = value)
                         .Go();
