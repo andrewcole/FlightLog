@@ -5,7 +5,7 @@ using Ninject;
 namespace Illallangi.FlightLog.PowerShell
 {
     [Cmdlet(VerbsCommon.Get, Nouns.Null)]
-    public abstract class ZumeroCmdlet<T> : PSCmdlet where T: class, IDebugHooks
+    public abstract class ZumeroCmdlet<T> : PSCmdlet where T: class
     {
         private StandardKernel currentKernel;
         private FlightLogModule currentModule;
@@ -48,7 +48,6 @@ namespace Illallangi.FlightLog.PowerShell
         private T GetRepository()
         {
             var repository = this.Kernel.Get<T>();
-            repository.Debug += (sender, e) => this.WriteDebug(e.Message);
             return repository;
         }
     }

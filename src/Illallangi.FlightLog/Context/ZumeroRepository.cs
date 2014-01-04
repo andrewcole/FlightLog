@@ -3,12 +3,7 @@ using Illallangi.LiteOrm;
 
 namespace Illallangi.FlightLog.Context
 {
-    public interface IDebugHooks
-    {
-        event DebugEventHandler Debug;
-    }
-
-    public abstract class ZumeroRepository : IDebugHooks
+    public abstract class ZumeroRepository
     {
         private readonly IConnectionSource currentConnectionSource;
 

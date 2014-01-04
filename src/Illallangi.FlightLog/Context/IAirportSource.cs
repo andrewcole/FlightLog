@@ -3,7 +3,7 @@ using Illallangi.FlightLog.Model;
 
 namespace Illallangi.FlightLog.Context
 {
-    public interface IAirportSource : IDebugHooks
+    public interface IAirportSource
     {
         Airport Create(Airport obj);
 

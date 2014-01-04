@@ -3,7 +3,7 @@ using Illallangi.FlightLog.Model;
 
 namespace Illallangi.FlightLog.Context
 {
-    public interface ICountrySource : IDebugHooks
+    public interface ICountrySource
     {
         Country Create(Country obj);
         IEnumerable<Country> Retrieve(Country obj);
