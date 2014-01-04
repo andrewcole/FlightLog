@@ -67,10 +67,16 @@
     <Compile Include="Config\FlightLogConfig.cs" />
     <Compile Include="Config\ValueElement.cs" />
     <Compile Include="Config\ValueElementCollection.cs" />
+    <Compile Include="Context\FlightRepository.cs" />
+    <Compile Include="Context\TripRepository.cs" />
+    <Compile Include="Context\YearRepository.cs" />
     <Compile Include="ISource.cs" />
     <Compile Include="Model\Airport.cs" />
     <Compile Include="Model\City.cs" />
     <Compile Include="Model\Country.cs" />
+    <Compile Include="Model\Flight.cs" />
+    <Compile Include="Model\Trip.cs" />
+    <Compile Include="Model\Year.cs" />
     <Compile Include="PowerShell\AddAirportCmdlet.cs" />
     <Compile Include="PowerShell\AddCityCmdlet.cs" />
     <Compile Include="PowerShell\AddCountryCmdlet.cs" />
