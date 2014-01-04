@@ -1,5 +1,4 @@
 using System.Management.Automation;
-using Illallangi.FlightLog.Context;
 using Illallangi.FlightLog.Model;
 
 namespace Illallangi.FlightLog.PowerShell
@@ -7,49 +6,55 @@ namespace Illallangi.FlightLog.PowerShell
     [Cmdlet(VerbsCommon.Add, Nouns.Airport)]
     public sealed class AddAirportCmdlet : FlightLogCmdlet<Airport>
     {
-        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
-        public string Name { get; set; }
+        #region Properties
 
-        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
-        public string CityName { get; set; }
+        [Parameter(Mandatory = true)]
+        public string Country { get; set; }
 
-        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
-        public string CountryName { get; set; }
+        [Parameter(Mandatory = true)]
+        public string City { get; set; }
 
-        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
-        public string Timezone { get; set; }
-
-        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
-        public float Altitude { get; set; }
-
-        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
-        public float Longitude { get; set; }
-
-        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
-        public float Latitude { get; set; }
-
-        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
+        [Parameter(Mandatory = true)]
         public string Icao { get; set; }
 
-        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
+        [Parameter(Mandatory = true)]
         public string Iata { get; set; }
+
+        [Parameter(Mandatory = true)]
+        public string Name { get; set; }
+
+        [Parameter(Mandatory = true)]
+        public float Latitude { get; set; }
+
+        [Parameter(Mandatory = true)]
+        public float Longitude { get; set; }
+
+        [Parameter(Mandatory = true)]
+        public float Altitude { get; set; }
+
+        [Parameter(Mandatory = true)]
+        public string Timezone { get; set; }
+
+        #endregion
+
+        #region Methods
         
         protected override void ProcessRecord()
         {
-            this.WriteObject(
-                this.Repository.Create(
-                    new Airport 
+            this.WriteObject(this.Repository.Create(new Airport
                     { 
-                        Name = this.Name, 
-                        City = this.CityName, 
-                        Country = this.CountryName, 
+                Country = this.Country, 
+                City = this.City, 
                         Iata = this.Iata, 
                         Icao = this.Icao, 
+                Name = this.Name,
                         Latitude = this.Latitude, 
                         Longitude = this.Longitude, 
                         Altitude = this.Altitude, 
                         Timezone = this.Timezone,
                     }));
         }
+
+        #endregion
     }
 }

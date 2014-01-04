@@ -1,5 +1,4 @@
 using System.Management.Automation;
-using Illallangi.FlightLog.Context;
 using Illallangi.FlightLog.Model;
 
 namespace Illallangi.FlightLog.PowerShell
@@ -7,15 +6,23 @@ namespace Illallangi.FlightLog.PowerShell
     [Cmdlet(VerbsCommon.Add, Nouns.City)]
     public sealed class AddCityCmdlet : FlightLogCmdlet<City>
     {
-        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
+        #region Properties
+
+        [Parameter(Mandatory = true)]
+        public string Name { get; set; }
+
+        [Parameter(Mandatory = true)]
         public string Country { get; set; }
 
-        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
-        public string Name { get; set; }
+        #endregion
+        
+        #region Methods
 
         protected override void ProcessRecord()
         {
             this.WriteObject(this.Repository.Create(new City { Name = this.Name, Country = this.Country }));
         }
+
+        #endregion
     }
 }
