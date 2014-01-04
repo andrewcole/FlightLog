@@ -23,47 +23,44 @@ namespace Illallangi.FlightLog.Context
             }
         }
 
-        public Airport Create(string name, string cityName, string countryName, string iata, string icao, float latitude,
-            float longitude, float altitude, float timezone, string dst)
+        public Airport Create(Airport obj)
         {
-            var city = this.CitySource.Retrieve(new City { Name = cityName, CountryName = countryName }).Single();
+            var city = this.CitySource.Retrieve(new City { Name = obj.CityName, CountryName = obj.CountryName }).Single();
 
             this.GetConnection()
                 .InsertInto("Airport")
-                .Values("AirportName", name)
+                .Values("AirportName", obj.Name)
                 .Values("CityId", city.Id)
-                .Values("Iata", iata)
-                .Values("Icao", icao)
-                .Values("Latitude", latitude)
-                .Values("Longitude", longitude)
-                .Values("Altitude", altitude)
-                .Values("Timezone", timezone)
-                .Values("Dst", dst)
+                .Values("Iata", obj.Iata)
+                .Values("Icao", obj.Icao)
+                .Values("Latitude", obj.Latitude)
+                .Values("Longitude", obj.Longitude)
+                .Values("Altitude", obj.Altitude)
+                .Values("Timezone", obj.Timezone)
+                .Values("Dst", obj.Dst)
                 .CreateCommand()
                 .ExecuteNonQuery();
 
             return null;
         }
 
-        public IEnumerable<Airport> Retrieve(int? id, string name = null, string cityName = null, string countryName = null,
-                    string iata = null, string icao = null, float? latitude = null, float? longitude = null, float? altitude = null,
-                    float? timezone = null, string dst = null)
+        public IEnumerable<Airport> Retrieve(Airport obj)
         {
             return this.GetConnection()
                 .Select<Airport>("Airports")
                 .Column("CountryId", (input, value) => input.CountryId = value)
-                .Column("CountryName", (input, value) => input.CountryName = value, countryName)
+                .Column("CountryName", (input, value) => input.CountryName = value, null == obj ? null : obj.CountryName)
                 .Column("CityId", (input, value) => input.CityId = value)
-                .Column("CityName", (input, value) => input.CityName = value, cityName)
-                .Column("AirportId", (input, value) => input.Id = value, id)
-                .Column("AirportName", (input, value) => input.Name = value, name)
-                .Column("Iata", (input, value) => input.Iata = value, iata)
-                .Column("Icao", (input, value) => input.Icao = value, icao)
-                .FloatColumn("Latitude", (input, value) => input.Latitude = value, latitude)
-                .FloatColumn("Longitude", (input, value) => input.Longitude = value, longitude)
-                .FloatColumn("Altitude", (input, value) => input.Altitude = value, altitude)
-                .FloatColumn("Timezone", (input, value) => input.Timezone = value, timezone)
-                .Column("Dst", (input, value) => input.Dst = value, dst)
+                .Column("CityName", (input, value) => input.CityName = value, null == obj ? null : obj.CityName)
+                .Column("AirportId", (input, value) => input.Id = value, null == obj ? null : obj.Id)
+                .Column("AirportName", (input, value) => input.Name = value, null == obj ? null : obj.Name)
+                .Column("Iata", (input, value) => input.Iata = value, null == obj ? null : obj.Iata)
+                .Column("Icao", (input, value) => input.Icao = value, null == obj ? null : obj.Icao)
+                .FloatColumn("Latitude", (input, value) => input.Latitude = value)
+                .FloatColumn("Longitude", (input, value) => input.Longitude = value)
+                .FloatColumn("Altitude", (input, value) => input.Altitude = value)
+                .FloatColumn("Timezone", (input, value) => input.Timezone = value)
+                .Column("Dst", (input, value) => input.Dst = value, null == obj ? null : obj.Dst)
                 .Go();
         }
 

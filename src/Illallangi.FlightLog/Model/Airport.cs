@@ -22,22 +22,22 @@ namespace Illallangi.FlightLog.Model
         /// <summary>
         /// Decimal degrees, usually to six significant digits. Negative is South, positive is North.
         /// </summary>
-        public float Latitude { get; set; }
+        public float? Latitude { get; set; }
 
         /// <summary>
         /// Decimal degrees, usually to six significant digits. Negative is West, positive is East.
         /// </summary>
-        public float Longitude { get; set; }
+        public float? Longitude { get; set; }
 
         /// <summary>
         /// In feet.
         /// </summary>
-        public float Altitude { get; set; }
+        public float? Altitude { get; set; }
 
         /// <summary>
         /// Hours offset from UTC. Fractional hours are expressed as decimals, eg. India is 5.5.
         /// </summary>
-        public float Timezone { get; set; }
+        public float? Timezone { get; set; }
 
         /// <summary>
         /// Daylight savings time. One of E (Europe), A (US/Canada), S (South America), O (Australia), Z (New Zealand), N (None) or U (Unknown) (http://openflights.org/help/time.html)

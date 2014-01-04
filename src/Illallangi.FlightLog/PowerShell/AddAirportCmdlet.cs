@@ -42,10 +42,13 @@ namespace Illallangi.FlightLog.PowerShell
 //            this.WriteObject(this.Repository.Retrieve(this.Id, this.Name, this.CityName, 
   //              this.CountryName, this.Iata, this.Icao, this.Latitude, this.Longitude, this.Altitude, this.Timezone, this.Dst), true);
         }
+
         protected override void ProcessRecord()
         {
-            this.WriteObject(this.Repository.Create(this.Name, this.CityName, this.CountryName, this.Iata, this.Icao,
-                this.Latitude, this.Longitude, this.Altitude, this.Timezone, this.Dst));
+            this.WriteObject(
+                this.Repository.Create(new Airport { Name = this.Name, CityName = this.CityName, CountryName = this.CountryName, Iata = this.Iata, 
+                    Icao = this.Icao, Latitude = this.Latitude, Longitude = this.Longitude, Altitude = this.Altitude, Timezone = this.Timezone,
+                    Dst = this.Dst } ));
         }
 
     }
