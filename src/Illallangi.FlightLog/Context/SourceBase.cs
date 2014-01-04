@@ -57,7 +57,9 @@ namespace Illallangi.FlightLog.Context
 
         public abstract T Create(T obj);
 
-        public abstract IEnumerable<T> Retrieve(T obj);
+        public abstract IEnumerable<T> Retrieve(T obj = null);
+
+        public abstract T Update(T obj);
 
         public abstract void Delete(T obj);
 

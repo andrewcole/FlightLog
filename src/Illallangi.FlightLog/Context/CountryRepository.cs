@@ -25,7 +25,7 @@ namespace Illallangi.FlightLog.Context
             return null;
         }
 
-        public override IEnumerable<Country> Retrieve(Country obj)
+        public override IEnumerable<Country> Retrieve(Country obj = null)
         {
             return this.GetConnection()
                         .Select<Country>("Countries")
@@ -33,6 +33,11 @@ namespace Illallangi.FlightLog.Context
                         .Column("Country", (input, value) => input.Name = value, null == obj ? null : obj.Name)
                         .Column("Cities", (input, value) => input.CityCount = value)
                         .Go();
+        }
+
+        public override Country Update(Country obj)
+        {
+            throw new System.NotImplementedException();
         }
 
         public override void Delete(Country country)

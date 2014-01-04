@@ -43,7 +43,7 @@ namespace Illallangi.FlightLog.Context
             return null;
         }
 
-        public override IEnumerable<Airport> Retrieve(Airport obj)
+        public override IEnumerable<Airport> Retrieve(Airport obj = null)
         {
             return this.GetConnection()
                 .Select<Airport>("Airports")
@@ -58,6 +58,11 @@ namespace Illallangi.FlightLog.Context
                 .FloatColumn("Altitude", (input, value) => input.Altitude = value)
                 .Column("Timezone", (input, value) => input.Timezone = value)
                 .Go();
+        }
+
+        public override Airport Update(Airport obj)
+        {
+            throw new System.NotImplementedException();
         }
 
         public override void Delete(Airport airport)
