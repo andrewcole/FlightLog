@@ -18,9 +18,10 @@ namespace Illallangi.FlightLog
                         (FlightLogConfig)
                             ConfigurationManager.OpenExeConfiguration(Assembly.GetExecutingAssembly().Location)
                                 .GetSection("FlightLogConfig")).InSingletonScope();
-            this.Bind<ISource<Country>>().To<CountryRepository>().InTransientScope();
-            this.Bind<ISource<City>>().To<CityRepository>().InTransientScope();
-            this.Bind<ISource<Airport>>().To<AirportRepository>().InTransientScope();
+
+            this.Bind<ISource<Country>>().To<CountryRepository>().InSingletonScope();
+            this.Bind<ISource<City>>().To<CityRepository>().InSingletonScope();
+            this.Bind<ISource<Airport>>().To<AirportRepository>().InSingletonScope();
             this.Bind<IConnectionSource>().To<SQLiteConnectionSource>().InSingletonScope();
         }
     }
