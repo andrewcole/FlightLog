@@ -1,7 +1,7 @@
 ﻿using System.Data.SQLite;
 using Illallangi.LiteOrm;
 
-namespace Illallangi.FlightLog.Repository
+namespace Illallangi.FlightLog.Context
 {
     public interface IDebugHooks
     {

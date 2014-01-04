@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Illallangi.FlightLog.Model;
-using Illallangi.FlightLog.Repository;
 
 namespace Illallangi.FlightLog.Context
 {

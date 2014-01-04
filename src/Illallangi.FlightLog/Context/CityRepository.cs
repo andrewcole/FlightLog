@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Illallangi.FlightLog.Context;
 using Illallangi.FlightLog.Model;
 using Illallangi.LiteOrm;
 
-
-namespace Illallangi.FlightLog.Repository
+namespace Illallangi.FlightLog.Context
 {
     public sealed class CityRepository : ZumeroRepository, ICitySource
     {

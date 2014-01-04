@@ -1,5 +1,5 @@
 ﻿using System.Management.Automation;
-using Illallangi.FlightLog.Repository;
+using Illallangi.FlightLog.Context;
 using Ninject;
 
 namespace Illallangi.FlightLog.PowerShell
