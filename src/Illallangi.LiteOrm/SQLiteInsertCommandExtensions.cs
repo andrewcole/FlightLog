@@ -6,6 +6,12 @@ namespace Illallangi.LiteOrm
 {
     public static class SQLiteInsertCommandExtensions
     {
+        public static SQLiteInsertCommand Values(this SQLiteInsertCommand insert, string column, DateTime value)
+        {
+            insert.Values.Add(column, value.ToString("yyyy-MM-ddTHH:mm:ss"));
+            return insert;
+        }
+
         public static SQLiteInsertCommand Values(this SQLiteInsertCommand insert, string column, object value)
         {
             insert.Values.Add(column, value);

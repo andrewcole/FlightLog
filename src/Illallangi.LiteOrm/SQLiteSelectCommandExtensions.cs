@@ -9,23 +9,35 @@ namespace Illallangi.LiteOrm
     {
         public static SQLiteSelectCommand<T> Column<T>(this SQLiteSelectCommand<T> select, string column, object value = null) where T : new()
         {
-            select.Columns.Add(column, value);
+            select.Columns.Add(column, null == value ? null : value.ToString());
             return select;
         }
 
-        public static SQLiteSelectCommand<T> FloatColumn<T>(this SQLiteSelectCommand<T> select, string column, Action<T, float> func, object value = null) where T : new()
+        private static SQLiteSelectCommand<T> Column<T>(this SQLiteSelectCommand<T> select, string column, string value = null) where T : new()
+        {
+            select.Columns.Add(column, string.IsNullOrWhiteSpace(value) ? null : value.Replace('*', '%'));
+            return select;
+        }
+
+        public static SQLiteSelectCommand<T> FloatColumn<T>(this SQLiteSelectCommand<T> select, string column, Action<T, float> func, float? value = null) where T : new()
         {
             select.FloatMap.Add(column, func);
             return select.Column(column, value);
         }
 
-        public static SQLiteSelectCommand<T> Column<T>(this SQLiteSelectCommand<T> select, string column, Action<T, int> func, object value = null) where T : new()
+        public static SQLiteSelectCommand<T> Column<T>(this SQLiteSelectCommand<T> select, string column, Action<T, int> func, int? value = null) where T : new()
         {
             select.IntMap.Add(column, func);
             return select.Column(column, value);
         }
 
-        public static SQLiteSelectCommand<T> Column<T>(this SQLiteSelectCommand<T> select, string column, Action<T, string> func, object value = null) where T : new()
+        public static SQLiteSelectCommand<T> Column<T>(this SQLiteSelectCommand<T> select, string column, Action<T, DateTime> func, string value = null) where T : new()
+        {
+            select.DateMap.Add(column, func);
+            return select.Column(column, value);
+        }
+        
+        public static SQLiteSelectCommand<T> Column<T>(this SQLiteSelectCommand<T> select, string column, Action<T, string> func, string value = null) where T : new()
         {
             select.StringMap.Add(column, func);
             return select.Column(column, value);
@@ -33,33 +45,37 @@ namespace Illallangi.LiteOrm
 
         public static IEnumerable<T> Go<T>(this SQLiteSelectCommand<T> select) where T : new()
         {
-            using (var reader = select.CreateCommand().ExecuteReader())
-            while (reader.HasRows && reader.Read())
+            using (var sqLiteCommand = select.CreateCommand())
             {
-                var result = new T();
-                foreach (var kvm in select.IntMap)
+                using (var reader = sqLiteCommand.ExecuteReader())
                 {
-                    var ordinal = reader.GetOrdinal(kvm.Key);
-                    var int32 = reader.GetInt32(ordinal);
-                    kvm.Value(result, int32);
+                    while (reader.HasRows && reader.Read())
+                    {
+                        var result = new T();
+                        foreach (var kvm in select.IntMap)
+                        {
+                            var int32 = reader.GetInt32(reader.GetOrdinal(kvm.Key));
+                            kvm.Value(result, int32);
+                        }
+                        foreach (var kvm in select.FloatMap)
+                        {
+                            kvm.Value(result, reader.GetFloat(reader.GetOrdinal(kvm.Key)));
+                        }
+                        foreach (var kvm in select.StringMap)
+                        {
+                            var ordinal = reader.GetOrdinal(kvm.Key);
+                            if (!reader.IsDBNull(ordinal))
+                            {
+                                kvm.Value(result, reader.GetString(ordinal));
+                            }
+                        }
+                        foreach (var kvm in select.DateMap)
+                        {
+                            kvm.Value(result, reader.GetDateTime(reader.GetOrdinal(kvm.Key)));
+                        }
+                        yield return result;
+                    }
                 }
-                foreach (var kvm in select.FloatMap)
-                {
-                    kvm.Value(result, reader.GetFloat(reader.GetOrdinal(kvm.Key)));
-                }
-                foreach (var kvm in select.StringMap)
-                {
-                    kvm.Value(result, reader.GetString(reader.GetOrdinal(kvm.Key)));
-                }
-
-                yield return result;
-                //yield return new Country
-                //{
-                //    Id = reader.GetInt32(0),
-                //    Name = reader.GetString(1),
-                //    Cities = reader.GetInt32(2),
-                //    Airports = reader.GetInt32(3),
-                //};
             }
         }
 
@@ -74,7 +90,7 @@ namespace Illallangi.LiteOrm
                 ? string.Concat(" WHERE ",
                                 string.Join(" AND ", select.Columns
                                     .Where(kvp => null != kvp.Value)
-                                    .Select(kvp => string.Format("[{0}].[{1}]=@{1}", select.Table, kvp.Key))))
+                                    .Select(kvp => string.Format("[{0}].[{1}]{2}@{1}", select.Table, kvp.Key, kvp.Value.Contains('%') ? " LIKE " : "="))))
                 : string.Empty;
         }
 

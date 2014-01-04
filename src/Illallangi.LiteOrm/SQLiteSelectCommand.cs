@@ -8,16 +8,18 @@ namespace Illallangi.LiteOrm
     {
         private readonly SQLiteConnection currentConnection;
         private readonly string currentTable;
-        private readonly IDictionary<string, object> currentColumns;
+        private readonly IDictionary<string, string> currentColumns;
         private readonly IDictionary<string, Action<T, float>> currentFloatMap;
         private readonly IDictionary<string, Action<T, int>> currentIntMap;
         private readonly IDictionary<string, Action<T, string>> currentStringMap;
-        
+        private readonly IDictionary<string, Action<T, DateTime>> currentDateMap;
+
         public SQLiteSelectCommand(SQLiteConnection connection, string table)
         {
             this.currentConnection = connection;
             this.currentTable = table;
-            this.currentColumns = new Dictionary<string, object>();
+            this.currentDateMap = new Dictionary<string, Action<T, DateTime>>();
+            this.currentColumns = new Dictionary<string, string>();
             this.currentFloatMap = new Dictionary<string, Action<T, float>>();
             this.currentIntMap = new Dictionary<string, Action<T, int>>();
             this.currentStringMap = new Dictionary<string, Action<T, string>>();
@@ -39,7 +41,7 @@ namespace Illallangi.LiteOrm
             }
         }
 
-        public IDictionary<string, object> Columns
+        public IDictionary<string, string> Columns
         {
             get
             {
@@ -50,5 +52,6 @@ namespace Illallangi.LiteOrm
         public IDictionary<string, Action<T, float>> FloatMap { get { return this.currentFloatMap; } }
         public IDictionary<string, Action<T, int>> IntMap { get { return this.currentIntMap; } }
         public IDictionary<string, Action<T, string>> StringMap { get { return this.currentStringMap; } }
+        public IDictionary<string, Action<T, DateTime>> DateMap { get { return this.currentDateMap; } }
     }
 }
