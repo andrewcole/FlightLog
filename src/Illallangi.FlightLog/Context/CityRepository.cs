@@ -29,25 +29,24 @@ namespace Illallangi.FlightLog.Context
             this.Logger.Debug(@"CityRepository.Create(""{0}"")", obj);
             var country = this.CountrySource.Retrieve(new Country { Name = obj.Country }).Single();
 
-            this.GetConnection()
+            var id = this.GetConnection()
                 .InsertInto("City")
-                .Values("City", obj.Name)
                 .Values("CountryId", country.Id)
-                .CreateCommand()
-                .ExecuteNonQuery();
+                .Values("CityName", obj.Name)
+                .Go();
 
-            return null;
+            return this.Retrieve(new City { Id = id }).Single();
         }
 
         public override IEnumerable<City> Retrieve(City obj = null)
         {
             return this.GetConnection()
-                        .Select<City>("Cities")
-                        .Column("CityId", (input, value) => input.Id = value, null == obj ? null : obj.Id)
-                        .Column("City", (input, value) => input.Name = value, null == obj ? null : obj.Name)
-                        .Column("Country", (input, value) => input.Country = value, null == obj ? null : obj.Country)
-                        .Column("AirportCount", (input, value) => input.AirportCount = value)
-                        .Go();
+           .Select<City>("Cities")
+           .Column("CityId", (city, value) => city.Id = value, null == obj ? null : obj.Id)
+           .Column("CountryName", (city, value) => city.Country = value, null == obj ? null : obj.Country)
+           .Column("CityName", (city, value) => city.Name = value, null == obj ? null : obj.Name)
+           .Column("AirportCount", (city, value) => city.AirportCount = value)
+           .Go();
         }
 
         public override City Update(City obj)

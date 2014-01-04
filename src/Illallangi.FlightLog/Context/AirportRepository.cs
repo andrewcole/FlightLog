@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Illallangi.FlightLog.Model;
 using Illallangi.LiteOrm;
@@ -27,7 +28,7 @@ namespace Illallangi.FlightLog.Context
             this.Logger.Debug(@"AirportSource.Create(""{0}"")", obj);
             var city = this.CitySource.Retrieve(new City { Name = obj.City, Country = obj.Country }).Single();
 
-            this.GetConnection()
+            var id = this.GetConnection()
                 .InsertInto("Airport")
                 .Values("AirportName", obj.Name)
                 .Values("CityId", city.Id)
@@ -37,32 +38,31 @@ namespace Illallangi.FlightLog.Context
                 .Values("Longitude", obj.Longitude)
                 .Values("Altitude", obj.Altitude)
                 .Values("Timezone", obj.Timezone)
-                .CreateCommand()
-                .ExecuteNonQuery();
+                .Go();
 
-            return null;
+            return this.Retrieve(new Airport { Id = id }).Single();
         }
 
         public override IEnumerable<Airport> Retrieve(Airport obj = null)
         {
             return this.GetConnection()
-                .Select<Airport>("Airports")
-                .Column("Country", (input, value) => input.Country = value, null == obj ? null : obj.Country)
-                .Column("City", (input, value) => input.City = value, null == obj ? null : obj.City)
-                .Column("AirportId", (input, value) => input.Id = value, null == obj ? null : obj.Id)
-                .Column("AirportName", (input, value) => input.Name = value, null == obj ? null : obj.Name)
-                .Column("Iata", (input, value) => input.Iata = value, null == obj ? null : obj.Iata)
-                .Column("Icao", (input, value) => input.Icao = value, null == obj ? null : obj.Icao)
-                .FloatColumn("Latitude", (input, value) => input.Latitude = value)
-                .FloatColumn("Longitude", (input, value) => input.Longitude = value)
-                .FloatColumn("Altitude", (input, value) => input.Altitude = value)
-                .Column("Timezone", (input, value) => input.Timezone = value)
-                .Go();
+            .Select<Airport>("Airports")
+            .Column("AirportId", (airport, value) => airport.Id = value, null == obj ? null : obj.Id)
+            .Column("CountryName", (airport, value) => airport.Country = value, null == obj ? null : obj.Country)
+            .Column("CityName", (airport, value) => airport.City = value, null == obj ? null : obj.City)
+            .Column("Icao", (airport, value) => airport.Icao = value, null == obj ? null : obj.Icao)
+            .Column("Iata", (airport, value) => airport.Iata = value, null == obj ? null : obj.Iata)
+            .Column("AirportName", (airport, value) => airport.Name = value, null == obj ? null : obj.Name)
+            .FloatColumn("Latitude", (airport, value) => airport.Latitude = value)
+            .FloatColumn("Longitude", (airport, value) => airport.Longitude = value)
+            .FloatColumn("Altitude", (airport, value) => airport.Altitude = value)
+            .Column("Timezone", (airport, value) => airport.Timezone = value)
+            .Go();
         }
 
         public override Airport Update(Airport obj)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public override void Delete(Airport airport)
