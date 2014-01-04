@@ -1,6 +1,7 @@
 using System.Configuration;
 using System.Reflection;
 using Illallangi.FlightLog.Config;
+using Illallangi.FlightLog.Context;
 using Illallangi.FlightLog.Model;
 
 using Illallangi.FlightLog.Repository;

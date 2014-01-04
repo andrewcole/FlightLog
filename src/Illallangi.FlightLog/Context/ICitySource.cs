@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
+using Illallangi.FlightLog.Model;
 using Illallangi.FlightLog.Repository;
 
-namespace Illallangi.FlightLog.Model
+namespace Illallangi.FlightLog.Context
 {
     public interface ICitySource : IDebugHooks
     {
