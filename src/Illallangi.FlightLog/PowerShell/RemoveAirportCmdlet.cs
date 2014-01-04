@@ -43,11 +43,11 @@ namespace Illallangi.FlightLog.PowerShell
 
         protected override void BeginProcessing()
         {
-            foreach (var o in this.Repository.RetrieveAirport(this.Id, this.Name, this.CityName,
+            foreach (var o in this.Repository.Retrieve(this.Id, this.Name, this.CityName,
                 this.CountryName, this.Iata, this.Icao, this.Latitude, this.Longitude, this.Altitude, this.Timezone,
                 this.Dst).ToList().Where(o => this.ShouldProcess(o.ToString(), VerbsCommon.Remove)))
             {
-                this.Repository.DeleteAirport(o);
+                this.Repository.Delete(o);
             }
         }
 

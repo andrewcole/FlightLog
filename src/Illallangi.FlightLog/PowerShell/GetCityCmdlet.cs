@@ -18,7 +18,7 @@ namespace Illallangi.FlightLog.PowerShell
 
         protected override void BeginProcessing()
         {
-            this.WriteObject(this.Repository.RetrieveCity(this.Id, this.Name, this.CountryName), true);
+            this.WriteObject(this.Repository.Retrieve(this.Id, this.Name, this.CountryName), true);
         }
     }
 }

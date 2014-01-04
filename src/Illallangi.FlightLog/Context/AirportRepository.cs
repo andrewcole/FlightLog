@@ -23,10 +23,10 @@ namespace Illallangi.FlightLog.Context
             }
         }
 
-        public Airport CreateAirport(string name, string cityName, string countryName, string iata, string icao, float latitude,
+        public Airport Create(string name, string cityName, string countryName, string iata, string icao, float latitude,
             float longitude, float altitude, float timezone, string dst)
         {
-            var city = this.CitySource.RetrieveCity(name: cityName, countryName: countryName).Single();
+            var city = this.CitySource.Retrieve(name: cityName, countryName: countryName).Single();
 
             this.GetConnection()
                 .InsertInto("Airport")
@@ -45,7 +45,7 @@ namespace Illallangi.FlightLog.Context
             return null;
         }
 
-        public IEnumerable<Airport> RetrieveAirport(int? id, string name = null, string cityName = null, string countryName = null,
+        public IEnumerable<Airport> Retrieve(int? id, string name = null, string cityName = null, string countryName = null,
                     string iata = null, string icao = null, float? latitude = null, float? longitude = null, float? altitude = null,
                     float? timezone = null, string dst = null)
         {
@@ -67,7 +67,7 @@ namespace Illallangi.FlightLog.Context
                 .Go();
         }
 
-        public void DeleteAirport(Airport airport)
+        public void Delete(Airport airport)
         {
             this.GetConnection()
                 .DeleteFrom("Airport")

@@ -16,9 +16,9 @@ namespace Illallangi.FlightLog.PowerShell
 
         protected override void BeginProcessing()
         {
-            foreach (var o in this.Repository.RetrieveCountry(this.Id, this.Name).ToList().Where(o => this.ShouldProcess(o.ToString(), VerbsCommon.Remove)))
+            foreach (var o in this.Repository.Retrieve(this.Id, this.Name).ToList().Where(o => this.ShouldProcess(o.ToString(), VerbsCommon.Remove)))
             {
-                this.Repository.DeleteCountry(o);
+                this.Repository.Delete(o);
             }
         }
     }

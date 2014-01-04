@@ -42,7 +42,7 @@ namespace Illallangi.FlightLog.PowerShell
         
         protected override void BeginProcessing()
         {
-            this.WriteObject(this.Repository.RetrieveAirport(this.Id, this.Name, this.CityName, 
+            this.WriteObject(this.Repository.Retrieve(this.Id, this.Name, this.CityName, 
                 this.CountryName, this.Iata, this.Icao, this.Latitude, this.Longitude, this.Altitude, this.Timezone, this.Dst), true);
         }
 

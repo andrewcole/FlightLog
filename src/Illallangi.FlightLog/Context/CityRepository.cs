@@ -23,9 +23,9 @@ namespace Illallangi.FlightLog.Context
             }
         }
 
-        public City CreateCity(string name, string countryName)
+        public City Create(string name, string countryName)
         {
-            var country = this.CountrySource.RetrieveCountry(name: countryName).Single();
+            var country = this.CountrySource.Retrieve(name: countryName).Single();
 
             this.GetConnection()
                 .InsertInto("City")
@@ -37,7 +37,7 @@ namespace Illallangi.FlightLog.Context
             return null;
         }
 
-        public IEnumerable<City> RetrieveCity(int? id = null, string name = null, string countryName = null)
+        public IEnumerable<City> Retrieve(int? id = null, string name = null, string countryName = null)
         {
             return this.GetConnection()
                         .Select<City>("Cities")
@@ -49,7 +49,7 @@ namespace Illallangi.FlightLog.Context
                         .Go();
         }
 
-        public void DeleteCity(City city)
+        public void Delete(City city)
         {
             this.GetConnection()
                 .DeleteFrom("City")

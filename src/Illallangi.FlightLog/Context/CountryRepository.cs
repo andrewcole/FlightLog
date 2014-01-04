@@ -11,7 +11,7 @@ namespace Illallangi.FlightLog.Context
         {
         }
 
-        public Country CreateCountry(string name)
+        public Country Create(string name)
         {
             this.GetConnection()
                 .InsertInto("Country")
@@ -22,7 +22,7 @@ namespace Illallangi.FlightLog.Context
             return null;
         }
 
-        public IEnumerable<Country> RetrieveCountry(int? id = null, string name = null)
+        public IEnumerable<Country> Retrieve(int? id = null, string name = null)
         {
             return this.GetConnection()
                         .Select<Country>("Countries")
@@ -33,7 +33,7 @@ namespace Illallangi.FlightLog.Context
                         .Go();
         }
 
-        public void DeleteCountry(Country country)
+        public void Delete(Country country)
         {
             this.GetConnection()
                 .DeleteFrom("Country")

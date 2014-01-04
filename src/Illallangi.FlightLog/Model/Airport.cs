@@ -2,7 +2,7 @@ namespace Illallangi.FlightLog.Model
 {
     public class Airport
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         /// <summary>
         /// Name of airport. May or may not contain the City name.
