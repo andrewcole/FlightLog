@@ -3,6 +3,8 @@ using System.Linq;
 
 namespace Illallangi.LiteOrm
 {
+    using System.Diagnostics.CodeAnalysis;
+
     public static class SQLiteDeleteCommandExtensions
     {
         public static SQLiteDeleteCommand Where(this SQLiteDeleteCommand delete, string column, object value = null)
@@ -11,6 +13,7 @@ namespace Illallangi.LiteOrm
             return delete;
         }
 
+        [SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1118:ParameterMustNotSpanMultipleLines", Justification = "Reviewed. Suppression is OK here.")]
         public static string GetWhereClause(this SQLiteDeleteCommand delete)
         {
             return delete.Columns.Any(kvp => null != kvp.Value)

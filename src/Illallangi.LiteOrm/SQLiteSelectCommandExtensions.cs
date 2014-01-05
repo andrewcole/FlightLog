@@ -5,6 +5,8 @@ using System.Linq;
 
 namespace Illallangi.LiteOrm
 {
+    using System.Diagnostics.CodeAnalysis;
+
     public static class SQLiteSelectCommandExtensions
     {
         #region Methods
@@ -86,6 +88,7 @@ namespace Illallangi.LiteOrm
             return string.Join(", ", select.Columns.Keys.Select(k => string.Format("[{0}].[{1}] as {1}", select.Table, k)));
         }
 
+        [SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1118:ParameterMustNotSpanMultipleLines", Justification = "Reviewed. Suppression is OK here.")]
         public static string GetWhereClause<T>(this SQLiteSelectCommand<T> select) where T : new()
         {
             return select.Columns.Any(kvp => null != kvp.Value)
