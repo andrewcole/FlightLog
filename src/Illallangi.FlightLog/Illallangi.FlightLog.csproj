@@ -112,7 +112,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="ClassDiagram1.cd" />
     <None Include="Illallangi.FlightLog.psd1">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
