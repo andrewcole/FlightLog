@@ -15,13 +15,13 @@ namespace Illallangi.FlightLog.PowerShell
         public string City { get; set; }
 
         [Parameter(Mandatory = true)]
-        public string Icao { get; set; }
+        public string Name { get; set; }
 
         [Parameter(Mandatory = true)]
         public string Iata { get; set; }
 
         [Parameter(Mandatory = true)]
-        public string Name { get; set; }
+        public string Icao { get; set; }
 
         [Parameter(Mandatory = true)]
         public float Latitude { get; set; }
@@ -44,10 +44,10 @@ namespace Illallangi.FlightLog.PowerShell
             this.WriteObject(this.Repository.Create(new Airport
                     { 
                         Country = this.Country, 
-                        City = this.City, 
+                        City = this.City,
+                        Name = this.Name,
                         Iata = this.Iata, 
                         Icao = this.Icao, 
-                        Name = this.Name,
                         Latitude = this.Latitude, 
                         Longitude = this.Longitude, 
                         Altitude = this.Altitude, 

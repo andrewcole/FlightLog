@@ -6,12 +6,23 @@ namespace Illallangi.FlightLog.PowerShell
     [Cmdlet(VerbsCommon.Add, Nouns.Year)]
     public sealed class AddYearCmdlet : FlightLogCmdlet<Year>
     {
+        #region Properties
+
         [Parameter(Mandatory = true)]
         public string Name { get; set; }
 
+        #endregion
+
+        #region Methods
+
         protected override void ProcessRecord()
         {
-            this.WriteObject(this.Repository.Create(new Year { Name = this.Name }));
+            this.WriteObject(this.Repository.Create(new Year
+            {
+                Name = this.Name,
+            }));
         }
+
+        #endregion
     }
 }

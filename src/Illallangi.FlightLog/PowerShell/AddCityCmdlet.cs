@@ -9,10 +9,10 @@ namespace Illallangi.FlightLog.PowerShell
         #region Properties
 
         [Parameter(Mandatory = true)]
-        public string Name { get; set; }
+        public string Country { get; set; }
 
         [Parameter(Mandatory = true)]
-        public string Country { get; set; }
+        public string Name { get; set; }
 
         #endregion
         
@@ -20,7 +20,11 @@ namespace Illallangi.FlightLog.PowerShell
 
         protected override void ProcessRecord()
         {
-            this.WriteObject(this.Repository.Create(new City { Name = this.Name, Country = this.Country }));
+            this.WriteObject(this.Repository.Create(new City
+            {
+                Name = this.Name, 
+                Country = this.Country,
+            }));
         }
 
         #endregion
