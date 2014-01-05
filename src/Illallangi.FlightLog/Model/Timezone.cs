@@ -7,8 +7,6 @@
         string Name { get; set; }
 
         int AirportCount { get; set; }
-
-        string ToString();
     }
 
     public class Timezone : ITimezone

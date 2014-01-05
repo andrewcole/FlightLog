@@ -7,8 +7,6 @@
         string Name { get; set; }
 
         int CityCount { get; set; }
-
-        string ToString();
     }
 
     public class Country : ICountry

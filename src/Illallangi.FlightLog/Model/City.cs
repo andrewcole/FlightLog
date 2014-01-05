@@ -9,8 +9,6 @@ namespace Illallangi.FlightLog.Model
         string Name { get; set; }
 
         int AirportCount { get; set; }
-
-        string ToString();
     }
 
     public class City : ICity

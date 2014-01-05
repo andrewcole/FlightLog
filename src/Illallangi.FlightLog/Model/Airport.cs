@@ -42,8 +42,6 @@ namespace Illallangi.FlightLog.Model
         /// In feet.
         /// </summary>
         float Altitude { get; set; }
-
-        string ToString();
     }
 
     public class Airport : IAirport
