@@ -1,6 +1,15 @@
 ﻿namespace Illallangi.FlightLog.Model
 {
-    public class Year
+    public interface IYear
+    {
+        int? Id { get; set; }
+
+        string Name { get; set; }
+
+        int TripCount { get; set; }
+    }
+
+    public class Year : IYear
     {
         #region Primary Key Property
 

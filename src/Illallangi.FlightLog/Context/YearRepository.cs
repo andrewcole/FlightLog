@@ -7,7 +7,7 @@ using Ninject.Extensions.Logging;
 
 namespace Illallangi.FlightLog.Context
 {
-    public class YearRepository : RepositoryBase<Year>
+    public class YearRepository : RepositoryBase<IYear>
     {
         #region Constructor
 
@@ -21,7 +21,7 @@ namespace Illallangi.FlightLog.Context
 
         #region Methods
 
-        public override Year Create(Year obj)
+        public override IYear Create(IYear obj)
         {
             this.Logger.Debug(@"YearRepository.Create(""{0}"")", obj);
 
@@ -33,7 +33,7 @@ namespace Illallangi.FlightLog.Context
             return this.Retrieve(new Year { Id = id }).Single();
         }
 
-        public override IEnumerable<Year> Retrieve(Year obj = null)
+        public override IEnumerable<IYear> Retrieve(IYear obj = null)
         {
             this.Logger.Debug(@"YearRepository.Retrieve(""{0}"")", obj);
 
@@ -45,14 +45,14 @@ namespace Illallangi.FlightLog.Context
                        .Go();
         }
 
-        public override Year Update(Year obj)
+        public override IYear Update(IYear obj)
         {
             this.Logger.Debug(@"YearRepository.Update(""{0}"")", obj);
 
             throw new NotImplementedException();
         }
 
-        public override void Delete(Year obj)
+        public override void Delete(IYear obj)
         {
             this.Logger.Debug(@"YearRepository.Delete(""{0}"")", obj);
 

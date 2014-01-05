@@ -4,7 +4,7 @@ using Illallangi.FlightLog.Model;
 namespace Illallangi.FlightLog.PowerShell
 {
     [Cmdlet(VerbsCommon.Get, Nouns.Year)]
-    public sealed class GetYearCmdlet : FlightLogCmdlet<Year>
+    public sealed class GetYearCmdlet : FlightLogCmdlet<IYear>
     {
         #region Properties
 
