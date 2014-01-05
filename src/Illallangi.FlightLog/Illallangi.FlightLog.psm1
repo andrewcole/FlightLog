@@ -1,9 +1,11 @@
-﻿$DebugPreference = "Continue"
-
-if ($null -eq (Get-Module PSCompletion))
+﻿if ($null -eq (Get-Module PSCompletion))
 {
 	Write-Debug "Import-Module PSCompletion -Global"
-	Import-Module PSCompletion -Global
+	Import-Module PSCompletion -Global -ErrorAction SilentlyContinue
+	if ($null -eq (Get-Module PSCompletion))
+	{
+		Write-Warning "PSCompletion module not found; tab completion will be unavailable."
+	}
 }
 
 if ($null -ne (Get-Module PSCompletion))
@@ -158,7 +160,7 @@ Function Import-CitySampleData
 		{
 			$i += 1
 			Write-Progress -Id $MyProgressId -ParentId $ParentProgressId -Activity "Importing Cities" -status "$($city.City), $($city.Country) ($($i) / $($cityCount))" -PercentComplete (($i / $cityCount) * 100)
-			Add-City -Name $city.City -CountryName $city.Country
+			Add-City -Name $city.City -Country $city.Country
 		}
 	}
 }
@@ -171,7 +173,7 @@ Function Import-AirportSampleData
 	)
 	Begin
 	{
-		Get-AirportSampleData |%{ Add-Airport -Name $_.Name -CityName $_.City -CountryName $_.Country -Dst $_.DST -Timezone $_.Timezone -Altitude $_.Altitude -Longitude $_.Longitude -Latitude $_.Latitude -Icao $_.Icao -Iata $_.Iata  }
+		Get-AirportSampleData |%{ Add-Airport -Name $_.Name -City $_.City -Country $_.Country -Altitude $_.Altitude -Longitude $_.Longitude -Latitude $_.Latitude -Icao $_.Icao -Iata $_.Iata  }
 	}
 }
 
