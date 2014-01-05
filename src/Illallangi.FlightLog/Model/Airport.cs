@@ -9,6 +9,11 @@ namespace Illallangi.FlightLog.Model
         string City { get; set; }
 
         /// <summary>
+        /// IANA Time Zone Database designation for the local time zone of the airport.
+        /// </summary>
+        string Timezone { get; set; }
+        
+        /// <summary>
         /// Name of airport. May or may not contain the City name.
         /// </summary>
         string Name { get; set; }
@@ -38,11 +43,6 @@ namespace Illallangi.FlightLog.Model
         /// </summary>
         float Altitude { get; set; }
 
-        /// <summary>
-        /// IANA Time Zone Database designation for the local time zone of the airport.
-        /// </summary>
-        string Timezone { get; set; }
-
         string ToString();
     }
 
@@ -59,6 +59,11 @@ namespace Illallangi.FlightLog.Model
         public string Country { get; set; }
         
         public string City { get; set; }
+
+        /// <summary>
+        /// IANA Time Zone Database designation for the local time zone of the airport.
+        /// </summary>
+        public string Timezone { get; set; }
 
         #endregion
 
@@ -93,11 +98,6 @@ namespace Illallangi.FlightLog.Model
         /// In feet.
         /// </summary>
         public float Altitude { get; set; }
-
-        /// <summary>
-        /// IANA Time Zone Database designation for the local time zone of the airport.
-        /// </summary>
-        public string Timezone { get; set; }
 
         #endregion
 

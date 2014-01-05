@@ -9,5 +9,6 @@
         public const string Trip = "Trip";
         public const string Year = "Year";
         public const string Flight = "Flight";
+        public const string Timezone = "Timezone";
     }
 }

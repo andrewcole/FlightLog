@@ -1,3 +1,11 @@
+CREATE VIRTUAL TABLE Timezone
+	USING zumero
+	(
+		TimezoneId INTEGER PRIMARY KEY AUTOINCREMENT,
+		TimezoneName TEXT NOT NULL,
+		Unique (TimezoneName)
+	);
+
 CREATE VIRTUAL TABLE Country
 	USING zumero
 	(
@@ -20,13 +28,13 @@ CREATE VIRTUAL TABLE Airport
 	(
 		AirportId INTEGER PRIMARY KEY AUTOINCREMENT,
 		CityId INTEGER NOT NULL REFERENCES City(CityId),
+		TimezoneId INTEGER NOT NULL REFERENCES Timezone(TimezoneId),
 		AirportName TEXT NOT NULL,
 		Iata TEXT NOT NULL,
 		Icao TEXT NOT NULL,
 		Latitude DOUBLE NOT NULL,
 		Longitude DOUBLE NOT NULL,
 		Altitude DOUBLE NOT NULL,
-		Timezone TEXT NOT NULL,
 		Unique(CityId, AirportName),
 		Unique(Icao),
 		Unique(Iata),
@@ -37,9 +45,9 @@ CREATE VIRTUAL TABLE Year
 	USING zumero
 	(
 		YearId INTEGER PRIMARY KEY AUTOINCREMENT,
-    YearName TEXT NOT NULL,
+		YearName TEXT NOT NULL,
 		Unique (YearName)
-  );
+	);
 
 CREATE VIRTUAL TABLE Trip
 	USING zumero
@@ -68,6 +76,20 @@ CREATE VIRTUAL TABLE Flight
 		Unique (TripId, OriginId, DestinationId)
 	);
 
+CREATE VIEW Timezones
+	AS
+		SELECT
+			Timezone.TimezoneId as TimezoneId,
+			Timezone.TimezoneName as TimezoneName,
+			Count(Airport.AirportId) as AirportCount
+		FROM
+			z$Timezone as Timezone
+			LEFT JOIN z$Airport as Airport
+				ON Timezone.TimezoneId = Airport.TimezoneId
+			GROUP BY
+				Timezone.TimezoneId,
+				Timezone.TimezoneName;
+			
 CREATE VIEW Countries
 	AS
 		SELECT
@@ -112,13 +134,15 @@ CREATE VIEW Airports
 			Airport.Latitude as Latitude,
 			Airport.Longitude as Longitude,
 			Airport.Altitude as Altitude,
-			Airport.Timezone as Timezone
+			Timezone.TimezoneName as TimezoneName
 		FROM
 			z$Airport as Airport
 			INNER JOIN z$City as City
 				On Airport.CityId = City.CityId
 			INNER JOIN z$Country as Country
-				ON City.CountryId = Country.CountryId;
+				ON City.CountryId = Country.CountryId
+			INNER JOIN z$Timezone as Timezone
+				ON Airport.TimezoneId = Timezone.TimezoneId;
 
 CREATE VIEW Years
 	AS
@@ -161,9 +185,9 @@ CREATE VIEW Flights
 			Year.YearName as YearName,
 			Trip.TripName as TripName,
 			Origin.Icao as OriginIcao,
-			Origin.Timezone as OriginTimezone,
+			OriginTz.TimezoneName as OriginTimezone,
 			Destination.Icao as DestinationIcao,
-			Destination.Timezone as DestinationTimezone,
+			DestinationTz.TimezoneName as DestinationTimezone,
 			Flight.Departure as Departure,
 			Flight.Arrival as Arrival,
 			Flight.Airline as Airline,
@@ -179,5 +203,9 @@ CREATE VIEW Flights
 				ON Trip.YearId = Year.YearId
 			INNER JOIN z$Airport as Origin
 				ON Flight.OriginId = Origin.AirportId
+			INNER JOIN z$Timezone as OriginTz
+				ON Origin.TimezoneId = OriginTz.TimezoneId
 			INNER JOIN z$Airport as Destination
 				ON Flight.DestinationId = Destination.AirportId
+			INNER JOIN z$Timezone as DestinationTz
+				ON Destination.TimezoneId = DestinationTz.TimezoneId;

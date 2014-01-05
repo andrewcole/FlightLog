@@ -13,15 +13,18 @@ namespace Illallangi.FlightLog.Context
 
         private readonly IRepository<ICity> currentCityRepository;
 
+        private readonly IRepository<ITimezone> currentTimezoneRepository;
+
         #endregion
 
         #region Constructor
 
-        public AirportRepository(ILogger logger, IConnectionSource connectionSource, IRepository<ICity> cityRepository)
+        public AirportRepository(ILogger logger, IConnectionSource connectionSource, IRepository<ICity> cityRepository, IRepository<ITimezone> timezoneRepository)
             : base(logger, connectionSource)
         {
-            this.Logger.Debug(@"AirportRepository(""{0}"",""{1}"",""{2}"")", logger, connectionSource, cityRepository);
+            this.Logger.Debug(@"AirportRepository(""{0}"",""{1}"",""{2}"", ""{3}"")", logger, connectionSource, cityRepository, timezoneRepository);
             this.currentCityRepository = cityRepository;
+            this.currentTimezoneRepository = timezoneRepository;
         }
 
         #endregion
@@ -33,6 +36,11 @@ namespace Illallangi.FlightLog.Context
             get { return this.currentCityRepository; }
         }
 
+        private IRepository<ITimezone> TimezoneRepository
+        {
+            get { return this.currentTimezoneRepository; }
+        }
+
         #endregion
 
         #region Methods
@@ -42,17 +50,18 @@ namespace Illallangi.FlightLog.Context
             this.Logger.Debug(@"AirportRepository.Create(""{0}"")", obj);
 
             var city = this.CityRepository.Retrieve(new City { Name = obj.City, Country = obj.Country }).Single();
+            var timezone = this.TimezoneRepository.Retrieve(new Timezone { Name = obj.Timezone }).Single();
 
             var id = this.GetConnection()
                 .InsertInto("Airport")
                 .Values("CityId", city.Id)
+                .Values("TimezoneId", timezone.Id)
                 .Values("AirportName", obj.Name)
                 .Values("Iata", obj.Iata)
                 .Values("Icao", obj.Icao)
                 .Values("Latitude", obj.Latitude)
                 .Values("Longitude", obj.Longitude)
                 .Values("Altitude", obj.Altitude)
-                .Values("Timezone", obj.Timezone)
                 .Go();
 
             return this.Retrieve(new Airport { Id = id }).Single();
@@ -67,13 +76,13 @@ namespace Illallangi.FlightLog.Context
                 .Column("AirportId", (airport, value) => airport.Id = value, null == obj ? null : obj.Id)
                 .Column("CountryName", (airport, value) => airport.Country = value, null == obj ? null : obj.Country)
                 .Column("CityName", (airport, value) => airport.City = value, null == obj ? null : obj.City)
+                .Column("TimezoneName", (airport, value) => airport.Timezone = value)
                 .Column("AirportName", (airport, value) => airport.Name = value, null == obj ? null : obj.Name)
                 .Column("Iata", (airport, value) => airport.Iata = value, null == obj ? null : obj.Iata)
                 .Column("Icao", (airport, value) => airport.Icao = value, null == obj ? null : obj.Icao)
                 .FloatColumn("Latitude", (airport, value) => airport.Latitude = value)
                 .FloatColumn("Longitude", (airport, value) => airport.Longitude = value)
                 .FloatColumn("Altitude", (airport, value) => airport.Altitude = value)
-                .Column("Timezone", (airport, value) => airport.Timezone = value)
                 .Go();
         }
 

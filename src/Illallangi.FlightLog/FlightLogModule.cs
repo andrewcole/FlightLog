@@ -34,7 +34,8 @@ namespace Illallangi.FlightLog
             this.Bind<IRepository<ICity>>().To<CityRepository>().InSingletonScope();
             this.Bind<IRepository<IAirport>>().To<AirportRepository>().InSingletonScope();
             this.Bind<IRepository<IFlight>>().To<FlightRepository>().InSingletonScope();
-            
+            this.Bind<IRepository<ITimezone>>().To<TimezoneRepository>().InSingletonScope();
+
             this.Bind<IConnectionSource>().To<SQLiteConnectionSource>().InSingletonScope();
         }
     }
