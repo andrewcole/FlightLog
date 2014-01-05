@@ -1,6 +1,6 @@
 ﻿namespace Illallangi.FlightLog.PowerShell
 {
-    public class Nouns
+    public static class Nouns
     {
         public const string Country = "Country";
         public const string City = "City";

@@ -2,7 +2,7 @@
 
 namespace Illallangi.FlightLog
 {
-    public interface ISource<T> where T : class 
+    public interface IRepository<T> where T : class 
     {
         T Create(T obj);
 

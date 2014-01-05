@@ -5,7 +5,7 @@ using Ninject.Extensions.Logging;
 
 namespace Illallangi.FlightLog.Context
 {
-    public abstract class SourceBase<T> : ISource<T> where T : class
+    public abstract class RepositoryBase<T> : IRepository<T> where T : class
     {
         #region Fields
 
@@ -23,7 +23,7 @@ namespace Illallangi.FlightLog.Context
 
         #region Constructors
 
-        protected SourceBase(ILogger logger, IConnectionSource connectionSource)
+        protected RepositoryBase(ILogger logger, IConnectionSource connectionSource)
         {
             this.currentLogger = logger;
             this.currentConnectionSource = connectionSource;

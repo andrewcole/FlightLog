@@ -7,13 +7,13 @@ namespace Illallangi.FlightLog.PowerShell
     {
         #region Fields
 
-        private ISource<T> currentRepository;
+        private IRepository<T> currentRepository;
 
         #endregion
 
         #region Properties
 
-        protected ISource<T> Repository
+        protected IRepository<T> Repository
         {
             get
             {
@@ -25,9 +25,9 @@ namespace Illallangi.FlightLog.PowerShell
 
         #region Methods
 
-        private ISource<T> GetRepository()
+        private IRepository<T> GetRepository()
         {
-            return this.Get<ISource<T>>();
+            return this.Get<IRepository<T>>();
         }
 
         #endregion

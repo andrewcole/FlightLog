@@ -77,7 +77,7 @@
     <Compile Include="Context\FlightRepository.cs" />
     <Compile Include="Context\TripRepository.cs" />
     <Compile Include="Context\YearRepository.cs" />
-    <Compile Include="ISource.cs" />
+    <Compile Include="IRepository.cs" />
     <Compile Include="Model\Airport.cs" />
     <Compile Include="Model\City.cs" />
     <Compile Include="Model\Country.cs" />
@@ -107,11 +107,12 @@
     <Compile Include="Context\AirportRepository.cs" />
     <Compile Include="Context\CityRepository.cs" />
     <Compile Include="Context\CountryRepository.cs" />
-    <Compile Include="Context\SourceBase.cs" />
+    <Compile Include="Context\RepositoryBase.cs" />
     <Compile Include="FlightLogModule.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="ClassDiagram1.cd" />
     <None Include="Illallangi.FlightLog.psd1">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -7,13 +7,14 @@ using Ninject.Extensions.Logging;
 
 namespace Illallangi.FlightLog.Context
 {
-    public class YearRepository : SourceBase<Year>
+    public class YearRepository : RepositoryBase<Year>
     {
         #region Constructor
 
         public YearRepository(ILogger logger, IConnectionSource connectionSource)
             : base(logger, connectionSource)
         {
+            this.Logger.Debug(@"YearRepository(""{0}"",""{1}"")", logger, connectionSource);
         }
 
         #endregion
@@ -22,6 +23,8 @@ namespace Illallangi.FlightLog.Context
 
         public override Year Create(Year obj)
         {
+            this.Logger.Debug(@"YearRepository.Create(""{0}"")", obj);
+
             var id = this.GetConnection()
                 .InsertInto("Year")
                 .Values("YearName", obj.Name)
@@ -32,6 +35,8 @@ namespace Illallangi.FlightLog.Context
 
         public override IEnumerable<Year> Retrieve(Year obj = null)
         {
+            this.Logger.Debug(@"YearRepository.Retrieve(""{0}"")", obj);
+
             return this.GetConnection()
                        .Select<Year>("Years")
                        .Column("YearID", (year, value) => year.Id = value, null == obj ? null : obj.Id)
@@ -42,12 +47,21 @@ namespace Illallangi.FlightLog.Context
 
         public override Year Update(Year obj)
         {
+            this.Logger.Debug(@"YearRepository.Update(""{0}"")", obj);
+
             throw new NotImplementedException();
         }
 
         public override void Delete(Year obj)
         {
-            throw new NotImplementedException();
+            this.Logger.Debug(@"YearRepository.Delete(""{0}"")", obj);
+
+            this.GetConnection()
+                .DeleteFrom("Year")
+                .Where("YearId", obj.Id)
+                .Where("YearName", obj.Name)
+                .CreateCommand()
+                .ExecuteNonQuery();
         }
 
         #endregion

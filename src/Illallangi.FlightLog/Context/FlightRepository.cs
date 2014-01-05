@@ -7,36 +7,38 @@ using Ninject.Extensions.Logging;
 
 namespace Illallangi.FlightLog.Context
 {
-    public class FlightRepository : SourceBase<Flight>
+    public class FlightRepository : RepositoryBase<Flight>
     {
         #region Fields
 
-        private readonly ISource<Trip> currentTripSource;
+        private readonly IRepository<Trip> currentTripRepository;
         
-        private readonly ISource<Airport> currentAirportSource;
+        private readonly IRepository<Airport> currentAirportRepository;
 
         #endregion
 
         #region Constructor
 
-        public FlightRepository(ILogger logger, IConnectionSource connectionSource, ISource<Trip> tripSource, ISource<Airport> airportSource) : base(logger, connectionSource)
+        public FlightRepository(ILogger logger, IConnectionSource connectionSource, IRepository<Trip> tripRepository, IRepository<Airport> airportRepository) 
+            : base(logger, connectionSource)
         {
-            this.currentTripSource = tripSource;
-            this.currentAirportSource = airportSource;
+            this.Logger.Debug(@"FlightRepository(""{0}"",""{1}"",""{2}"",""{3}"")", logger, connectionSource, tripRepository, airportRepository);
+            this.currentTripRepository = tripRepository;
+            this.currentAirportRepository = airportRepository;
         }
 
         #endregion
 
         #region Properties
 
-        private ISource<Trip> TripSource
+        private IRepository<Trip> TripRepository
         {
-            get { return this.currentTripSource; }
+            get { return this.currentTripRepository; }
         }
 
-        private ISource<Airport> AirportSource
+        private IRepository<Airport> AirportRepository
         {
-            get { return this.currentAirportSource; }
+            get { return this.currentAirportRepository; }
         }
 
         #endregion
@@ -45,22 +47,24 @@ namespace Illallangi.FlightLog.Context
 
         public override Flight Create(Flight obj)
         {
-            var trip = this.TripSource.Retrieve(new Trip { Year = obj.Year, Name = obj.Trip }).Single();
-            var origin = this.AirportSource.Retrieve(new Airport { Icao = obj.Origin }).Single();
-            var destination = this.AirportSource.Retrieve(new Airport { Icao = obj.Destination }).Single();
+            this.Logger.Debug(@"FlightRepository.Create(""{0}"")", obj);
+
+            var trip = this.TripRepository.Retrieve(new Trip { Year = obj.Year, Name = obj.Trip }).Single();
+            var origin = this.AirportRepository.Retrieve(new Airport { Icao = obj.Origin }).Single();
+            var destination = this.AirportRepository.Retrieve(new Airport { Icao = obj.Destination }).Single();
 
             var id = this.GetConnection()
                 .InsertInto("Flight")
                 .Values("TripId", trip.Id)
                 .Values("OriginId", origin.Id)
                 .Values("DestinationId", destination.Id)
-                .Values("Airline", obj.Airline)
-                .Values("Number", obj.Number)
-                .Values("Note", obj.Note)
                 .Values("Departure", obj.Departure)
                 .Values("Arrival", obj.Arrival)
+                .Values("Airline", obj.Airline)
+                .Values("Number", obj.Number)
                 .Values("Aircraft", obj.Aircraft)
                 .Values("Seat", obj.Seat)
+                .Values("Note", obj.Note)
                 .Go();
 
             return this.Retrieve(new Flight { Id = id }).Single();
@@ -68,6 +72,8 @@ namespace Illallangi.FlightLog.Context
 
         public override IEnumerable<Flight> Retrieve(Flight obj = null)
         {
+            this.Logger.Debug(@"FlightRepository.Retrieve(""{0}"")", obj);
+
             return this.GetConnection()
                 .Select<Flight>("Flights")
                 .Column("FlightId", (flight, i) => flight.Id = i, null == obj ? null : obj.Id)
@@ -77,24 +83,39 @@ namespace Illallangi.FlightLog.Context
                 .Column("OriginTimezone", (flight, s) => flight.OriginTimezone = s)
                 .Column("DestinationIcao", (flight, s) => flight.Destination = s, null == obj ? null : obj.Destination)
                 .Column("DestinationTimezone", (flight, s) => flight.DestinationTimezone = s)
-                .Column("Airline", (flight, s) => flight.Airline = s, null == obj ? null : obj.Airline)
-                .Column("Number", (flight, s) => flight.Number = s, null == obj ? null : obj.Number)
-                .Column("Note", (flight, s) => flight.Note = s)
                 .Column("Departure", (flight, s) => flight.Departure = s)
                 .Column("Arrival", (flight, s) => flight.Arrival = s)
+                .Column("Airline", (flight, s) => flight.Airline = s, null == obj ? null : obj.Airline)
+                .Column("Number", (flight, s) => flight.Number = s, null == obj ? null : obj.Number)
                 .Column("Aircraft", (flight, s) => flight.Aircraft = s)
                 .Column("Seat", (flight, s) => flight.Seat = s)
+                .Column("Note", (flight, s) => flight.Note = s)
                 .Go();
         }
 
         public override Flight Update(Flight obj)
         {
+            this.Logger.Debug(@"FlightRepository.Update(""{0}"")", obj);
+
             throw new NotImplementedException();
         }
 
         public override void Delete(Flight obj)
         {
-            throw new NotImplementedException();
+            this.Logger.Debug(@"CountryRepository.Delete(""{0}"")", obj);
+
+            this.GetConnection()
+                .DeleteFrom("Flight")
+                .Where("FlightId", obj.Id)
+                .Where("Departure", obj.Departure)
+                .Where("Arrival", obj.Arrival)
+                .Where("Airline", obj.Airline)
+                .Where("Number", obj.Number)
+                .Where("Aircraft", obj.Aircraft)
+                .Where("Seat", obj.Seat)
+                .Where("Note", obj.Note)
+                .CreateCommand()
+                .ExecuteNonQuery();
         }
 
         #endregion
