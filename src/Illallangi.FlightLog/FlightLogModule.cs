@@ -29,11 +29,11 @@ namespace Illallangi.FlightLog
                                 .GetSection("FlightLogConfig")).InSingletonScope();
 
             this.Bind<IRepository<IYear>>().To<YearRepository>().InSingletonScope();
-            this.Bind<IRepository<Trip>>().To<TripRepository>().InSingletonScope();
-            this.Bind<IRepository<Country>>().To<CountryRepository>().InSingletonScope();
-            this.Bind<IRepository<City>>().To<CityRepository>().InSingletonScope();
-            this.Bind<IRepository<Airport>>().To<AirportRepository>().InSingletonScope();
-            this.Bind<IRepository<Flight>>().To<FlightRepository>().InSingletonScope();
+            this.Bind<IRepository<ITrip>>().To<TripRepository>().InSingletonScope();
+            this.Bind<IRepository<ICountry>>().To<CountryRepository>().InSingletonScope();
+            this.Bind<IRepository<ICity>>().To<CityRepository>().InSingletonScope();
+            this.Bind<IRepository<IAirport>>().To<AirportRepository>().InSingletonScope();
+            this.Bind<IRepository<IFlight>>().To<FlightRepository>().InSingletonScope();
             
             this.Bind<IConnectionSource>().To<SQLiteConnectionSource>().InSingletonScope();
         }

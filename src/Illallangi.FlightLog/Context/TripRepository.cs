@@ -7,17 +7,17 @@ using Ninject.Extensions.Logging;
 
 namespace Illallangi.FlightLog.Context
 {
-    public class TripRepository : RepositoryBase<Trip>
+    public class TripRepository : RepositoryBase<ITrip>
     {
         #region Fields
 
-        private readonly IRepository<Year> currentYearRepository;
+        private readonly IRepository<IYear> currentYearRepository;
 
         #endregion
 
         #region Constructors
 
-        public TripRepository(ILogger logger, IConnectionSource connectionSource, IRepository<Year> yearRepository) 
+        public TripRepository(ILogger logger, IConnectionSource connectionSource, IRepository<IYear> yearRepository) 
             : base(logger, connectionSource)
         {
             this.Logger.Debug(@"TripRepository(""{0}"",""{1}"",""{2}"")", logger, connectionSource, yearRepository);
@@ -28,7 +28,7 @@ namespace Illallangi.FlightLog.Context
 
         #region Properties
 
-        private IRepository<Year> YearRepository
+        private IRepository<IYear> YearRepository
         {
             get { return this.currentYearRepository; }
         }
@@ -37,7 +37,7 @@ namespace Illallangi.FlightLog.Context
         
         #region Methods
 
-        public override Trip Create(Trip obj)
+        public override ITrip Create(ITrip obj)
         {
             this.Logger.Debug(@"TripRepository.Create(""{0}"")", obj);
 
@@ -53,7 +53,7 @@ namespace Illallangi.FlightLog.Context
             return this.Retrieve(new Trip { Id = id }).Single();
         }
 
-        public override IEnumerable<Trip> Retrieve(Trip obj = null)
+        public override IEnumerable<ITrip> Retrieve(ITrip obj = null)
         {
             this.Logger.Debug(@"TripRepository.Retrieve(""{0}"")", obj); 
             
@@ -67,14 +67,14 @@ namespace Illallangi.FlightLog.Context
                 .Go();
         }
 
-        public override Trip Update(Trip obj)
+        public override ITrip Update(ITrip obj)
         {
             this.Logger.Debug(@"TripRepository.Update(""{0}"")", obj);
 
             throw new NotImplementedException();
         }
 
-        public override void Delete(Trip obj)
+        public override void Delete(ITrip obj)
         {
             this.Logger.Debug(@"TripRepository.Delete(""{0}"")", obj);
 

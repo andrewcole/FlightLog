@@ -7,19 +7,19 @@ using Ninject.Extensions.Logging;
 
 namespace Illallangi.FlightLog.Context
 {
-    public class FlightRepository : RepositoryBase<Flight>
+    public class FlightRepository : RepositoryBase<IFlight>
     {
         #region Fields
 
-        private readonly IRepository<Trip> currentTripRepository;
+        private readonly IRepository<ITrip> currentTripRepository;
         
-        private readonly IRepository<Airport> currentAirportRepository;
+        private readonly IRepository<IAirport> currentAirportRepository;
 
         #endregion
 
         #region Constructor
 
-        public FlightRepository(ILogger logger, IConnectionSource connectionSource, IRepository<Trip> tripRepository, IRepository<Airport> airportRepository) 
+        public FlightRepository(ILogger logger, IConnectionSource connectionSource, IRepository<ITrip> tripRepository, IRepository<IAirport> airportRepository) 
             : base(logger, connectionSource)
         {
             this.Logger.Debug(@"FlightRepository(""{0}"",""{1}"",""{2}"",""{3}"")", logger, connectionSource, tripRepository, airportRepository);
@@ -31,12 +31,12 @@ namespace Illallangi.FlightLog.Context
 
         #region Properties
 
-        private IRepository<Trip> TripRepository
+        private IRepository<ITrip> TripRepository
         {
             get { return this.currentTripRepository; }
         }
 
-        private IRepository<Airport> AirportRepository
+        private IRepository<IAirport> AirportRepository
         {
             get { return this.currentAirportRepository; }
         }
@@ -45,7 +45,7 @@ namespace Illallangi.FlightLog.Context
 
         #region Methods
 
-        public override Flight Create(Flight obj)
+        public override IFlight Create(IFlight obj)
         {
             this.Logger.Debug(@"FlightRepository.Create(""{0}"")", obj);
 
@@ -70,7 +70,7 @@ namespace Illallangi.FlightLog.Context
             return this.Retrieve(new Flight { Id = id }).Single();
         }
 
-        public override IEnumerable<Flight> Retrieve(Flight obj = null)
+        public override IEnumerable<IFlight> Retrieve(IFlight obj = null)
         {
             this.Logger.Debug(@"FlightRepository.Retrieve(""{0}"")", obj);
 
@@ -93,14 +93,14 @@ namespace Illallangi.FlightLog.Context
                 .Go();
         }
 
-        public override Flight Update(Flight obj)
+        public override IFlight Update(IFlight obj)
         {
             this.Logger.Debug(@"FlightRepository.Update(""{0}"")", obj);
 
             throw new NotImplementedException();
         }
 
-        public override void Delete(Flight obj)
+        public override void Delete(IFlight obj)
         {
             this.Logger.Debug(@"CountryRepository.Delete(""{0}"")", obj);
 

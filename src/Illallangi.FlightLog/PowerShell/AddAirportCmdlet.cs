@@ -4,7 +4,7 @@ using Illallangi.FlightLog.Model;
 namespace Illallangi.FlightLog.PowerShell
 {
     [Cmdlet(VerbsCommon.Add, Nouns.Airport)]
-    public sealed class AddAirportCmdlet : FlightLogCmdlet<Airport>
+    public sealed class AddAirportCmdlet : FlightLogCmdlet<IAirport>
     {
         #region Properties
 

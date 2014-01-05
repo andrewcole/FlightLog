@@ -7,17 +7,17 @@ using Ninject.Extensions.Logging;
 
 namespace Illallangi.FlightLog.Context
 {
-    public class AirportRepository : RepositoryBase<Airport>
+    public class AirportRepository : RepositoryBase<IAirport>
     {
         #region Fields
 
-        private readonly IRepository<City> currentCityRepository;
+        private readonly IRepository<ICity> currentCityRepository;
 
         #endregion
 
         #region Constructor
 
-        public AirportRepository(ILogger logger, IConnectionSource connectionSource, IRepository<City> cityRepository)
+        public AirportRepository(ILogger logger, IConnectionSource connectionSource, IRepository<ICity> cityRepository)
             : base(logger, connectionSource)
         {
             this.Logger.Debug(@"AirportRepository(""{0}"",""{1}"",""{2}"")", logger, connectionSource, cityRepository);
@@ -28,7 +28,7 @@ namespace Illallangi.FlightLog.Context
 
         #region Properties
 
-        private IRepository<City> CityRepository
+        private IRepository<ICity> CityRepository
         {
             get { return this.currentCityRepository; }
         }
@@ -37,7 +37,7 @@ namespace Illallangi.FlightLog.Context
 
         #region Methods
 
-        public override Airport Create(Airport obj)
+        public override IAirport Create(IAirport obj)
         {
             this.Logger.Debug(@"AirportRepository.Create(""{0}"")", obj);
 
@@ -58,7 +58,7 @@ namespace Illallangi.FlightLog.Context
             return this.Retrieve(new Airport { Id = id }).Single();
         }
 
-        public override IEnumerable<Airport> Retrieve(Airport obj = null)
+        public override IEnumerable<IAirport> Retrieve(IAirport obj = null)
         {
             this.Logger.Debug(@"AirportRepository.Retrieve(""{0}"")", obj);
 
@@ -77,14 +77,14 @@ namespace Illallangi.FlightLog.Context
                 .Go();
         }
 
-        public override Airport Update(Airport obj)
+        public override IAirport Update(IAirport obj)
         {
             this.Logger.Debug(@"AirportRepository.Update(""{0}"")", obj);
 
             throw new NotImplementedException();
         }
 
-        public override void Delete(Airport obj)
+        public override void Delete(IAirport obj)
         {
             this.Logger.Debug(@"AirportRepository.Delete(""{0}"")", obj);
 

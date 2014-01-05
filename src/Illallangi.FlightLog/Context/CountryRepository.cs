@@ -6,7 +6,7 @@ using Ninject.Extensions.Logging;
 
 namespace Illallangi.FlightLog.Context
 {
-    public sealed class CountryRepository : RepositoryBase<Country>
+    public sealed class CountryRepository : RepositoryBase<ICountry>
     {
         #region Constructor
 
@@ -20,7 +20,7 @@ namespace Illallangi.FlightLog.Context
 
         #region Methods
 
-        public override Country Create(Country obj)
+        public override ICountry Create(ICountry obj)
         {
             this.Logger.Debug(@"CountryRepository.Create(""{0}"")", obj);
             
@@ -32,7 +32,7 @@ namespace Illallangi.FlightLog.Context
             return this.Retrieve(new Country { Id = id }).Single();
         }
 
-        public override IEnumerable<Country> Retrieve(Country obj = null)
+        public override IEnumerable<ICountry> Retrieve(ICountry obj = null)
         {
             this.Logger.Debug(@"CountryRepository.Retrieve(""{0}"")", obj);
 
@@ -44,14 +44,14 @@ namespace Illallangi.FlightLog.Context
                 .Go();
         }
 
-        public override Country Update(Country obj)
+        public override ICountry Update(ICountry obj)
         {
             this.Logger.Debug(@"CountryRepository.Update(""{0}"")", obj);
 
             throw new System.NotImplementedException();
         }
 
-        public override void Delete(Country obj)
+        public override void Delete(ICountry obj)
         {
             this.Logger.Debug(@"CountryRepository.Delete(""{0}"")", obj);
 

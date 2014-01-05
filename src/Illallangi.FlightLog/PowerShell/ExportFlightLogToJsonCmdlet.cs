@@ -19,7 +19,7 @@ namespace Illallangi.FlightLog.PowerShell
                 JsonConvert.SerializeObject(
                     new
                     {
-                        Airports = this.Get<IRepository<Airport>>()
+                        Airports = this.Get<IRepository<IAirport>>()
                             .Retrieve()
                             .Select(
                                 airport => new
@@ -34,20 +34,20 @@ namespace Illallangi.FlightLog.PowerShell
                                     airport.Altitude,
                                     airport.Timezone,
                                 }),
-                        Years = this.Get<IRepository<Year>>()
+                        Years = this.Get<IRepository<IYear>>()
                             .Retrieve()
                             .Select(
                                 year => new
                                 {
                                     Title = year.Name,
-                                    Trips = this.Get<IRepository<Trip>>()
+                                    Trips = this.Get<IRepository<ITrip>>()
                                         .Retrieve(new Trip { Year = year.Name })
                                         .Select(
                                             trip => new
                                             {
                                                 Title = trip.Name,
                                                 trip.Description,
-                                                Flights = this.Get<IRepository<Flight>>()
+                                                Flights = this.Get<IRepository<IFlight>>()
                                                     .Retrieve(new Flight { Year = year.Name, Trip = trip.Name })
                                                     .OrderBy(flight => flight.Departure)
                                                     .Select(

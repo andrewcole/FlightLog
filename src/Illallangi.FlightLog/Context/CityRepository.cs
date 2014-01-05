@@ -6,17 +6,17 @@ using Ninject.Extensions.Logging;
 
 namespace Illallangi.FlightLog.Context
 {
-    public sealed class CityRepository : RepositoryBase<City>
+    public sealed class CityRepository : RepositoryBase<ICity>
     {
         #region Fields
 
-        private readonly IRepository<Country> currentCountryRepository;
+        private readonly IRepository<ICountry> currentCountryRepository;
 
         #endregion
 
         #region Constructor
 
-        public CityRepository(ILogger logger, IConnectionSource connectionSource, IRepository<Country> countryRepository)
+        public CityRepository(ILogger logger, IConnectionSource connectionSource, IRepository<ICountry> countryRepository)
             : base(logger, connectionSource)
         {
             this.Logger.Debug(@"CityRepository(""{0}"",""{1}"",""{2}"")", logger, connectionSource, countryRepository);
@@ -27,7 +27,7 @@ namespace Illallangi.FlightLog.Context
 
         #region Properties
 
-        private IRepository<Country> CountryRepository
+        private IRepository<ICountry> CountryRepository
         {
             get
             {
@@ -39,7 +39,7 @@ namespace Illallangi.FlightLog.Context
 
         #region Methods
 
-        public override City Create(City obj)
+        public override ICity Create(ICity obj)
         {
             this.Logger.Debug(@"CityRepository.Create(""{0}"")", obj);
 
@@ -54,7 +54,7 @@ namespace Illallangi.FlightLog.Context
             return this.Retrieve(new City { Id = id }).Single();
         }
 
-        public override IEnumerable<City> Retrieve(City obj = null)
+        public override IEnumerable<ICity> Retrieve(ICity obj = null)
         {
             this.Logger.Debug(@"CityRepository.Retrieve(""{0}"")", obj);
 
@@ -67,14 +67,14 @@ namespace Illallangi.FlightLog.Context
                 .Go();
         }
 
-        public override City Update(City obj)
+        public override ICity Update(ICity obj)
         {
             this.Logger.Debug(@"CityRepository.Update(""{0}"")", obj);
 
             throw new System.NotImplementedException();
         }
 
-        public override void Delete(City obj)
+        public override void Delete(ICity obj)
         {
             this.Logger.Debug(@"CityRepository.Delete(""{0}"")", obj);
 
