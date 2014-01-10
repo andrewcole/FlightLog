@@ -60,10 +60,7 @@ namespace Illallangi.LiteOrm
                     foreach (
                         var line in
                             this.LiteOrmConfig
-                                .SqlSchema
-                                .Select(f => Path.GetFullPath(Environment.ExpandEnvironmentVariables(f)))
-                                .Where(File.Exists)
-                                .SelectMany(file => File.ReadAllText(file).Split(';')))
+                                .SqlSchema)
                     {
                         new SQLiteCommand(line, conn).ExecuteNonQuery();
                     }
