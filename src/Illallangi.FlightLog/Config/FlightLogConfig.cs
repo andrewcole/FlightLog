@@ -1,6 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
+using System.Reflection;
+
 using Illallangi.LiteOrm;
 
 namespace Illallangi.FlightLog.Config
@@ -57,7 +61,27 @@ namespace Illallangi.FlightLog.Config
         {
             get
             {
-                return this.ExtensionCollection.Cast<ValueElement>().Select(element => element.Value);
+                foreach (var extension in this.ExtensionCollection.Cast<ValueElement>().Select(element => element.Value))
+                {
+
+                    if (null != Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) &&
+                             File.Exists(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), extension)))
+                    {
+                        yield return Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), extension);
+                    }
+                    else if (File.Exists(extension))
+                    {
+                        yield return extension;
+                    }
+                    else if (File.Exists(Path.GetFullPath(extension)))
+                    {
+                        yield return Path.GetFullPath(extension);
+                    }
+                    else
+                    {
+                        throw new FileNotFoundException(extension);
+                    }
+                }
             }
         }
 
