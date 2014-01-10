@@ -86,9 +86,6 @@
     <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Illallangi.FlightLog.psm1"
           DestinationFolder="$(BuildDir32)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Illallangi.FlightLog.sql"
-          DestinationFolder="$(BuildDir32)\bin" />
-
     <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\System.Data.SQLite.dll"
           DestinationFolder="$(BuildDir32)\bin" />
 
@@ -141,9 +138,6 @@
           DestinationFolder="$(BuildDir64)\bin" />
 
     <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Illallangi.FlightLog.psm1"
-          DestinationFolder="$(BuildDir64)\bin" />
-
-    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Illallangi.FlightLog.sql"
           DestinationFolder="$(BuildDir64)\bin" />
 
     <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Ninject.dll"

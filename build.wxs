@@ -68,7 +68,6 @@
         <File Id="IllallangiFlightLogDllConfigF" KeyPath="no" Source="$(var.source)\Illallangi.FlightLog.dll.config" />
         <File Id="IllallangiFlightLogPsd1F" KeyPath="no" Source="$(var.source)\Illallangi.FlightLog.psd1" />
         <File Id="IllallangiFlightLogPsm1F" KeyPath="no" Source="$(var.source)\Illallangi.FlightLog.psm1" />
-        <File Id="IllallangiFlightLogSql1F" KeyPath="no" Source="$(var.source)\Illallangi.FlightLog.sql" />
       </Component>
 
       <Component Id="IllallangiLiteOrmC" Directory="SOFTWAREDIR" Guid="{4386B7A3-0F92-4684-B2DE-63FADCE31C94}" Permanent="yes" >
