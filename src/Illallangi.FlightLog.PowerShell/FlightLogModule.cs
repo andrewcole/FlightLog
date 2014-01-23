@@ -1,20 +1,22 @@
-using System.Configuration;
-using System.Reflection;
-using System.Collections.Specialized;
-
-using Common.Logging;
-using Common.Logging.Log4Net;
-
-using Illallangi.FlightLog.Config;
-using Illallangi.FlightLog.Context;
-using Illallangi.FlightLog.Model;
-using Illallangi.LiteOrm;
-
-using log4net.Config;
-using Ninject.Modules;
-
-namespace Illallangi.FlightLog
+namespace Illallangi.FlightLog.PowerShell
 {
+    using System.Collections.Specialized;
+    using System.Configuration;
+    using System.Reflection;
+
+    using Common.Logging;
+    using Common.Logging.Log4Net;
+
+    using Illallangi.FlightLog.Config;
+    using Illallangi.FlightLog.Context;
+    using Illallangi.FlightLog.Model;
+    using Illallangi.FlightLog.PowerShell.Config;
+    using Illallangi.LiteOrm;
+
+    using log4net.Config;
+
+    using Ninject.Modules;
+
     public sealed class FlightLogModule : NinjectModule
     {
         public override void Load()

@@ -1,9 +1,10 @@
-using System.Linq;
-using System.Management.Automation;
-using Illallangi.FlightLog.Model;
-
-namespace Illallangi.FlightLog.PowerShell
+namespace Illallangi.FlightLog.PowerShell.Airport
 {
+    using System.Linq;
+    using System.Management.Automation;
+
+    using Illallangi.FlightLog.Model;
+
     [Cmdlet(VerbsCommon.Remove, Nouns.Airport, DefaultParameterSetName = "Id", SupportsShouldProcess = true, ConfirmImpact = ConfirmImpact.High)]
     public sealed class RemoveAirportCmdlet : FlightLogCmdlet<IAirport>
     {
@@ -28,7 +29,7 @@ namespace Illallangi.FlightLog.PowerShell
         protected override void BeginProcessing()
         {
             foreach (var o in this.Repository.Retrieve(
-                new Airport 
+                new FlightLog.PowerShell.Airport 
                 { 
                     Id = this.Id, 
                     Name = this.Name, 

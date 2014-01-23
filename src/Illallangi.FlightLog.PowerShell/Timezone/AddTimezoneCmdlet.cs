@@ -1,8 +1,9 @@
-﻿using System.Management.Automation;
-using Illallangi.FlightLog.Model;
-
-namespace Illallangi.FlightLog.PowerShell
+﻿namespace Illallangi.FlightLog.PowerShell.Timezone
 {
+    using System.Management.Automation;
+
+    using Illallangi.FlightLog.Model;
+
     [Cmdlet(VerbsCommon.Add, Nouns.Timezone)]
     public sealed class AddTimezoneCmdlet : FlightLogCmdlet<ITimezone>
     {
@@ -17,7 +18,7 @@ namespace Illallangi.FlightLog.PowerShell
 
         protected override void ProcessRecord()
         {
-            this.WriteObject(this.Repository.Create(new Timezone
+            this.WriteObject(this.Repository.Create(new FlightLog.PowerShell.Timezone
             {
                 Name = this.Name,
             }));

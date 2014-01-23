@@ -1,8 +1,9 @@
-﻿using System.Management.Automation;
-using Illallangi.FlightLog.Model;
-
-namespace Illallangi.FlightLog.PowerShell
+﻿namespace Illallangi.FlightLog.PowerShell.Year
 {
+    using System.Management.Automation;
+
+    using Illallangi.FlightLog.Model;
+
     [Cmdlet(VerbsCommon.Add, Nouns.Year)]
     public sealed class AddYearCmdlet : FlightLogCmdlet<IYear>
     {

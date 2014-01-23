@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-
-namespace Illallangi.FlightLog.Config
+﻿namespace Illallangi.FlightLog.PowerShell.Config
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Configuration;
+    using System.IO;
+    using System.Linq;
+    using System.Reflection;
+
+    using Illallangi.FlightLog.Config;
+
     public sealed class FlightLogConfig : ConfigurationSection, IFlightLogConfig
     {
         #region Properties

@@ -1,8 +1,9 @@
-﻿using System.Management.Automation;
-using Illallangi.FlightLog.Model;
-
-namespace Illallangi.FlightLog.PowerShell
+﻿namespace Illallangi.FlightLog.PowerShell.Year
 {
+    using System.Management.Automation;
+
+    using Illallangi.FlightLog.Model;
+
     [Cmdlet(VerbsCommon.Get, Nouns.Year)]
     public sealed class GetYearCmdlet : FlightLogCmdlet<IYear>
     {
@@ -17,7 +18,7 @@ namespace Illallangi.FlightLog.PowerShell
 
         protected override void BeginProcessing()
         {
-            this.WriteObject(this.Repository.Retrieve(new Year { Name = this.Name }), true);
+            this.WriteObject(this.Repository.Retrieve(new FlightLog.PowerShell.Year { Name = this.Name }), true);
         }
 
         #endregion

@@ -1,9 +1,10 @@
-using System.Linq;
-using System.Management.Automation;
-using Illallangi.FlightLog.Model;
-
-namespace Illallangi.FlightLog.PowerShell
+namespace Illallangi.FlightLog.PowerShell.City
 {
+    using System.Linq;
+    using System.Management.Automation;
+
+    using Illallangi.FlightLog.Model;
+
     [Cmdlet(VerbsCommon.Remove, Nouns.City, DefaultParameterSetName = "Id", SupportsShouldProcess = true, ConfirmImpact = ConfirmImpact.High)]
     public sealed class RemoveCityCmdlet : FlightLogCmdlet<ICity>
     {
@@ -18,7 +19,7 @@ namespace Illallangi.FlightLog.PowerShell
 
         protected override void BeginProcessing()
         {
-            foreach (var o in this.Repository.Retrieve(new City { Id = this.Id, Name = this.Name, Country = this.Country }).ToList().Where(o => this.ShouldProcess(o.ToString(), VerbsCommon.Remove)))
+            foreach (var o in this.Repository.Retrieve(new FlightLog.PowerShell.City { Id = this.Id, Name = this.Name, Country = this.Country }).ToList().Where(o => this.ShouldProcess(o.ToString(), VerbsCommon.Remove)))
             {
                 this.Repository.Delete(o);
             }

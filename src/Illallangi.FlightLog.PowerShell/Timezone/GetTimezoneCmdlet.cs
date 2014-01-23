@@ -1,8 +1,9 @@
-using System.Management.Automation;
-using Illallangi.FlightLog.Model;
-
-namespace Illallangi.FlightLog.PowerShell
+namespace Illallangi.FlightLog.PowerShell.Timezone
 {
+    using System.Management.Automation;
+
+    using Illallangi.FlightLog.Model;
+
     [Cmdlet(VerbsCommon.Get, Nouns.Timezone)]
     public sealed class GetTimezoneCmdlet : FlightLogCmdlet<ITimezone>
     {

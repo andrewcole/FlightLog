@@ -1,9 +1,10 @@
-using System;
-using System.Management.Automation;
-using Illallangi.FlightLog.Model;
-
-namespace Illallangi.FlightLog.PowerShell
+namespace Illallangi.FlightLog.PowerShell.Flight
 {
+    using System;
+    using System.Management.Automation;
+
+    using Illallangi.FlightLog.Model;
+
     [Cmdlet(VerbsCommon.Add, Nouns.Flight)]
     public sealed class AddFlightCmdlet : FlightLogCmdlet<IFlight>
     {
@@ -48,7 +49,7 @@ namespace Illallangi.FlightLog.PowerShell
 
         protected override void ProcessRecord()
         {
-            this.WriteObject(this.Repository.Create(new Flight
+            this.WriteObject(this.Repository.Create(new FlightLog.PowerShell.Flight
             {
                 Year = this.Year,
                 Trip = this.Trip,

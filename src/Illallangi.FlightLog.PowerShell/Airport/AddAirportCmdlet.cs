@@ -1,8 +1,9 @@
-using System.Management.Automation;
-using Illallangi.FlightLog.Model;
-
-namespace Illallangi.FlightLog.PowerShell
+namespace Illallangi.FlightLog.PowerShell.Airport
 {
+    using System.Management.Automation;
+
+    using Illallangi.FlightLog.Model;
+
     [Cmdlet(VerbsCommon.Add, Nouns.Airport)]
     public sealed class AddAirportCmdlet : FlightLogCmdlet<IAirport>
     {

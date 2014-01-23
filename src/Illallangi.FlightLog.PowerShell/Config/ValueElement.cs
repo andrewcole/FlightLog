@@ -1,7 +1,7 @@
-﻿using System.Configuration;
-
-namespace Illallangi.FlightLog.Config
+﻿namespace Illallangi.FlightLog.PowerShell.Config
 {
+    using System.Configuration;
+
     public class ValueElement : ConfigurationElement
     {
         [ConfigurationProperty("Value", IsRequired = true)]

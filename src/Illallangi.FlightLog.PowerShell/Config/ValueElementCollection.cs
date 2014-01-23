@@ -1,7 +1,7 @@
-using System.Configuration;
-
-namespace Illallangi.FlightLog.Config
+namespace Illallangi.FlightLog.PowerShell.Config
 {
+    using System.Configuration;
+
     public sealed class ValueElementCollection : ConfigurationElementCollection
     {
         public ValueElement this[int index]

@@ -1,8 +1,9 @@
-using System.Management.Automation;
-using Illallangi.FlightLog.Model;
-
-namespace Illallangi.FlightLog.PowerShell
+namespace Illallangi.FlightLog.PowerShell.Trip
 {
+    using System.Management.Automation;
+
+    using Illallangi.FlightLog.Model;
+
     [Cmdlet(VerbsCommon.Add, Nouns.Trip)]
     public sealed class AddTripCmdlet : FlightLogCmdlet<ITrip>
     {
