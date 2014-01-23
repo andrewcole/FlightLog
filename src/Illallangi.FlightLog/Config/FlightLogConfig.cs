@@ -7,16 +7,6 @@ using System.Reflection;
 
 namespace Illallangi.FlightLog.Config
 {
-    public interface IFlightLogConfig
-    {
-        string DatabasePath { get; }
-        string ConnectionString { get; }
-        IEnumerable<string> SqlSchemaLines { get; }
-        IEnumerable<string> SqlSchemaFiles { get; }
-        IEnumerable<string> Pragmas { get; }
-        IEnumerable<string> Extensions { get; }
-    }
-
     public sealed class FlightLogConfig : ConfigurationSection, IFlightLogConfig
     {
         #region Properties
