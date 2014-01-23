@@ -18,7 +18,7 @@
 
         protected override void BeginProcessing()
         {
-            this.WriteObject(this.Repository.Retrieve(new FlightLog.PowerShell.Year { Name = this.Name }), true);
+            this.WriteObject(this.Repository.Retrieve(new Year { Name = this.Name }), true);
         }
 
         #endregion

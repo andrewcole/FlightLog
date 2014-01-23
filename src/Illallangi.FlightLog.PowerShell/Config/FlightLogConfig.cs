@@ -77,7 +77,6 @@
             {
                 foreach (var extension in this.ExtensionCollection.Cast<ValueElement>().Select(element => element.Value))
                 {
-
                     if (null != Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) &&
                              File.Exists(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), extension)))
                     {

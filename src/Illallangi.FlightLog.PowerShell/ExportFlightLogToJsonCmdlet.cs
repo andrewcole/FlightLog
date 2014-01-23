@@ -1,12 +1,13 @@
-using System.IO;
-using System.Linq;
-using System.Management.Automation;
-using Illallangi.FlightLog.Model;
-using Newtonsoft.Json;
-
 namespace Illallangi.FlightLog.PowerShell
 {
+    using System.IO;
+    using System.Linq;
+    using System.Management.Automation;
+
+    using Illallangi.FlightLog.Model;
     using Illallangi.LiteOrm;
+
+    using Newtonsoft.Json;
 
     [Cmdlet(VerbsData.Export, "FlightLogToJson")]
     public sealed class ExportFlightLogToJsonCmdlet : NinjectCmdlet
@@ -43,14 +44,14 @@ namespace Illallangi.FlightLog.PowerShell
                                 {
                                     Title = year.Name,
                                     Trips = this.Get<IRepository<ITrip>>()
-                                        .Retrieve(new Trip { Year = year.Name })
+                                        .Retrieve(new Model.Trip { Year = year.Name })
                                         .Select(
                                             trip => new
                                             {
                                                 Title = trip.Name,
                                                 trip.Description,
                                                 Flights = this.Get<IRepository<IFlight>>()
-                                                    .Retrieve(new Flight { Year = year.Name, Trip = trip.Name })
+                                                    .Retrieve(new Model.Flight { Year = year.Name, Trip = trip.Name })
                                                     .OrderBy(flight => flight.Departure)
                                                     .Select(
                                                         flight => new

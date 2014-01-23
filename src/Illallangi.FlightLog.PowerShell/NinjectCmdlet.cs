@@ -1,17 +1,16 @@
-﻿using System.Management.Automation;
-using Ninject;
-using Ninject.Modules;
-
-namespace Illallangi.FlightLog.PowerShell
+﻿namespace Illallangi.FlightLog.PowerShell
 {
+    using System.Management.Automation;
+
+    using Ninject;
+    using Ninject.Modules;
+
     [Cmdlet(VerbsCommon.Get, Nouns.Null)]
     public abstract class NinjectCmdlet : PSCmdlet
     {
         #region Fields
 
         private INinjectModule currentFlightLogModule;
-
-        private INinjectModule currentLog4NetModule;
 
         private StandardKernel currentKernel;
 

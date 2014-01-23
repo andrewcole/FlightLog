@@ -18,10 +18,7 @@
 
         protected override void ProcessRecord()
         {
-            this.WriteObject(this.Repository.Create(new FlightLog.PowerShell.Timezone
-            {
-                Name = this.Name,
-            }));
+            this.WriteObject(this.Repository.Create(new Timezone { Name = this.Name }));
         }
 
         #endregion

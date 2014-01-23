@@ -49,7 +49,7 @@ namespace Illallangi.FlightLog.PowerShell.Flight
 
         protected override void ProcessRecord()
         {
-            this.WriteObject(this.Repository.Create(new FlightLog.PowerShell.Flight
+            this.WriteObject(this.Repository.Create(new Flight
             {
                 Year = this.Year,
                 Trip = this.Trip,

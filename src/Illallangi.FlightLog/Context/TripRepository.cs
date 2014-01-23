@@ -20,7 +20,8 @@ namespace Illallangi.FlightLog.Context
 
         #region Constructors
 
-        public TripRepository(IFlightLogConfig flightLogConfig,
+        public TripRepository(
+            IFlightLogConfig flightLogConfig,
             IRepository<IYear> yearRepository,
             ILog log)
         : base(

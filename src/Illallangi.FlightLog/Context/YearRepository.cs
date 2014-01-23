@@ -10,7 +10,6 @@ using Illallangi.LiteOrm;
 
 namespace Illallangi.FlightLog.Context
 {
-
     public class YearRepository : RepositoryBase<IYear>
     {
         #region Constructor

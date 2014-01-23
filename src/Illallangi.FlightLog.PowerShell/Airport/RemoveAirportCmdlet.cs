@@ -29,7 +29,7 @@ namespace Illallangi.FlightLog.PowerShell.Airport
         protected override void BeginProcessing()
         {
             foreach (var o in this.Repository.Retrieve(
-                new FlightLog.PowerShell.Airport 
+                new Airport 
                 { 
                     Id = this.Id, 
                     Name = this.Name, 

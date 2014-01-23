@@ -13,8 +13,9 @@ namespace Illallangi.FlightLog.Context
     {
         #region Constructor
 
-        public TimezoneRepository(IFlightLogConfig flightLogConfig,
-            ILog log)
+        public TimezoneRepository(
+                IFlightLogConfig flightLogConfig,
+                ILog log)
             : base(
                 flightLogConfig.DatabasePath,
                 flightLogConfig.ConnectionString,
