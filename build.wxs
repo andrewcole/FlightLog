@@ -65,11 +65,13 @@
     <Feature Id="Complete" Level="1" Title="$(var.AppName)">
       <Component Id="IllallangiFlightLogDllC" Directory="SOFTWAREDIR" Guid="{21165B21-1DD8-443B-BD5A-0031FFA138A9}" Permanent="yes" >
         <File Id="IllallangiFlightLogDllF" KeyPath="yes" Source="$(var.source)\Illallangi.FlightLog.dll" />
-        <File Id="IllallangiFlightLogDllConfigF" KeyPath="no" Source="$(var.source)\Illallangi.FlightLog.dll.config" />
         <File Id="IllallangiFlightLogPsd1F" KeyPath="no" Source="$(var.source)\Illallangi.FlightLog.psd1" />
         <File Id="IllallangiFlightLogPsm1F" KeyPath="no" Source="$(var.source)\Illallangi.FlightLog.psm1" />
       </Component>
-
+      <Component Id="IllallangiFlightLogPowerShellDllC" Directory="SOFTWAREDIR" Guid="{39B792BD-F104-4502-B9FC-FA13CF75BF98}" Permanent="yes" >
+        <File Id="IllallangiFlightLogPowerShellDllF" KeyPath="yes" Source="$(var.source)\Illallangi.FlightLog.PowerShell.dll" />
+        <File Id="IllallangiFlightLogPowerShellDllConfigF" KeyPath="no" Source="$(var.source)\Illallangi.FlightLog.PowerShell.dll.config" />
+      </Component>
       <Component Id="IllallangiLiteOrmC" Directory="SOFTWAREDIR" Guid="{4386B7A3-0F92-4684-B2DE-63FADCE31C94}" Permanent="yes" >
         <File Id="IllallangiLiteOrmF" KeyPath="yes" Source="$(var.source)\Illallangi.LiteOrm.dll" />
       </Component>

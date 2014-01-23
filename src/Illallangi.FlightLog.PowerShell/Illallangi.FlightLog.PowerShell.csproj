@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{67E9FA77-DAD3-47A5-A229-9069F2DEFD63}</ProjectGuid>
+    <ProjectGuid>{47CBC3D5-F923-401E-AF20-F4D766699B7A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Illallangi.FlightLog</RootNamespace>
-    <AssemblyName>Illallangi.FlightLog</AssemblyName>
+    <RootNamespace>Illallangi.FlightLog.PowerShell</RootNamespace>
+    <AssemblyName>Illallangi.FlightLog.PowerShell</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
@@ -32,20 +32,23 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Common.Logging, Version=2.0.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Common.Logging">
       <HintPath>..\packages\Common.Logging.2.0.0\lib\2.0\Common.Logging.dll</HintPath>
     </Reference>
-    <Reference Include="Illallangi.LiteOrm, Version=1.0.13.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Illallangi.LiteOrm.1.0.13\lib\Illallangi.LiteOrm.dll</HintPath>
+    <Reference Include="Common.Logging.Log4Net">
+      <HintPath>..\packages\Common.Logging.Log4Net.2.0.1\lib\net20\Common.Logging.Log4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="Illallangi.LiteOrm">
+      <HintPath>..\packages\Illallangi.LiteOrm.1.0.14\lib\Illallangi.LiteOrm.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\packages\log4net.1.2.10\lib\2.0\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="NodaTime, Version=1.2.0.0, Culture=neutral, PublicKeyToken=4226afe0d9b296d1, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NodaTime.1.2.0\lib\net35-Client\NodaTime.dll</HintPath>
+    <Reference Include="Ninject">
+      <HintPath>..\packages\Ninject.3.0.1.10\lib\net45-full\Ninject.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -56,6 +59,10 @@
     <Reference Include="System.Data.SQLite.Linq">
       <HintPath>..\packages\System.Data.SQLite.1.0.90.0\lib\net45\System.Data.SQLite.Linq.dll</HintPath>
     </Reference>
+    <Reference Include="System.Management.Automation, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\System.Management.Automation.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -63,37 +70,63 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Config\IFlightLogConfig.cs" />
-    <Compile Include="Context\TimezoneRepository.cs" />
-    <Compile Include="Context\FlightRepository.cs" />
-    <Compile Include="Context\TripRepository.cs" />
-    <Compile Include="Context\YearRepository.cs" />
-    <Compile Include="Model\Airport.cs" />
-    <Compile Include="Model\City.cs" />
-    <Compile Include="Model\Timezone.cs" />
-    <Compile Include="Model\Country.cs" />
-    <Compile Include="Model\Flight.cs" />
-    <Compile Include="Model\Trip.cs" />
-    <Compile Include="Model\Year.cs" />
+    <Compile Include="Airport\AddAirportCmdlet.cs" />
+    <Compile Include="Airport\GetAirportCmdlet.cs" />
+    <Compile Include="Airport\RemoveAirportCmdlet.cs" />
+    <Compile Include="City\AddCityCmdlet.cs" />
+    <Compile Include="City\GetCityCmdlet.cs" />
+    <Compile Include="City\RemoveCityCmdlet.cs" />
+    <Compile Include="Config\FlightLogConfig.cs" />
+    <Compile Include="Config\ValueElement.cs" />
+    <Compile Include="Config\ValueElementCollection.cs" />
+    <Compile Include="Country\AddCountryCmdlet.cs" />
+    <Compile Include="Country\GetCountryCmdlet.cs" />
+    <Compile Include="Country\RemoveCountryCmdlet.cs" />
+    <Compile Include="FlightLogModule.cs" />
+    <Compile Include="Flight\AddFlightCmdlet.cs" />
+    <Compile Include="Flight\GetFlightCmdlet.cs" />
+    <Compile Include="ExportFlightLogToJsonCmdlet.cs" />
+    <Compile Include="FlightLogCmdlet.cs" />
+    <Compile Include="NinjectCmdlet.cs" />
+    <Compile Include="Nouns.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Context\AirportRepository.cs" />
-    <Compile Include="Context\CityRepository.cs" />
-    <Compile Include="Context\CountryRepository.cs" />
+    <Compile Include="Timezone\AddTimezoneCmdlet.cs" />
+    <Compile Include="Timezone\GetTimezoneCmdlet.cs" />
+    <Compile Include="Trip\AddTripCmdlet.cs" />
+    <Compile Include="Trip\GetTripCmdlet.cs" />
+    <Compile Include="Year\AddYearCmdlet.cs" />
+    <Compile Include="Year\GetYearCmdlet.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Illallangi.FlightLog\Illallangi.FlightLog.csproj">
+      <Project>{67e9fa77-dad3-47a5-a229-9069f2defd63}</Project>
+      <Name>Illallangi.FlightLog</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Log4Net.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="PowerShell\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="Illallangi.FlightLog.psd1">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Illallangi.FlightLog.psm1">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
+    <None Include="SampleData.ps1">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="x64\SQLite.Interop.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="x64\zumero.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="x86\SQLite.Interop.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="x86\zumero.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

@@ -32,35 +32,37 @@
 
     <AssemblyInfo CodeLanguage="CS"
                   OutputFile="$(SourceDir)\Illallangi.FlightLog\Properties\AssemblyInfo.cs"
-                  AssemblyTitle="Illallangi.FlightLog"
+                  AssemblyTitle="Flight Log"
                   AssemblyDescription=""
                   AssemblyCompany="Illallangi Enterprises"
                   AssemblyProduct="Flight Log"
-                  AssemblyCopyright="Copyright © Illallangi Enterprises 2013"
+                  AssemblyCopyright="Copyright © Illallangi Enterprises 2014"
                   ComVisible="false"
                   AssemblyInformationalVersion="Built from hash '$(GitCommitHash)'"
                   Guid="4560e272-e976-41a7-aee2-f7a04533c85d"
                   AssemblyVersion="$(Version)"
-                  AssemblyFileVersion="$(Version)" />
+                  AssemblyFileVersion="$(Version)"
+                  Condition="$(Version) != '0.0.0.1'" />
 
     <AssemblyInfo CodeLanguage="CS"
-              OutputFile="$(SourceDir)\Illallangi.LiteOrm\Properties\AssemblyInfo.cs"
-              AssemblyTitle="Illallangi.LiteOrm"
-              AssemblyDescription=""
-              AssemblyCompany="Illallangi Enterprises"
-              AssemblyProduct="Lite ORM"
-              AssemblyCopyright="Copyright © Illallangi Enterprises 2013"
-              ComVisible="false"
-              AssemblyInformationalVersion="Built from hash '$(GitCommitHash)'"
-              Guid="f8f3fcdc-9320-4a06-8d80-2ffdba8a6fab"
-              AssemblyVersion="$(Version)"
-              AssemblyFileVersion="$(Version)" />
+                  OutputFile="$(SourceDir)\Illallangi.FlightLog.PowerShell\Properties\AssemblyInfo.cs"
+                  AssemblyTitle="Flight Log PowerShell Module"
+                  AssemblyDescription=""
+                  AssemblyCompany="Illallangi Enterprises"
+                  AssemblyProduct="Flight Log PowerShell Module"
+                  AssemblyCopyright="Copyright © Illallangi Enterprises 2014"
+                  ComVisible="false"
+                  AssemblyInformationalVersion="Built from hash '$(GitCommitHash)'"
+                  Guid="fc8b7763-1e31-4f13-806c-ebb1640e9b4a"
+                  AssemblyVersion="$(Version)"
+                  AssemblyFileVersion="$(Version)"  
+                  Condition="$(Version) != '0.0.0.1'" />
 
     <Message Text="Building version $(Version) from hash $(GitCommitHash)"  Importance="High" />
 
   </Target>
 
-  <Target Name="Compile">
+  <Target Name="Compile" DependsOnTargets="Version">
     <Message Text="=========== Compile ===========" Importance="High" />
 
     <MSBuild Projects="$(SourceDir)\Illallangi.FlightLog.sln" Properties="Configuration=$(Configuration)" Targets="Rebuild" />
@@ -71,49 +73,52 @@
 
     <MakeDir Directories="$(BuildDir32)\bin" />
     
-    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Common.Logging.dll"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog.PowerShell\bin\$(Configuration)\Common.Logging.dll"
           DestinationFolder="$(BuildDir32)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Common.Logging.Log4Net.dll"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog.PowerShell\bin\$(Configuration)\Common.Logging.Log4Net.dll"
           DestinationFolder="$(BuildDir32)\bin" />
               
-    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Illallangi.FlightLog.dll"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog.PowerShell\bin\$(Configuration)\Illallangi.FlightLog.dll"
           DestinationFolder="$(BuildDir32)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Illallangi.FlightLog.dll.config"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog.PowerShell\bin\$(Configuration)\Illallangi.FlightLog.PowerShell.dll"
           DestinationFolder="$(BuildDir32)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Illallangi.FlightLog.psd1"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog.PowerShell\bin\$(Configuration)\Illallangi.FlightLog.PowerShell.dll.config"
           DestinationFolder="$(BuildDir32)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Illallangi.FlightLog.psm1"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog.PowerShell\bin\$(Configuration)\Illallangi.FlightLog.psd1"
           DestinationFolder="$(BuildDir32)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Illallangi.LiteOrm.dll"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog.PowerShell\bin\$(Configuration)\Illallangi.FlightLog.psm1"
           DestinationFolder="$(BuildDir32)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\log4net.dll"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog.PowerShell\bin\$(Configuration)\Illallangi.LiteOrm.dll"
           DestinationFolder="$(BuildDir32)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Newtonsoft.Json.dll"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog.PowerShell\bin\$(Configuration)\log4net.dll"
           DestinationFolder="$(BuildDir32)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Ninject.dll"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog.PowerShell\bin\$(Configuration)\Newtonsoft.Json.dll"
           DestinationFolder="$(BuildDir32)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\NodaTime.dll"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog.PowerShell\bin\$(Configuration)\Ninject.dll"
           DestinationFolder="$(BuildDir32)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\SampleData.ps1"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog.PowerShell\bin\$(Configuration)\NodaTime.dll"
           DestinationFolder="$(BuildDir32)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\System.Data.SQLite.dll"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog.PowerShell\bin\$(Configuration)\SampleData.ps1"
           DestinationFolder="$(BuildDir32)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\x86\SQLite.Interop.dll"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog.PowerShell\bin\$(Configuration)\System.Data.SQLite.dll"
           DestinationFolder="$(BuildDir32)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\x86\zumero.dll"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog.PowerShell\bin\$(Configuration)\x86\SQLite.Interop.dll"
+          DestinationFolder="$(BuildDir32)\bin" />
+
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog.PowerShell\bin\$(Configuration)\x86\zumero.dll"
           DestinationFolder="$(BuildDir32)\bin" />
   </Target>
   
@@ -122,49 +127,52 @@
 
     <MakeDir Directories="$(BuildDir64)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Common.Logging.dll"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog.PowerShell\bin\$(Configuration)\Common.Logging.dll"
               DestinationFolder="$(BuildDir64)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Common.Logging.Log4Net.dll"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog.PowerShell\bin\$(Configuration)\Common.Logging.Log4Net.dll"
           DestinationFolder="$(BuildDir64)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Illallangi.FlightLog.dll"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog.PowerShell\bin\$(Configuration)\Illallangi.FlightLog.dll"
           DestinationFolder="$(BuildDir64)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Illallangi.FlightLog.dll.config"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog.PowerShell\bin\$(Configuration)\Illallangi.FlightLog.PowerShell.dll"
           DestinationFolder="$(BuildDir64)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Illallangi.FlightLog.psd1"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog.PowerShell\bin\$(Configuration)\Illallangi.FlightLog.PowerShell.dll.config"
           DestinationFolder="$(BuildDir64)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Illallangi.FlightLog.psm1"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog.PowerShell\bin\$(Configuration)\Illallangi.FlightLog.psd1"
           DestinationFolder="$(BuildDir64)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Illallangi.LiteOrm.dll"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog.PowerShell\bin\$(Configuration)\Illallangi.FlightLog.psm1"
           DestinationFolder="$(BuildDir64)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\log4net.dll"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog.PowerShell\bin\$(Configuration)\Illallangi.LiteOrm.dll"
           DestinationFolder="$(BuildDir64)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Newtonsoft.Json.dll"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog.PowerShell\bin\$(Configuration)\log4net.dll"
           DestinationFolder="$(BuildDir64)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Ninject.dll"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog.PowerShell\bin\$(Configuration)\Newtonsoft.Json.dll"
           DestinationFolder="$(BuildDir64)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\NodaTime.dll"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog.PowerShell\bin\$(Configuration)\Ninject.dll"
           DestinationFolder="$(BuildDir64)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\SampleData.ps1"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog.PowerShell\bin\$(Configuration)\NodaTime.dll"
           DestinationFolder="$(BuildDir64)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\System.Data.SQLite.dll"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog.PowerShell\bin\$(Configuration)\SampleData.ps1"
           DestinationFolder="$(BuildDir64)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\x64\SQLite.Interop.dll"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog.PowerShell\bin\$(Configuration)\System.Data.SQLite.dll"
           DestinationFolder="$(BuildDir64)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\x64\zumero.dll"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog.PowerShell\bin\$(Configuration)\x64\SQLite.Interop.dll"
+          DestinationFolder="$(BuildDir64)\bin" />
+
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog.PowerShell\bin\$(Configuration)\x64\zumero.dll"
           DestinationFolder="$(BuildDir64)\bin" />
   </Target>
 

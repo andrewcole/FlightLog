@@ -14,13 +14,13 @@ using System.Resources;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Flight Log")]
+[assembly: AssemblyTitle("Flight Log PowerShell Module")]
 [assembly: AssemblyCompany("Illallangi Enterprises")]
-[assembly: AssemblyProduct("Flight Log")]
+[assembly: AssemblyProduct("Flight Log PowerShell Module")]
 [assembly: AssemblyCopyright("Copyright © Illallangi Enterprises 2014")]
 [assembly: ComVisible(false)]
 [assembly: AssemblyInformationalVersion("Debug Build")]
-[assembly: Guid("4560e272-e976-41a7-aee2-f7a04533c85d")]
+[assembly: Guid("fc8b7763-1e31-4f13-806c-ebb1640e9b4a")]
 [assembly: AssemblyVersion("0.0.0.1")]
 [assembly: AssemblyFileVersion("0.0.0.1")]
 

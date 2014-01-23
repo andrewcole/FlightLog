@@ -1,9 +1,9 @@
 ﻿using System.Management.Automation;
 
+using Illallangi.LiteOrm;
+
 namespace Illallangi.FlightLog.PowerShell
 {
-    using Illallangi.LiteOrm;
-
     [Cmdlet(VerbsCommon.Get, Nouns.Null)]
     public abstract class FlightLogCmdlet<T> : NinjectCmdlet where T : class
     {

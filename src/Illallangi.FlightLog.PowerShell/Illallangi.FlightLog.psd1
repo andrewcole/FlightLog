@@ -1,5 +1,5 @@
 ﻿@{
-    ModuleToProcess = 'Illallangi.FlightLog.dll'
+    ModuleToProcess = 'Illallangi.FlightLog.PowerShell.dll'
     NestedModules = 'Illallangi.FlightLog.psm1'
     ModuleVersion = '1.0'
     GUID = 'FC9FCBA7-9027-462D-828F-C56F83CF2070'
