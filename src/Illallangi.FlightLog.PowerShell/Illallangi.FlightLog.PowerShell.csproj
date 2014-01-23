@@ -106,9 +106,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Log4Net.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="PowerShell\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="App.config" />
     <None Include="Illallangi.FlightLog.psd1">
