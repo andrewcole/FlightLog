@@ -70,11 +70,14 @@
     <Message Text="=========== Copy x86 ===========" Importance="High" />
 
     <MakeDir Directories="$(BuildDir32)\bin" />
-
-    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Illallangi.FlightLog.dll"
+    
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Common.Logging.dll"
           DestinationFolder="$(BuildDir32)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Illallangi.LiteOrm.dll"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Common.Logging.Log4Net.dll"
+          DestinationFolder="$(BuildDir32)\bin" />
+              
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Illallangi.FlightLog.dll"
           DestinationFolder="$(BuildDir32)\bin" />
 
     <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Illallangi.FlightLog.dll.config"
@@ -86,13 +89,7 @@
     <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Illallangi.FlightLog.psm1"
           DestinationFolder="$(BuildDir32)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\System.Data.SQLite.dll"
-          DestinationFolder="$(BuildDir32)\bin" />
-
-    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Ninject.dll"
-          DestinationFolder="$(BuildDir32)\bin" />
-
-    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\System.Data.SQLite.Linq.dll"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Illallangi.LiteOrm.dll"
           DestinationFolder="$(BuildDir32)\bin" />
 
     <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\log4net.dll"
@@ -101,18 +98,18 @@
     <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Newtonsoft.Json.dll"
           DestinationFolder="$(BuildDir32)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Ninject.Extensions.Logging.dll"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Ninject.dll"
           DestinationFolder="$(BuildDir32)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Ninject.Extensions.Logging.Log4Net.dll"
-          DestinationFolder="$(BuildDir32)\bin" />
-    
     <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\NodaTime.dll"
           DestinationFolder="$(BuildDir32)\bin" />
-    
+
     <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\SampleData.ps1"
           DestinationFolder="$(BuildDir32)\bin" />
-      
+
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\System.Data.SQLite.dll"
+          DestinationFolder="$(BuildDir32)\bin" />
+
     <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\x86\SQLite.Interop.dll"
           DestinationFolder="$(BuildDir32)\bin" />
 
@@ -124,11 +121,14 @@
     <Message Text="=========== Copy x64 ===========" Importance="High" />
 
     <MakeDir Directories="$(BuildDir64)\bin" />
-    
-    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Illallangi.FlightLog.dll"
+
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Common.Logging.dll"
+              DestinationFolder="$(BuildDir64)\bin" />
+
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Common.Logging.Log4Net.dll"
           DestinationFolder="$(BuildDir64)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Illallangi.LiteOrm.dll"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Illallangi.FlightLog.dll"
           DestinationFolder="$(BuildDir64)\bin" />
 
     <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Illallangi.FlightLog.dll.config"
@@ -140,13 +140,7 @@
     <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Illallangi.FlightLog.psm1"
           DestinationFolder="$(BuildDir64)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Ninject.dll"
-          DestinationFolder="$(BuildDir64)\bin" />
-
-    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\System.Data.SQLite.dll"
-          DestinationFolder="$(BuildDir64)\bin" />
-
-    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\System.Data.SQLite.Linq.dll"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Illallangi.LiteOrm.dll"
           DestinationFolder="$(BuildDir64)\bin" />
 
     <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\log4net.dll"
@@ -155,10 +149,7 @@
     <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Newtonsoft.Json.dll"
           DestinationFolder="$(BuildDir64)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Ninject.Extensions.Logging.dll"
-          DestinationFolder="$(BuildDir64)\bin" />
-
-    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Ninject.Extensions.Logging.Log4Net.dll"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\Ninject.dll"
           DestinationFolder="$(BuildDir64)\bin" />
 
     <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\NodaTime.dll"
@@ -166,7 +157,10 @@
 
     <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\SampleData.ps1"
           DestinationFolder="$(BuildDir64)\bin" />
-    
+
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\System.Data.SQLite.dll"
+          DestinationFolder="$(BuildDir64)\bin" />
+
     <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog\bin\$(Configuration)\x64\SQLite.Interop.dll"
           DestinationFolder="$(BuildDir64)\bin" />
 

@@ -76,9 +76,6 @@
       <Component Id="SystemDataSQLiteDllC" Directory="SOFTWAREDIR" Guid="{F7D45499-2682-49CB-B591-E72DEA61D974}" Permanent="yes" >
         <File Id="SystemDataSQLiteDllF" KeyPath="yes" Source="$(var.source)\System.Data.SQLite.dll" />
       </Component>
-      <Component Id="SystemDataSQLiteLinqDllC" Directory="SOFTWAREDIR" Guid="{AFD94AA5-5CA2-41C4-B2D3-65969213A6E2}" Permanent="yes" >
-        <File Id="SystemDataSQLiteLinqDllF" KeyPath="yes" Source="$(var.source)\System.Data.SQLite.Linq.dll" />
-      </Component>
       <Component Id="SQLiteInteropDllC" Directory="SOFTWAREDIR" Guid="{BAD4C637-C327-4B7A-9775-DB37A56BA505}" Permanent="yes" >
         <File Id="SQLiteInteropDllF" KeyPath="yes" Source="$(var.source)\SQLite.Interop.dll" />
       </Component>
@@ -86,28 +83,27 @@
         <File Id="ZumeroDllF" KeyPath="yes" Source="$(var.source)\zumero.dll" />
       </Component>
 
-      <Component Id="log4net.dll" Directory="SOFTWAREDIR" Guid="{1D114856-0C6F-410A-95DE-92DECB27D18D}" Permanent="yes" >
-        <File Id="log4net.dll" KeyPath="yes" Source="$(var.source)\log4net.dll" />
+      <Component Id="Log4NetDllC" Directory="SOFTWAREDIR" Guid="{1D114856-0C6F-410A-95DE-92DECB27D18D}" Permanent="yes" >
+        <File Id="Log4NetDllF" KeyPath="yes" Source="$(var.source)\log4net.dll" />
       </Component>
       
-      <Component Id="Newtonsoft.Json.dll" Directory="SOFTWAREDIR" Guid="{71B7DAE5-CDBB-4F42-9B2A-5B6231145CA2}" Permanent="yes" >
-        <File Id="Newtonsoft.Json.dll" KeyPath="yes" Source="$(var.source)\Newtonsoft.Json.dll" />
-      </Component>
-      
-      <Component Id="Ninject.Extensions.Logging.dll" Directory="SOFTWAREDIR" Guid="{04B59991-EE45-4FD3-A291-F70055C2F77C}" Permanent="yes" >
-        <File Id="Ninject.Extensions.Logging.dll" KeyPath="yes" Source="$(var.source)\Ninject.Extensions.Logging.dll" />
-      </Component>
-      
-      <Component Id="Ninject.Extensions.Logging.Log4Net.dll" Directory="SOFTWAREDIR" Guid="{CD014813-33A5-4587-BD92-8DF92AFFF6B7}" Permanent="yes" >
-        <File Id="Ninject.Extensions.Logging.Log4Net.dll" KeyPath="yes" Source="$(var.source)\Ninject.Extensions.Logging.Log4Net.dll" />
-      </Component>
-      
-      <Component Id="NodaTime.dll" Directory="SOFTWAREDIR" Guid="{A839A2DC-FB35-4A37-9879-1C6616ED9D6F}" Permanent="yes" >
-        <File Id="NodaTime.dll" KeyPath="yes" Source="$(var.source)\NodaTime.dll" />
+      <Component Id="NewtonsoftJsonDllC" Directory="SOFTWAREDIR" Guid="{71B7DAE5-CDBB-4F42-9B2A-5B6231145CA2}" Permanent="yes" >
+        <File Id="NewtonsoftJsonDllF" KeyPath="yes" Source="$(var.source)\Newtonsoft.Json.dll" />
       </Component>
 
-      <Component Id="SampleData.ps1" Directory="SOFTWAREDIR" Guid="{8E55F927-ADD6-43D0-A7B4-499762C15CEA}" Permanent="yes" >
-        <File Id="SampleData.ps1" KeyPath="yes" Source="$(var.source)\SampleData.ps1" />
+      <Component Id="CommonLoggingDllC" Directory="SOFTWAREDIR" Guid="{1CCDF75E-090B-4070-9DD6-264BDAB1C505}" Permanent="yes" >
+        <File Id="CommonLoggingDllF" KeyPath="yes" Source="$(var.source)\Common.Logging.dll" />
+      </Component>
+      <Component Id="CommonLoggingLog4NetDllC" Directory="SOFTWAREDIR" Guid="{4BF4EC39-8E7A-4AC6-99A4-A55F536516CB}" Permanent="yes" >
+        <File Id="CommonLoggingLog4NetDllF" KeyPath="yes" Source="$(var.source)\Common.Logging.Log4Net.dll" />
+      </Component>
+      
+      <Component Id="NodaTimeDllC" Directory="SOFTWAREDIR" Guid="{A839A2DC-FB35-4A37-9879-1C6616ED9D6F}" Permanent="yes" >
+        <File Id="NodaTimeDllF" KeyPath="yes" Source="$(var.source)\NodaTime.dll" />
+      </Component>
+
+      <Component Id="SampleDataPs1C" Directory="SOFTWAREDIR" Guid="{8E55F927-ADD6-43D0-A7B4-499762C15CEA}" Permanent="yes" >
+        <File Id="SampleDataPs1F" KeyPath="yes" Source="$(var.source)\SampleData.ps1" />
       </Component>
                               
       <Component Id="NinjectDllC" Directory="SOFTWAREDIR" Guid="{89E2AF78-FC82-4A10-AF1C-3B86AF060680}" Permanent="yes" >
