@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Illallangi.FlightLog.Model;
 using Illallangi.LiteOrm;
-using Ninject.Extensions.Logging;
 
 namespace Illallangi.FlightLog.Context
 {
+    using Common.Logging;
+
+    using Illallangi.FlightLog.Config;
+
     public class TripRepository : RepositoryBase<ITrip>
     {
         #region Fields
@@ -17,10 +20,22 @@ namespace Illallangi.FlightLog.Context
 
         #region Constructors
 
-        public TripRepository(ILogger logger, IConnectionSource connectionSource, IRepository<IYear> yearRepository) 
-            : base(logger, connectionSource)
+        public TripRepository(IFlightLogConfig flightLogConfig,
+            IRepository<IYear> yearRepository,
+            ILog log)
+        : base(
+            flightLogConfig.DatabasePath,
+            flightLogConfig.ConnectionString,
+            flightLogConfig.SqlSchemaLines,
+            flightLogConfig.SqlSchemaFiles,
+            flightLogConfig.Pragmas,
+            flightLogConfig.Extensions,
+            log)
         {
-            this.Logger.Debug(@"TripRepository(""{0}"",""{1}"",""{2}"")", logger, connectionSource, yearRepository);
+            this.Log.DebugFormat(
+                @"TimezoneRepository(""{0}"", ""{1}"")",
+                flightLogConfig,
+                log);
             this.currentYearRepository = yearRepository;
         }
 
@@ -39,7 +54,7 @@ namespace Illallangi.FlightLog.Context
 
         public override ITrip Create(ITrip obj)
         {
-            this.Logger.Debug(@"TripRepository.Create(""{0}"")", obj);
+            this.Log.DebugFormat(@"TripRepository.Create(""{0}"")", obj);
 
             var year = this.YearRepository.Retrieve(new Year { Name = obj.Year }).Single();
 
@@ -55,7 +70,7 @@ namespace Illallangi.FlightLog.Context
 
         public override IEnumerable<ITrip> Retrieve(ITrip obj = null)
         {
-            this.Logger.Debug(@"TripRepository.Retrieve(""{0}"")", obj); 
+            this.Log.DebugFormat(@"TripRepository.Retrieve(""{0}"")", obj); 
             
             return this.GetConnection()
                 .Select<Trip>("Trips")
@@ -69,14 +84,14 @@ namespace Illallangi.FlightLog.Context
 
         public override ITrip Update(ITrip obj)
         {
-            this.Logger.Debug(@"TripRepository.Update(""{0}"")", obj);
+            this.Log.DebugFormat(@"TripRepository.Update(""{0}"")", obj);
 
             throw new NotImplementedException();
         }
 
         public override void Delete(ITrip obj)
         {
-            this.Logger.Debug(@"TripRepository.Delete(""{0}"")", obj);
+            this.Log.DebugFormat(@"TripRepository.Delete(""{0}"")", obj);
 
             this.GetConnection()
                 .DeleteFrom("Trip")

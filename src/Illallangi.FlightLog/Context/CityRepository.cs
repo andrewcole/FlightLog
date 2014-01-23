@@ -1,8 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+
+using Common.Logging;
+
+using Illallangi.FlightLog.Config;
 using Illallangi.FlightLog.Model;
 using Illallangi.LiteOrm;
-using Ninject.Extensions.Logging;
 
 namespace Illallangi.FlightLog.Context
 {
@@ -16,10 +19,24 @@ namespace Illallangi.FlightLog.Context
 
         #region Constructor
 
-        public CityRepository(ILogger logger, IConnectionSource connectionSource, IRepository<ICountry> countryRepository)
-            : base(logger, connectionSource)
+        public CityRepository(
+            IFlightLogConfig flightLogConfig,
+            IRepository<ICountry> countryRepository,
+            ILog log)
+        : base(
+            flightLogConfig.DatabasePath,
+            flightLogConfig.ConnectionString,
+            flightLogConfig.SqlSchemaLines,
+            flightLogConfig.SqlSchemaFiles,
+            flightLogConfig.Pragmas,
+            flightLogConfig.Extensions,
+            log)
         {
-            this.Logger.Debug(@"CityRepository(""{0}"",""{1}"",""{2}"")", logger, connectionSource, countryRepository);
+            this.Log.DebugFormat(
+                @"CityRepository(""{0}"", ""{1}"", ""{2}"")",
+                flightLogConfig,
+                countryRepository,
+                log);
             this.currentCountryRepository = countryRepository;
         }
 
@@ -41,7 +58,7 @@ namespace Illallangi.FlightLog.Context
 
         public override ICity Create(ICity obj)
         {
-            this.Logger.Debug(@"CityRepository.Create(""{0}"")", obj);
+            this.Log.DebugFormat(@"CityRepository.Create(""{0}"")", obj);
 
             var country = this.CountryRepository.Retrieve(new Country { Name = obj.Country }).Single();
 
@@ -56,7 +73,7 @@ namespace Illallangi.FlightLog.Context
 
         public override IEnumerable<ICity> Retrieve(ICity obj = null)
         {
-            this.Logger.Debug(@"CityRepository.Retrieve(""{0}"")", obj);
+            this.Log.DebugFormat(@"CityRepository.Retrieve(""{0}"")", obj);
 
             return this.GetConnection()
                 .Select<City>("Cities")
@@ -69,14 +86,14 @@ namespace Illallangi.FlightLog.Context
 
         public override ICity Update(ICity obj)
         {
-            this.Logger.Debug(@"CityRepository.Update(""{0}"")", obj);
+            this.Log.DebugFormat(@"CityRepository.Update(""{0}"")", obj);
 
             throw new System.NotImplementedException();
         }
 
         public override void Delete(ICity obj)
         {
-            this.Logger.Debug(@"CityRepository.Delete(""{0}"")", obj);
+            this.Log.DebugFormat(@"CityRepository.Delete(""{0}"")", obj);
 
             this.GetConnection()
                 .DeleteFrom("City")

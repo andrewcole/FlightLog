@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+
+using Common.Logging;
+
+using Illallangi.FlightLog.Config;
 using Illallangi.FlightLog.Model;
 using Illallangi.LiteOrm;
-using Ninject.Extensions.Logging;
 
 namespace Illallangi.FlightLog.Context
 {
+
     public class AirportRepository : RepositoryBase<IAirport>
     {
         #region Fields
@@ -19,10 +23,26 @@ namespace Illallangi.FlightLog.Context
 
         #region Constructor
 
-        public AirportRepository(ILogger logger, IConnectionSource connectionSource, IRepository<ICity> cityRepository, IRepository<ITimezone> timezoneRepository)
-            : base(logger, connectionSource)
+        public AirportRepository(
+            IFlightLogConfig flightLogConfig, 
+            IRepository<ICity> cityRepository, 
+            IRepository<ITimezone> timezoneRepository, 
+            ILog log = null)
+        : base(
+            flightLogConfig.DatabasePath,
+            flightLogConfig.ConnectionString,
+            flightLogConfig.SqlSchemaLines,
+            flightLogConfig.SqlSchemaFiles,
+            flightLogConfig.Pragmas,
+            flightLogConfig.Extensions,
+            log)
         {
-            this.Logger.Debug(@"AirportRepository(""{0}"",""{1}"",""{2}"", ""{3}"")", logger, connectionSource, cityRepository, timezoneRepository);
+            this.Log.DebugFormat(
+                @"AirportRepository(""{0}"", ""{1}"", ""{2}"",  ""{3}"")",
+                flightLogConfig,
+                cityRepository,
+                timezoneRepository,
+                log);
             this.currentCityRepository = cityRepository;
             this.currentTimezoneRepository = timezoneRepository;
         }
@@ -47,7 +67,7 @@ namespace Illallangi.FlightLog.Context
 
         public override IAirport Create(IAirport obj)
         {
-            this.Logger.Debug(@"AirportRepository.Create(""{0}"")", obj);
+            this.Log.DebugFormat(@"AirportRepository.Create(""{0}"")", obj);
 
             var city = this.CityRepository.Retrieve(new City { Name = obj.City, Country = obj.Country }).Single();
             var timezone = this.TimezoneRepository.Retrieve(new Timezone { Name = obj.Timezone }).Single();
@@ -69,7 +89,7 @@ namespace Illallangi.FlightLog.Context
 
         public override IEnumerable<IAirport> Retrieve(IAirport obj = null)
         {
-            this.Logger.Debug(@"AirportRepository.Retrieve(""{0}"")", obj);
+            this.Log.DebugFormat(@"AirportRepository.Retrieve(""{0}"")", obj);
 
             return this.GetConnection()
                 .Select<Airport>("Airports")
@@ -88,14 +108,14 @@ namespace Illallangi.FlightLog.Context
 
         public override IAirport Update(IAirport obj)
         {
-            this.Logger.Debug(@"AirportRepository.Update(""{0}"")", obj);
+            this.Log.DebugFormat(@"AirportRepository.Update(""{0}"")", obj);
 
             throw new NotImplementedException();
         }
 
         public override void Delete(IAirport obj)
         {
-            this.Logger.Debug(@"AirportRepository.Delete(""{0}"")", obj);
+            this.Log.DebugFormat(@"AirportRepository.Delete(""{0}"")", obj);
 
             this.GetConnection()
                 .DeleteFrom("Airport")

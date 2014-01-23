@@ -2,18 +2,33 @@
 using System.Linq;
 using Illallangi.FlightLog.Model;
 using Illallangi.LiteOrm;
-using Ninject.Extensions.Logging;
 
 namespace Illallangi.FlightLog.Context
 {
+    using Common.Logging;
+
+    using Illallangi.FlightLog.Config;
+
     public sealed class CountryRepository : RepositoryBase<ICountry>
     {
         #region Constructor
 
-        public CountryRepository(ILogger logger, IConnectionSource connectionSource)
-            : base(logger, connectionSource)
+        public CountryRepository(
+            IFlightLogConfig flightLogConfig,
+            ILog log)
+            : base(
+                flightLogConfig.DatabasePath,
+                flightLogConfig.ConnectionString,
+                flightLogConfig.SqlSchemaLines,
+                flightLogConfig.SqlSchemaFiles,
+                flightLogConfig.Pragmas,
+                flightLogConfig.Extensions,
+                log)
         {
-            this.Logger.Debug(@"CountryRepository(""{0}"",""{1}"")", logger, connectionSource);
+            this.Log.DebugFormat(
+                @"CountryRepository(""{0}"", ""{1}"")",
+                flightLogConfig,
+                log);
         }
 
         #endregion
@@ -22,7 +37,7 @@ namespace Illallangi.FlightLog.Context
 
         public override ICountry Create(ICountry obj)
         {
-            this.Logger.Debug(@"CountryRepository.Create(""{0}"")", obj);
+            this.Log.DebugFormat(@"CountryRepository.Create(""{0}"")", obj);
             
             var id = this.GetConnection()
                 .InsertInto("Country")
@@ -34,7 +49,7 @@ namespace Illallangi.FlightLog.Context
 
         public override IEnumerable<ICountry> Retrieve(ICountry obj = null)
         {
-            this.Logger.Debug(@"CountryRepository.Retrieve(""{0}"")", obj);
+            this.Log.DebugFormat(@"CountryRepository.Retrieve(""{0}"")", obj);
 
             return this.GetConnection()
                 .Select<Country>("Countries")
@@ -46,14 +61,14 @@ namespace Illallangi.FlightLog.Context
 
         public override ICountry Update(ICountry obj)
         {
-            this.Logger.Debug(@"CountryRepository.Update(""{0}"")", obj);
+            this.Log.DebugFormat(@"CountryRepository.Update(""{0}"")", obj);
 
             throw new System.NotImplementedException();
         }
 
         public override void Delete(ICountry obj)
         {
-            this.Logger.Debug(@"CountryRepository.Delete(""{0}"")", obj);
+            this.Log.DebugFormat(@"CountryRepository.Delete(""{0}"")", obj);
 
             this.GetConnection()
                 .DeleteFrom("Country")

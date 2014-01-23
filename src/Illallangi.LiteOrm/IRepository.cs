@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-
-namespace Illallangi.FlightLog
+﻿namespace Illallangi.LiteOrm
 {
-    public interface IRepository<T> where T : class 
+    using System.Collections.Generic;
+
+    public interface IRepository<T> where T : class
     {
         T Create(T obj);
 

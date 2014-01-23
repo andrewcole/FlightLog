@@ -5,54 +5,76 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 
-using Illallangi.LiteOrm;
-
 namespace Illallangi.FlightLog.Config
 {
-    public sealed class FlightLogConfig : ConfigurationSection, ILiteOrmConfig
+    public interface IFlightLogConfig
+    {
+        string DatabasePath { get; }
+        string ConnectionString { get; }
+        IEnumerable<string> SqlSchemaLines { get; }
+        IEnumerable<string> SqlSchemaFiles { get; }
+        IEnumerable<string> Pragmas { get; }
+        IEnumerable<string> Extensions { get; }
+    }
+
+    public sealed class FlightLogConfig : ConfigurationSection, IFlightLogConfig
     {
         #region Properties
 
-        [ConfigurationProperty("DbPath", DefaultValue = @"FlightLog.dat")]
-        public string DbPath
+        [ConfigurationProperty("DatabasePath", DefaultValue = @"FlightLog.dat")]
+        public string DatabasePath
         {
-            get { return (string)this["DbPath"]; }
-            set { this["DbPath"] = value; }
+            get
+            {
+                return Path.GetFullPath(Environment.ExpandEnvironmentVariables((string)this["DatabasePath"]));
+            }
         }
 
         [ConfigurationProperty("ConnectionString", DefaultValue = @"data source=""{0}""")]
         public string ConnectionString
         {
-            get { return (string)this["ConnectionString"]; }
-            set { this["ConnectionString"] = value; }
+            get
+            {
+                return string.Format((string)this["ConnectionString"], this.DatabasePath);
+            }
         }
 
-        [ConfigurationProperty("Extension")]
+        [ConfigurationProperty("Extensions")]
         public ValueElementCollection ExtensionCollection
         {
             get
             {
-                return (ValueElementCollection)this["Extension"] ??
+                return (ValueElementCollection)this["Extensions"] ??
                        new ValueElementCollection();
             }
         }
 
-        [ConfigurationProperty("SqlSchema")]
-        public ValueElementCollection SqlSchemaCollection
-        {
-            get
-            {
-                return (ValueElementCollection)this["SqlSchema"] ??
-                       new ValueElementCollection();
-            }
-        }
-
-        [ConfigurationProperty("Pragma")]
+        [ConfigurationProperty("Pragmas")]
         public ValueElementCollection PragmaCollection
         {
             get
             {
-                return (ValueElementCollection)this["Pragma"] ??
+                return (ValueElementCollection)this["Pragmas"] ??
+                       new ValueElementCollection();
+            }
+        }
+
+        [ConfigurationProperty("SqlSchemaLines")]
+        public ValueElementCollection SqlSchemaLineCollection
+        {
+            get
+            {
+                return (ValueElementCollection)this["SqlSchemaLines"] ??
+                       new ValueElementCollection();
+            }
+        }
+
+        [ConfigurationProperty("SqlSchemaFiles")]
+        public ValueElementCollection SqlSchemaFileCollection
+        {
+            get
+            {
+                return (ValueElementCollection)this["SqlSchemaFiles"] ??
                        new ValueElementCollection();
             }
         }
@@ -93,11 +115,38 @@ namespace Illallangi.FlightLog.Config
             }
         }
 
-        public IEnumerable<string> SqlSchema
+        public IEnumerable<string> SqlSchemaLines
         {
             get
             {
-                return this.SqlSchemaCollection.Cast<ValueElement>().Select(element => element.Value);
+                return this.SqlSchemaLineCollection.Cast<ValueElement>().Select(element => element.Value);
+            }
+        }
+
+        public IEnumerable<string> SqlSchemaFiles
+        {
+            get
+            {
+                foreach (var sqlSchemaFile in this.SqlSchemaFileCollection.Cast<ValueElement>().Select(element => element.Value))
+                {
+                    if (null != Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) &&
+                             File.Exists(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), sqlSchemaFile)))
+                    {
+                        yield return Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), sqlSchemaFile);
+                    }
+                    else if (File.Exists(sqlSchemaFile))
+                    {
+                        yield return sqlSchemaFile;
+                    }
+                    else if (File.Exists(Path.GetFullPath(sqlSchemaFile)))
+                    {
+                        yield return Path.GetFullPath(sqlSchemaFile);
+                    }
+                    else
+                    {
+                        throw new FileNotFoundException(sqlSchemaFile);
+                    }
+                }
             }
         }
 

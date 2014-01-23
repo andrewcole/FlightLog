@@ -1,20 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+
+using Common.Logging;
+
+using Illallangi.FlightLog.Config;
 using Illallangi.FlightLog.Model;
 using Illallangi.LiteOrm;
-using Ninject.Extensions.Logging;
 
 namespace Illallangi.FlightLog.Context
 {
+
     public class YearRepository : RepositoryBase<IYear>
     {
         #region Constructor
 
-        public YearRepository(ILogger logger, IConnectionSource connectionSource)
-            : base(logger, connectionSource)
+        public YearRepository(
+            IFlightLogConfig flightLogConfig, 
+            ILog log)
+        : base(
+            flightLogConfig.DatabasePath,
+            flightLogConfig.ConnectionString,
+            flightLogConfig.SqlSchemaLines,
+            flightLogConfig.SqlSchemaFiles,
+            flightLogConfig.Pragmas,
+            flightLogConfig.Extensions,
+            log)
         {
-            this.Logger.Debug(@"YearRepository(""{0}"",""{1}"")", logger, connectionSource);
+            this.Log.DebugFormat(
+                @"YearRepository(""{0}"", ""{1}"")",
+                flightLogConfig,
+                log);
         }
 
         #endregion
@@ -23,7 +39,7 @@ namespace Illallangi.FlightLog.Context
 
         public override IYear Create(IYear obj)
         {
-            this.Logger.Debug(@"YearRepository.Create(""{0}"")", obj);
+            this.Log.DebugFormat(@"YearRepository.Create(""{0}"")", obj);
 
             var id = this.GetConnection()
                 .InsertInto("Year")
@@ -35,7 +51,7 @@ namespace Illallangi.FlightLog.Context
 
         public override IEnumerable<IYear> Retrieve(IYear obj = null)
         {
-            this.Logger.Debug(@"YearRepository.Retrieve(""{0}"")", obj);
+            this.Log.DebugFormat(@"YearRepository.Retrieve(""{0}"")", obj);
 
             return this.GetConnection()
                        .Select<Year>("Years")
@@ -47,14 +63,14 @@ namespace Illallangi.FlightLog.Context
 
         public override IYear Update(IYear obj)
         {
-            this.Logger.Debug(@"YearRepository.Update(""{0}"")", obj);
+            this.Log.DebugFormat(@"YearRepository.Update(""{0}"")", obj);
 
             throw new NotImplementedException();
         }
 
         public override void Delete(IYear obj)
         {
-            this.Logger.Debug(@"YearRepository.Delete(""{0}"")", obj);
+            this.Log.DebugFormat(@"YearRepository.Delete(""{0}"")", obj);
 
             this.GetConnection()
                 .DeleteFrom("Year")

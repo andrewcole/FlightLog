@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Data.SQLite;
 using System.IO;
-using Ninject.Extensions.Logging;
 
 namespace Illallangi.LiteOrm
 {
+    using Common.Logging;
+
     public static class SQLiteConnectionExtensions
     {
         public static SQLiteInsertCommand InsertInto(this SQLiteConnection cx, string table)
@@ -42,9 +43,14 @@ namespace Illallangi.LiteOrm
             return cx;
         }
 
-        public static SQLiteConnection WithLogger(this SQLiteConnection cx, ILogger logger)
+        public static SQLiteConnection WithLogger(this SQLiteConnection cx, ILog log)
         {
-            cx.Trace += (o, a) => logger.Debug(@"Executing ""{0}""", a.Statement);
+            if (log.IsDebugEnabled)
+            {
+                cx.Trace += (o, a) => log.DebugFormat(@"SQLiteConnection executing ""{0}""", a.Statement);
+                cx.Disposed += (o, a) => log.DebugFormat(@"SQLiteConnection disposing");
+            }
+
             return cx;
         }
     }

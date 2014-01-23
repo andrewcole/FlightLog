@@ -1,6 +1,5 @@
 ﻿using System.Management.Automation;
 using Ninject;
-using Ninject.Extensions.Logging.Log4net;
 using Ninject.Modules;
 
 namespace Illallangi.FlightLog.PowerShell
@@ -28,14 +27,6 @@ namespace Illallangi.FlightLog.PowerShell
             }
         }
 
-        private INinjectModule Log4NetModule
-        {
-            get
-            {
-                return this.currentLog4NetModule ?? (this.currentLog4NetModule = this.GetLog4NetModule());
-            }
-        }
-
         private StandardKernel Kernel
         {
             get
@@ -59,11 +50,6 @@ namespace Illallangi.FlightLog.PowerShell
 
         #region Private Methods
 
-        private INinjectModule GetLog4NetModule()
-        {
-            return new Log4NetModule();
-        }
-
         private INinjectModule GetFlightLogModule()
         {
             return new FlightLogModule();
@@ -71,7 +57,7 @@ namespace Illallangi.FlightLog.PowerShell
 
         private StandardKernel GetKernel()
         {
-            return new StandardKernel(this.FlightLogModule, this.Log4NetModule);
+            return new StandardKernel(this.FlightLogModule);
         }
 
         #endregion

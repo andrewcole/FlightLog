@@ -1,9 +1,15 @@
 using System.Configuration;
 using System.Reflection;
+using System.Collections.Specialized;
+
+using Common.Logging;
+using Common.Logging.Log4Net;
+
 using Illallangi.FlightLog.Config;
 using Illallangi.FlightLog.Context;
 using Illallangi.FlightLog.Model;
 using Illallangi.LiteOrm;
+
 using log4net.Config;
 using Ninject.Modules;
 
@@ -13,6 +19,8 @@ namespace Illallangi.FlightLog
     {
         public override void Load()
         {
+            LogManager.Adapter = new Log4NetLoggerFactoryAdapter(new NameValueCollection { { "configType", "EXTERNAL" } });
+
             XmlConfigurator.Configure(
                 Assembly
                     .GetExecutingAssembly()
@@ -21,7 +29,7 @@ namespace Illallangi.FlightLog
                             "{0}.Log4Net.config",
                             Assembly.GetExecutingAssembly().GetName().Name)));
 
-            this.Bind<ILiteOrmConfig>()
+            this.Bind<IFlightLogConfig>()
                 .ToMethod(
                     cx =>
                         (FlightLogConfig)
@@ -36,7 +44,7 @@ namespace Illallangi.FlightLog
             this.Bind<IRepository<IFlight>>().To<FlightRepository>().InSingletonScope();
             this.Bind<IRepository<ITimezone>>().To<TimezoneRepository>().InSingletonScope();
 
-            this.Bind<IConnectionSource>().To<SQLiteConnectionSource>().InSingletonScope();
+            this.Bind<ILog>().ToMethod(cx => LogManager.GetLogger(cx.Request.Target.Type));
         }
     }
 }

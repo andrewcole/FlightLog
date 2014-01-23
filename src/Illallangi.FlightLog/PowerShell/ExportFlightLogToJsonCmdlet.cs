@@ -6,6 +6,8 @@ using Newtonsoft.Json;
 
 namespace Illallangi.FlightLog.PowerShell
 {
+    using Illallangi.LiteOrm;
+
     [Cmdlet(VerbsData.Export, "FlightLogToJson")]
     public sealed class ExportFlightLogToJsonCmdlet : NinjectCmdlet
     {
