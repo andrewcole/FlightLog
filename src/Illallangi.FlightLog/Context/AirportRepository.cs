@@ -10,7 +10,7 @@ using Illallangi.LiteOrm;
 
 namespace Illallangi.FlightLog.Context
 {
-    public class AirportRepository : RepositoryBase<IAirport>
+    public class AirportRepository : FlightLogRepositoryBase<IAirport>
     {
         #region Fields
 
@@ -28,12 +28,7 @@ namespace Illallangi.FlightLog.Context
             IRepository<ITimezone> timezoneRepository, 
             ILog log = null)
         : base(
-            flightLogConfig.DatabasePath,
-            flightLogConfig.ConnectionString,
-            flightLogConfig.SqlSchemaLines,
-            flightLogConfig.SqlSchemaFiles,
-            flightLogConfig.Pragmas,
-            flightLogConfig.Extensions,
+            flightLogConfig,
             log)
         {
             this.Log.DebugFormat(

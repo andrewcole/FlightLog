@@ -9,21 +9,16 @@ namespace Illallangi.FlightLog.Context
 
     using Illallangi.FlightLog.Config;
 
-    public sealed class CountryRepository : RepositoryBase<ICountry>
+    public sealed class CountryRepository : FlightLogRepositoryBase<ICountry>
     {
         #region Constructor
 
         public CountryRepository(
             IFlightLogConfig flightLogConfig,
             ILog log)
-            : base(
-                flightLogConfig.DatabasePath,
-                flightLogConfig.ConnectionString,
-                flightLogConfig.SqlSchemaLines,
-                flightLogConfig.SqlSchemaFiles,
-                flightLogConfig.Pragmas,
-                flightLogConfig.Extensions,
-                log)
+        : base(
+            flightLogConfig,
+            log)
         {
             this.Log.DebugFormat(
                 @"CountryRepository(""{0}"", ""{1}"")",

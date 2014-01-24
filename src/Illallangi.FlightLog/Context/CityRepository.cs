@@ -9,7 +9,7 @@ using Illallangi.LiteOrm;
 
 namespace Illallangi.FlightLog.Context
 {
-    public sealed class CityRepository : RepositoryBase<ICity>
+    public sealed class CityRepository : FlightLogRepositoryBase<ICity>
     {
         #region Fields
 
@@ -24,12 +24,7 @@ namespace Illallangi.FlightLog.Context
             IRepository<ICountry> countryRepository,
             ILog log)
         : base(
-            flightLogConfig.DatabasePath,
-            flightLogConfig.ConnectionString,
-            flightLogConfig.SqlSchemaLines,
-            flightLogConfig.SqlSchemaFiles,
-            flightLogConfig.Pragmas,
-            flightLogConfig.Extensions,
+            flightLogConfig,
             log)
         {
             this.Log.DebugFormat(

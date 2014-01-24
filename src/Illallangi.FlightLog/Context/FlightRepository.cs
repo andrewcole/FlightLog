@@ -10,7 +10,7 @@ namespace Illallangi.FlightLog.Context
 
     using Illallangi.FlightLog.Config;
 
-    public class FlightRepository : RepositoryBase<IFlight>
+    public class FlightRepository : FlightLogRepositoryBase<IFlight>
     {
         #region Fields
 
@@ -28,12 +28,7 @@ namespace Illallangi.FlightLog.Context
             IRepository<IAirport> airportRepository,
             ILog log)
         : base(
-            flightLogConfig.DatabasePath,
-            flightLogConfig.ConnectionString,
-            flightLogConfig.SqlSchemaLines,
-            flightLogConfig.SqlSchemaFiles,
-            flightLogConfig.Pragmas,
-            flightLogConfig.Extensions,
+            flightLogConfig,
             log)
         {
             this.Log.DebugFormat(

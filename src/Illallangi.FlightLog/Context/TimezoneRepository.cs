@@ -9,21 +9,16 @@ namespace Illallangi.FlightLog.Context
 
     using Illallangi.FlightLog.Config;
 
-    public sealed class TimezoneRepository : RepositoryBase<ITimezone>
+    public sealed class TimezoneRepository : FlightLogRepositoryBase<ITimezone>
     {
         #region Constructor
 
         public TimezoneRepository(
                 IFlightLogConfig flightLogConfig,
                 ILog log)
-            : base(
-                flightLogConfig.DatabasePath,
-                flightLogConfig.ConnectionString,
-                flightLogConfig.SqlSchemaLines,
-                flightLogConfig.SqlSchemaFiles,
-                flightLogConfig.Pragmas,
-                flightLogConfig.Extensions,
-                log)
+        : base(
+            flightLogConfig,
+            log)
         {
             this.Log.DebugFormat(
                 @"TimezoneRepository(""{0}"", ""{1}"")",

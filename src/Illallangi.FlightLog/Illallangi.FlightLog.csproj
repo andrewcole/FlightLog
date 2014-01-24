@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\IFlightLogConfig.cs" />
+    <Compile Include="Context\FlightLogRepositoryBase.cs" />
     <Compile Include="Context\TimezoneRepository.cs" />
     <Compile Include="Context\FlightRepository.cs" />
     <Compile Include="Context\TripRepository.cs" />

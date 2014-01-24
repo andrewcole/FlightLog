@@ -10,7 +10,7 @@ using Illallangi.LiteOrm;
 
 namespace Illallangi.FlightLog.Context
 {
-    public class YearRepository : RepositoryBase<IYear>
+    public class YearRepository : FlightLogRepositoryBase<IYear>
     {
         #region Constructor
 
@@ -18,12 +18,7 @@ namespace Illallangi.FlightLog.Context
             IFlightLogConfig flightLogConfig, 
             ILog log)
         : base(
-            flightLogConfig.DatabasePath,
-            flightLogConfig.ConnectionString,
-            flightLogConfig.SqlSchemaLines,
-            flightLogConfig.SqlSchemaFiles,
-            flightLogConfig.Pragmas,
-            flightLogConfig.Extensions,
+            flightLogConfig,
             log)
         {
             this.Log.DebugFormat(
