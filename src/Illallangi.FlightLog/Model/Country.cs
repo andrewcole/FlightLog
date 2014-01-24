@@ -2,11 +2,11 @@
 {
     public interface ICountry
     {
-        int? Id { get; set; }
+        int? Id { get; }
 
-        string Name { get; set; }
+        string Name { get; }
 
-        int CityCount { get; set; }
+        int CityCount { get; }
     }
 
     public class Country : ICountry
