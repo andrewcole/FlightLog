@@ -78,6 +78,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Airport\AddAirportCmdlet.cs" />
+    <Compile Include="FlightLogRemoveCmdlet.cs" />
     <Compile Include="Airport\GetAirportCmdlet.cs" />
     <Compile Include="Airport\RemoveAirportCmdlet.cs" />
     <Compile Include="City\AddCityCmdlet.cs" />

@@ -1,46 +1,28 @@
 namespace Illallangi.FlightLog.PowerShell.Airport
 {
-    using System.Linq;
     using System.Management.Automation;
 
     using Illallangi.FlightLog.Model;
 
-    [Cmdlet(VerbsCommon.Remove, Nouns.Airport, DefaultParameterSetName = "Id", SupportsShouldProcess = true, ConfirmImpact = ConfirmImpact.High)]
-    public sealed class RemoveAirportCmdlet : FlightLogCmdlet<IAirport>
+    [Cmdlet(VerbsCommon.Remove, Nouns.Airport, SupportsShouldProcess = true, ConfirmImpact = ConfirmImpact.High)]
+    public sealed class RemoveAirportCmdlet : FlightLogRemoveCmdlet<IAirport, Airport>
     {
-        [Parameter(Mandatory = false, ValueFromPipelineByPropertyName = true, ParameterSetName = "Id")]
+        [Parameter(Mandatory = false, ValueFromPipelineByPropertyName = true)]
         public int? Id { get; set; }
 
-        [Parameter(Mandatory = false, ValueFromPipelineByPropertyName = true, ParameterSetName = "Value")]
+        [Parameter(Mandatory = false, ValueFromPipelineByPropertyName = true)]
+        public string Country { get; set; }
+
+        [Parameter(Mandatory = false, ValueFromPipelineByPropertyName = true)]
+        public string City { get; set; }
+
+        [Parameter(Mandatory = false, ValueFromPipelineByPropertyName = true)]
         public string Name { get; set; }
 
-        [Parameter(Mandatory = false, ValueFromPipelineByPropertyName = true, ParameterSetName = "Value")]
-        public string CityName { get; set; }
-
-        [Parameter(Mandatory = false, ValueFromPipelineByPropertyName = true, ParameterSetName = "Value")]
-        public string CountryName { get; set; }
-
-        [Parameter(Mandatory = false, ValueFromPipelineByPropertyName = true, ParameterSetName = "Value")]
+        [Parameter(Mandatory = false, ValueFromPipelineByPropertyName = true)]
         public string Icao { get; set; }
 
-        [Parameter(Mandatory = false, ValueFromPipelineByPropertyName = true, ParameterSetName = "Value")]
+        [Parameter(Mandatory = false, ValueFromPipelineByPropertyName = true)]
         public string Iata { get; set; }
-
-        protected override void BeginProcessing()
-        {
-            foreach (var o in this.Repository.Retrieve(
-                new Airport 
-                { 
-                    Id = this.Id, 
-                    Name = this.Name, 
-                    City = this.CityName, 
-                    Country = this.CountryName, 
-                    Iata = this.Iata, 
-                    Icao = this.Icao 
-                }).ToList().Where(o => this.ShouldProcess(o.ToString(), VerbsCommon.Remove)))
-            {
-                this.Repository.Delete(o);
-            }
-        }
     }
 }

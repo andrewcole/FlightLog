@@ -5,24 +5,16 @@ namespace Illallangi.FlightLog.PowerShell.City
 
     using Illallangi.FlightLog.Model;
 
-    [Cmdlet(VerbsCommon.Remove, Nouns.City, DefaultParameterSetName = "Id", SupportsShouldProcess = true, ConfirmImpact = ConfirmImpact.High)]
-    public sealed class RemoveCityCmdlet : FlightLogCmdlet<ICity>
+    [Cmdlet(VerbsCommon.Remove, Nouns.City, SupportsShouldProcess = true, ConfirmImpact = ConfirmImpact.High)]
+    public sealed class RemoveCityCmdlet : FlightLogRemoveCmdlet<ICity, City>
     {
-        [Parameter(Mandatory = false, ValueFromPipelineByPropertyName = true, ParameterSetName = "Id")]
+        [Parameter(Mandatory = false, ValueFromPipelineByPropertyName = true)]
         public int? Id { get; set; }
 
-        [Parameter(Mandatory = false, ValueFromPipelineByPropertyName = true, ParameterSetName = "Value")]
+        [Parameter(Mandatory = false, ValueFromPipelineByPropertyName = true)]
         public string Name { get; set; }
 
-        [Parameter(Mandatory = false, ValueFromPipelineByPropertyName = true, ParameterSetName = "Value")]
+        [Parameter(Mandatory = false, ValueFromPipelineByPropertyName = true)]
         public string Country { get; set; }
-
-        protected override void BeginProcessing()
-        {
-            foreach (var o in this.Repository.Retrieve(new City { Id = this.Id, Name = this.Name, Country = this.Country }).ToList().Where(o => this.ShouldProcess(o.ToString(), VerbsCommon.Remove)))
-            {
-                this.Repository.Delete(o);
-            }
-        }
     }
 }
