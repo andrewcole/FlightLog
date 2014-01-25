@@ -66,10 +66,18 @@ namespace Illallangi.FlightLog.Model
 
         public string OriginTimezone { get; set; }
 
+        public float OriginLatitude { get; set; }
+
+        public float OriginLongitude { get; set; }
+
         public string Destination { get; set; }
 
         public string DestinationTimezone { get; set; }
-        
+
+        public float DestinationLatitude { get; set; }
+
+        public float DestinationLongitude { get; set; }
+
         #endregion
 
         #region Instance Properties
@@ -121,7 +129,7 @@ namespace Illallangi.FlightLog.Model
                                     NodaTime.TimeZones.Resolvers.LenientResolver)).Value;
             }
         }
-
+        
         #endregion
 
         #endregion
