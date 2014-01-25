@@ -32,6 +32,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\packages\AutoMapper.3.1.1\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper.Net4">
+      <HintPath>..\packages\AutoMapper.3.1.1\lib\net40\AutoMapper.Net4.dll</HintPath>
+    </Reference>
     <Reference Include="Common.Logging">
       <HintPath>..\packages\Common.Logging.2.0.0\lib\2.0\Common.Logging.dll</HintPath>
     </Reference>
@@ -81,6 +87,7 @@
     <Compile Include="Config\ValueElement.cs" />
     <Compile Include="Config\ValueElementCollection.cs" />
     <Compile Include="Country\AddCountryCmdlet.cs" />
+    <Compile Include="FlightLogAddCmdlet.cs" />
     <Compile Include="FlightLogGetCmdlet.cs" />
     <Compile Include="Country\GetCountryCmdlet.cs" />
     <Compile Include="Country\RemoveCountryCmdlet.cs" />

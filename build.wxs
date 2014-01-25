@@ -107,10 +107,19 @@
       <Component Id="SampleDataPs1C" Directory="SOFTWAREDIR" Guid="{8E55F927-ADD6-43D0-A7B4-499762C15CEA}" Permanent="yes" >
         <File Id="SampleDataPs1F" KeyPath="yes" Source="$(var.source)\SampleData.ps1" />
       </Component>
-                              
+
       <Component Id="NinjectDllC" Directory="SOFTWAREDIR" Guid="{89E2AF78-FC82-4A10-AF1C-3B86AF060680}" Permanent="yes" >
         <File Id="NinjectDllF" KeyPath="yes" Source="$(var.source)\ninject.dll" />
       </Component>
+
+      <Component Id="AutoMapperDllC" Directory="SOFTWAREDIR" Guid="{FF2C485A-4054-49E1-952E-E4654855A01C}" Permanent="yes" >
+        <File Id="AutoMapperDllF" KeyPath="yes" Source="$(var.source)\AutoMapper.dll" />
+      </Component>
+
+      <Component Id="AutoMapperNet4DllC" Directory="SOFTWAREDIR" Guid="{2E6781BC-AE66-4900-AFC5-B5B96396AA10}" Permanent="yes" >
+        <File Id="AutoMapperNet4DllF" KeyPath="yes" Source="$(var.source)\AutoMapper.Net4.dll" />
+      </Component>
+
       <ComponentRef Id="Empty" />
     </Feature>
 

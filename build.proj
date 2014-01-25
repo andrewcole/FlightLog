@@ -72,7 +72,13 @@
     <Message Text="=========== Copy x86 ===========" Importance="High" />
 
     <MakeDir Directories="$(BuildDir32)\bin" />
-    
+
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog.PowerShell\bin\$(Configuration)\AutoMapper.dll"
+          DestinationFolder="$(BuildDir32)\bin" />
+
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog.PowerShell\bin\$(Configuration)\AutoMapper.Net4.dll"
+          DestinationFolder="$(BuildDir32)\bin" />
+
     <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog.PowerShell\bin\$(Configuration)\Common.Logging.dll"
           DestinationFolder="$(BuildDir32)\bin" />
 
@@ -127,8 +133,14 @@
 
     <MakeDir Directories="$(BuildDir64)\bin" />
 
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog.PowerShell\bin\$(Configuration)\AutoMapper.dll"
+          DestinationFolder="$(BuildDir64)\bin" />
+
+    <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog.PowerShell\bin\$(Configuration)\AutoMapper.Net4.dll"
+          DestinationFolder="$(BuildDir64)\bin" />
+
     <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog.PowerShell\bin\$(Configuration)\Common.Logging.dll"
-              DestinationFolder="$(BuildDir64)\bin" />
+          DestinationFolder="$(BuildDir64)\bin" />
 
     <Copy SourceFiles="$(SourceDir)\Illallangi.FlightLog.PowerShell\bin\$(Configuration)\Common.Logging.Log4Net.dll"
           DestinationFolder="$(BuildDir64)\bin" />
