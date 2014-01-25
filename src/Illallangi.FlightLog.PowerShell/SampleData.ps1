@@ -524,3 +524,5 @@ Add-Flight -Year 2013 -Trip "STM12" -Origin YBCS -Destination YHID -Departure 20
 Add-Flight -Year 2013 -Trip "STM12" -Origin YHID -Destination YBCS -Departure 2013-12-05T10:25:00 -Arrival 2013-12-05T12:00:00 -Airline QF -Number 2489
 Add-Flight -Year 2013 -Trip "STM12" -Origin YBCS -Destination YBBN -Departure 2013-12-05T12:55:00 -Arrival 2013-12-05T15:05:00 -Airline QF -Number 649
 Add-Flight -Year 2013 -Trip "STM12" -Origin YBBN -Destination YSCB -Departure 2013-12-05T19:05:00 -Arrival 2013-12-05T21:55:00 -Airline QF -Number 959
+
+Export-FlightLogToJson out.json
