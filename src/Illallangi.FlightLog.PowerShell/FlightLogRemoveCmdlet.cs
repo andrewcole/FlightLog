@@ -5,13 +5,17 @@ namespace Illallangi.FlightLog.PowerShell
 
     using AutoMapper;
 
-    public abstract class FlightLogRemoveCmdlet<T, Timpl> : FlightLogCmdlet<T> where T : class where Timpl : T
+    using Illallangi.LiteOrm;
+
+    public abstract class FlightLogRemoveCmdlet<T, Timpl> : NinjectCmdlet<FlightLogModule>
+        where T : class
+        where Timpl : T
     {
         protected override void ProcessRecord()
         {
-            foreach (var o in this.Repository.Retrieve(Mapper.DynamicMap<Timpl>(this)).Where(o => this.ShouldProcess(o.ToString(), VerbsCommon.Remove)))
+            foreach (var o in this.Get<IRepository<T>>().Retrieve(Mapper.DynamicMap<Timpl>(this)).Where(o => this.ShouldProcess(o.ToString(), VerbsCommon.Remove)))
             {
-                this.Repository.Delete(o);
+                this.Get<IRepository<T>>().Delete(o);
             }
         }
     }

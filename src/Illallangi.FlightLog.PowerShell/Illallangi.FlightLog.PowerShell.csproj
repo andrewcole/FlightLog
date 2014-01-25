@@ -99,7 +99,6 @@
     <Compile Include="Flight\AddFlightCmdlet.cs" />
     <Compile Include="Flight\GetFlightCmdlet.cs" />
     <Compile Include="ExportFlightLogToJsonCmdlet.cs" />
-    <Compile Include="FlightLogCmdlet.cs" />
     <Compile Include="Nouns.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Timezone\AddTimezoneCmdlet.cs" />

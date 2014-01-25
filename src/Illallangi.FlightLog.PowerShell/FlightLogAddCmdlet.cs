@@ -2,13 +2,17 @@
 {
     using AutoMapper;
 
-    public abstract class FlightLogAddCmdlet<T, Timpl> : FlightLogCmdlet<T> where T: class where Timpl : T
+    using Illallangi.LiteOrm;
+
+    public abstract class FlightLogAddCmdlet<T, Timpl> : NinjectCmdlet<FlightLogModule>
+        where T : class
+        where Timpl : T
     {
         #region Methods
 
         protected override void ProcessRecord()
         {
-            this.WriteObject(this.Repository.Create(Mapper.DynamicMap<Timpl>(this)));
+            this.WriteObject(this.Get<IRepository<T>>().Create(Mapper.DynamicMap<Timpl>(this)));
         }
 
         #endregion
