@@ -6,7 +6,7 @@
     {
         #region Methods
 
-        protected override void BeginProcessing()
+        protected override void ProcessRecord()
         {
             this.WriteObject(this.Repository.Retrieve(Mapper.DynamicMap<Timpl>(this)), true);
         }
