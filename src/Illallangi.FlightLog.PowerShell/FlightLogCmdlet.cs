@@ -5,7 +5,7 @@
     using Illallangi.LiteOrm;
 
     [Cmdlet(VerbsCommon.Get, Nouns.Null)]
-    public abstract class FlightLogCmdlet<T> : NinjectCmdlet where T : class
+    public abstract class FlightLogCmdlet<T> : NinjectCmdlet<FlightLogModule> where T : class
     {
         #region Fields
 

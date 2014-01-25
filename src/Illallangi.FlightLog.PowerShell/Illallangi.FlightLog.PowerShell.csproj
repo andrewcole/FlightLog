@@ -48,6 +48,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Illallangi.LiteOrm.1.0.16\lib\Illallangi.LiteOrm.dll</HintPath>
     </Reference>
+    <Reference Include="Illallangi.NinjectCmdlet">
+      <HintPath>..\packages\Illallangi.NinjectPowershell.1.0.3\lib\Illallangi.NinjectCmdlet.dll</HintPath>
+    </Reference>
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.1.2.10\lib\2.0\log4net.dll</HintPath>
     </Reference>
@@ -97,7 +100,6 @@
     <Compile Include="Flight\GetFlightCmdlet.cs" />
     <Compile Include="ExportFlightLogToJsonCmdlet.cs" />
     <Compile Include="FlightLogCmdlet.cs" />
-    <Compile Include="NinjectCmdlet.cs" />
     <Compile Include="Nouns.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Timezone\AddTimezoneCmdlet.cs" />

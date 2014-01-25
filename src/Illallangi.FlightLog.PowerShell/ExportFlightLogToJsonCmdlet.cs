@@ -10,7 +10,7 @@ namespace Illallangi.FlightLog.PowerShell
     using Newtonsoft.Json;
 
     [Cmdlet(VerbsData.Export, "FlightLogToJson")]
-    public sealed class ExportFlightLogToJsonCmdlet : NinjectCmdlet
+    public sealed class ExportFlightLogToJsonCmdlet : NinjectCmdlet<FlightLogModule>
     {
         [Parameter(Mandatory = true, Position = 1)]
         public string FileName { get; set; }
