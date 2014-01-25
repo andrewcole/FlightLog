@@ -170,6 +170,7 @@ namespace Illallangi.FlightLog.Model
 
         #region Methods
 
+        //http://www.geodatasource.com/developers/c-sharp
         private double GetDistance()
         {
             double theta = this.OriginLongitude - this.DestinationLongitude;
