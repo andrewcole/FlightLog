@@ -2,13 +2,13 @@ namespace Illallangi.FlightLog.Model
 {
     public interface ICity
     {
-        int? Id { get; set; }
+        int? Id { get; }
 
-        string Country { get; set; }
+        string Country { get; }
 
-        string Name { get; set; }
+        string Name { get; }
 
-        int AirportCount { get; set; }
+        int AirportCount { get; }
     }
 
     public class City : ICity

@@ -5,22 +5,48 @@
     using Illallangi.FlightLog.Model;
 
     [Cmdlet(VerbsCommon.Get, Nouns.Year)]
-    public sealed class GetYearCmdlet : FlightLogCmdlet<IYear>
+    public sealed class GetYearCmdlet : FlightLogGetCmdlet<IYear>, IYear
     {
-        #region Properties
+        private string currentName;
 
-        [Parameter(Position = 1)]
-        public string Name { get; set; }
-
-        #endregion
-
-        #region Methods
-
-        protected override void BeginProcessing()
+        public int? Id
         {
-            this.WriteObject(this.Repository.Retrieve(new Year { Name = this.Name }), true);
+            get
+            {
+                throw new System.NotImplementedException();
+            }
         }
 
-        #endregion
+        [SupportsWildcards]
+        [Parameter(Position = 1)]
+        public string Name
+        {
+            get
+            {
+                return string.IsNullOrWhiteSpace(this.currentName) ?
+                    null :
+                    new WildcardPattern(this.currentName).ToWql();
+            }
+            set
+            {
+                this.currentName = value;
+            }
+        }
+
+        public int TripCount
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+        }
+
+        protected override IYear Target
+        {
+            get
+            {
+                return this;
+            }
+        }
     }
 }

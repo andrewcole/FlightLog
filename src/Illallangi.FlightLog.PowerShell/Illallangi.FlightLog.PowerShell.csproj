@@ -81,6 +81,7 @@
     <Compile Include="Config\ValueElement.cs" />
     <Compile Include="Config\ValueElementCollection.cs" />
     <Compile Include="Country\AddCountryCmdlet.cs" />
+    <Compile Include="FlightLogGetCmdlet.cs" />
     <Compile Include="Country\GetCountryCmdlet.cs" />
     <Compile Include="Country\RemoveCountryCmdlet.cs" />
     <Compile Include="FlightLogModule.cs" />

@@ -2,46 +2,46 @@ namespace Illallangi.FlightLog.Model
 {
     public interface IAirport
     {
-        int? Id { get; set; }
+        int? Id { get; }
 
-        string Country { get; set; }
+        string Country { get; }
 
-        string City { get; set; }
+        string City { get; }
 
         /// <summary>
         /// IANA Time Zone Database designation for the local time zone of the airport.
         /// </summary>
-        string Timezone { get; set; }
+        string Timezone { get; }
         
         /// <summary>
         /// Name of airport. May or may not contain the City name.
         /// </summary>
-        string Name { get; set; }
+        string Name { get; }
 
         /// <summary>
         /// 3-letter FAA code, for airports located in Country 'United States of America'. 3-letter IATA code, for all other airports. Blank if not assigned.
         /// </summary>
-        string Iata { get; set; }
+        string Iata { get; }
 
         /// <summary>
         /// 4-letter ICAO code. Blank if not assigned.
         /// </summary>
-        string Icao { get; set; }
+        string Icao { get; }
 
         /// <summary>
         /// Decimal degrees, usually to six significant digits. Negative is South, positive is North.
         /// </summary>
-        float Latitude { get; set; }
+        float Latitude { get; }
 
         /// <summary>
         /// Decimal degrees, usually to six significant digits. Negative is West, positive is East.
         /// </summary>
-        float Longitude { get; set; }
+        float Longitude { get; }
 
         /// <summary>
         /// In feet.
         /// </summary>
-        float Altitude { get; set; }
+        float Altitude { get; }
     }
 
     public class Airport : IAirport

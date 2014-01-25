@@ -6,7 +6,7 @@
     using Illallangi.FlightLog.Model;
 
     [Cmdlet(VerbsCommon.Get, Nouns.Country)]
-    public sealed class GetCountryCmdlet : FlightLogCmdlet<ICountry>, ICountry
+    public sealed class GetCountryCmdlet : FlightLogGetCmdlet<ICountry>, ICountry
     {
         [SupportsWildcards]
         [Parameter(Mandatory = false, Position = 1)]
@@ -24,7 +24,9 @@
         {
             get
             {
-                return (new WildcardPattern(this.Name)).ToWql();
+                return string.IsNullOrWhiteSpace(this.Name) ?
+                    null :
+                    new WildcardPattern(this.Name).ToWql();
             }
         }
 
@@ -36,9 +38,12 @@
             }
         }
 
-        protected override void BeginProcessing()
+        protected override ICountry Target
         {
-            this.WriteObject(this.Repository.Retrieve(this), true);
+            get
+            {
+                return this;
+            }
         }
     }
 }
