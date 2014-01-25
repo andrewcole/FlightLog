@@ -5,7 +5,7 @@ namespace Illallangi.FlightLog.PowerShell.Trip
     using Illallangi.FlightLog.Model;
 
     [Cmdlet(VerbsCommon.Add, Nouns.Trip)]
-    public sealed class AddTripCmdlet : FlightLogCmdlet<ITrip>
+    public sealed class AddTripCmdlet : FlightLogAddCmdlet<ITrip, Trip>
     {
         #region Properties
 
@@ -17,20 +17,6 @@ namespace Illallangi.FlightLog.PowerShell.Trip
 
         [Parameter(Mandatory = false)]
         public string Description { get; set; }
-
-        #endregion
-
-        #region Methods
-
-        protected override void ProcessRecord()
-        {
-            this.WriteObject(this.Repository.Create(new Trip
-            {
-                Year = this.Year, 
-                Name = this.Name, 
-                Description = this.Description,
-            }));
-        }
 
         #endregion
     }

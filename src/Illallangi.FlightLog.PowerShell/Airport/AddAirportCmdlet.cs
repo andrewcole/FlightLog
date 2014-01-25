@@ -5,7 +5,7 @@ namespace Illallangi.FlightLog.PowerShell.Airport
     using Illallangi.FlightLog.Model;
 
     [Cmdlet(VerbsCommon.Add, Nouns.Airport)]
-    public sealed class AddAirportCmdlet : FlightLogCmdlet<IAirport>
+    public sealed class AddAirportCmdlet : FlightLogAddCmdlet<IAirport, Airport>
     {
         #region Properties
 
@@ -35,26 +35,6 @@ namespace Illallangi.FlightLog.PowerShell.Airport
 
         [Parameter(Mandatory = true)]
         public string Timezone { get; set; }
-
-        #endregion
-
-        #region Methods
-        
-        protected override void ProcessRecord()
-        {
-            this.WriteObject(this.Repository.Create(new Airport
-                    { 
-                        Country = this.Country, 
-                        City = this.City,
-                        Name = this.Name,
-                        Iata = this.Iata, 
-                        Icao = this.Icao, 
-                        Latitude = this.Latitude, 
-                        Longitude = this.Longitude, 
-                        Altitude = this.Altitude, 
-                        Timezone = this.Timezone,
-                    }));
-        }
 
         #endregion
     }

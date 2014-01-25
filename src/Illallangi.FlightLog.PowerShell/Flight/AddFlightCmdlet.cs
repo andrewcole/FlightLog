@@ -6,7 +6,7 @@ namespace Illallangi.FlightLog.PowerShell.Flight
     using Illallangi.FlightLog.Model;
 
     [Cmdlet(VerbsCommon.Add, Nouns.Flight)]
-    public sealed class AddFlightCmdlet : FlightLogCmdlet<IFlight>
+    public sealed class AddFlightCmdlet : FlightLogAddCmdlet<IFlight, Flight>
     {
         #region Properties
 
@@ -42,28 +42,6 @@ namespace Illallangi.FlightLog.PowerShell.Flight
         
         [Parameter(Mandatory = false)]
         public string Note { get; set; }
-
-        #endregion
-
-        #region Methods
-
-        protected override void ProcessRecord()
-        {
-            this.WriteObject(this.Repository.Create(new Flight
-            {
-                Year = this.Year,
-                Trip = this.Trip,
-                Origin = this.Origin,
-                Destination = this.Destination,
-                Departure = this.Departure,
-                Arrival = this.Arrival,
-                Airline = this.Airline,
-                Number = this.Number,
-                Aircraft = this.Aircraft,
-                Seat = this.Seat,
-                Note = this.Note,
-            }));
-        }
 
         #endregion
     }

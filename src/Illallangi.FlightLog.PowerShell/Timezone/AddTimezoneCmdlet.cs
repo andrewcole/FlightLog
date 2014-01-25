@@ -5,21 +5,12 @@
     using Illallangi.FlightLog.Model;
 
     [Cmdlet(VerbsCommon.Add, Nouns.Timezone)]
-    public sealed class AddTimezoneCmdlet : FlightLogCmdlet<ITimezone>
+    public sealed class AddTimezoneCmdlet : FlightLogAddCmdlet<ITimezone, Timezone>
     {
         #region Properties
 
         [Parameter(Mandatory = true, Position = 1)]
         public string Name { get; set; }
-
-        #endregion
-        
-        #region Methods
-
-        protected override void ProcessRecord()
-        {
-            this.WriteObject(this.Repository.Create(new Timezone { Name = this.Name }));
-        }
 
         #endregion
     }

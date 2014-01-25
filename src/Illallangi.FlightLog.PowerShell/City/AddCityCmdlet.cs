@@ -5,7 +5,7 @@ namespace Illallangi.FlightLog.PowerShell.City
     using Illallangi.FlightLog.Model;
 
     [Cmdlet(VerbsCommon.Add, Nouns.City)]
-    public sealed class AddCityCmdlet : FlightLogCmdlet<ICity>
+    public sealed class AddCityCmdlet : FlightLogAddCmdlet<ICity, City>
     {
         #region Properties
 
@@ -14,19 +14,6 @@ namespace Illallangi.FlightLog.PowerShell.City
 
         [Parameter(Mandatory = true)]
         public string Name { get; set; }
-
-        #endregion
-        
-        #region Methods
-
-        protected override void ProcessRecord()
-        {
-            this.WriteObject(this.Repository.Create(new City
-            {
-                Name = this.Name, 
-                Country = this.Country,
-            }));
-        }
 
         #endregion
     }
