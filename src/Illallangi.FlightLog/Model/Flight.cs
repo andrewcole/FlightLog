@@ -48,6 +48,8 @@ namespace Illallangi.FlightLog.Model
 
         private TimeSpan? currentDuration;
 
+        private double? currentDistance;
+
         #endregion
 
         #region Properties
@@ -152,7 +154,43 @@ namespace Illallangi.FlightLog.Model
             }
         }
 
+        public double Distance
+        {
+            get
+            {
+                return
+                    (this.currentDistance.HasValue ? this.currentDistance : this.currentDistance = this.GetDistance())
+                        .Value;
+            }
+        }
+
         #endregion
+
+        #endregion
+
+        #region Methods
+
+        private double GetDistance()
+        {
+            double theta = this.OriginLongitude - this.DestinationLongitude;
+            var dist = Math.Sin(DegreesToRadians(this.OriginLatitude)) * Math.Sin(DegreesToRadians(this.DestinationLatitude)) + 
+                       Math.Cos(DegreesToRadians(this.OriginLatitude)) * Math.Cos(DegreesToRadians(this.DestinationLatitude)) * Math.Cos(DegreesToRadians(theta));
+            dist = Math.Acos(dist);
+            dist = RadiansToDegrees(dist);
+            dist = dist * 60 * 1.1515;
+            dist = dist * 1.609344;
+            return dist;
+        }
+
+        private static double DegreesToRadians(double deg)
+        {
+            return deg * Math.PI / 180.0;
+        }
+
+        private static double RadiansToDegrees(double rad)
+        {
+            return rad / Math.PI * 180.0;
+        } 
 
         #endregion
     }
