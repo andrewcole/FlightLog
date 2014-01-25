@@ -46,6 +46,8 @@ namespace Illallangi.FlightLog.Model
 
         private ZonedDateTime? currentArrivalZoned;
 
+        private TimeSpan? currentDuration;
+
         #endregion
 
         #region Properties
@@ -129,7 +131,27 @@ namespace Illallangi.FlightLog.Model
                                     NodaTime.TimeZones.Resolvers.LenientResolver)).Value;
             }
         }
-        
+
+        public TimeSpan Duration
+        {
+            get
+            {
+                return
+                    (this.currentDuration.HasValue
+                         ? this.currentDuration
+                         : this.currentDuration =
+                           (this.ArrivalZoned.ToInstant() - this.DepartureZoned.ToInstant()).ToTimeSpan()).Value;
+            }
+        }
+
+        public double DurationMinutes
+        {
+            get
+            {
+                return this.Duration.TotalMinutes;
+            }
+        }
+
         #endregion
 
         #endregion
