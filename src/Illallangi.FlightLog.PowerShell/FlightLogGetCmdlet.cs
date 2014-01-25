@@ -1,13 +1,16 @@
 ﻿namespace Illallangi.FlightLog.PowerShell
 {
-    public abstract class FlightLogGetCmdlet<T> : FlightLogCmdlet<T>
-        where T : class
+    using AutoMapper;
+
+    public abstract class FlightLogGetCmdlet<T, Timpl> : FlightLogCmdlet<T> where T : class where Timpl : T
     {
-        protected abstract T Target { get; }
+        #region Methods
 
         protected override void BeginProcessing()
         {
-            this.WriteObject(this.Repository.Retrieve(this.Target), true);
+            this.WriteObject(this.Repository.Retrieve(Mapper.DynamicMap<Timpl>(this)), true);
         }
+
+        #endregion
     }
 }

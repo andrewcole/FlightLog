@@ -5,11 +5,7 @@
     using Illallangi.FlightLog.Model;
 
     [Cmdlet(VerbsCommon.Get, Nouns.Flight)]
-    public sealed class GetFlightCmdlet : FlightLogCmdlet<IFlight>
+    public sealed class GetFlightCmdlet : FlightLogGetCmdlet<IFlight, Flight>
     {
-        protected override void BeginProcessing()
-        {
-            this.WriteObject(this.Repository.Retrieve(), true);
-        }
     }
 }

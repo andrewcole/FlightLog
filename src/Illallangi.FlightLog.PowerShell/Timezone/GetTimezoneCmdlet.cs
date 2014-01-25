@@ -5,11 +5,7 @@ namespace Illallangi.FlightLog.PowerShell.Timezone
     using Illallangi.FlightLog.Model;
 
     [Cmdlet(VerbsCommon.Get, Nouns.Timezone)]
-    public sealed class GetTimezoneCmdlet : FlightLogCmdlet<ITimezone>
+    public sealed class GetTimezoneCmdlet : FlightLogGetCmdlet<ITimezone, Timezone>
     {
-        protected override void BeginProcessing()
-        {
-            this.WriteObject(this.Repository.Retrieve(), true);
-        }
     }
 }

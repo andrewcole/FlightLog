@@ -5,7 +5,7 @@
     using Illallangi.FlightLog.Model;
 
     [Cmdlet(VerbsCommon.Get, Nouns.Trip)]
-    public sealed class GetTripCmdlet : FlightLogCmdlet<ITrip>
+    public sealed class GetTripCmdlet : FlightLogGetCmdlet<ITrip, Trip>
     {
         protected override void BeginProcessing()
         {
