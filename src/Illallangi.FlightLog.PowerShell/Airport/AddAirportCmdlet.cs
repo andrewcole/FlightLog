@@ -7,13 +7,20 @@ namespace Illallangi.FlightLog.PowerShell.Airport
     [Cmdlet(VerbsCommon.Add, Nouns.Airport)]
     public sealed class AddAirportCmdlet : FlightLogAddCmdlet<IAirport, Airport>
     {
-        #region Properties
+        #region Parent Properties
 
         [Parameter(Mandatory = true)]
         public string Country { get; set; }
 
         [Parameter(Mandatory = true)]
         public string City { get; set; }
+
+        [Parameter(Mandatory = true)]
+        public string Timezone { get; set; }
+
+        #endregion
+
+        #region Instance Properties
 
         [Parameter(Mandatory = true)]
         public string Name { get; set; }
@@ -32,9 +39,6 @@ namespace Illallangi.FlightLog.PowerShell.Airport
 
         [Parameter(Mandatory = true)]
         public float Altitude { get; set; }
-
-        [Parameter(Mandatory = true)]
-        public string Timezone { get; set; }
 
         #endregion
     }

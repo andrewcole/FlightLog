@@ -99,14 +99,18 @@
     <Compile Include="Flight\AddFlightCmdlet.cs" />
     <Compile Include="Flight\GetFlightCmdlet.cs" />
     <Compile Include="ExportFlightLogToJsonCmdlet.cs" />
+    <Compile Include="Flight\RemoveFlightCmdlet.cs" />
     <Compile Include="Nouns.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Timezone\AddTimezoneCmdlet.cs" />
     <Compile Include="Timezone\GetTimezoneCmdlet.cs" />
+    <Compile Include="Timezone\RemoveTimezoneCmdlet.cs" />
     <Compile Include="Trip\AddTripCmdlet.cs" />
     <Compile Include="Trip\GetTripCmdlet.cs" />
+    <Compile Include="Trip\RemoveTripCmdlet.cs" />
     <Compile Include="Year\AddYearCmdlet.cs" />
     <Compile Include="Year\GetYearCmdlet.cs" />
+    <Compile Include="Year\RemoveYearCmdlet.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Illallangi.FlightLog\Illallangi.FlightLog.csproj">

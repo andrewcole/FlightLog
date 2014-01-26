@@ -7,7 +7,7 @@
     [Cmdlet(VerbsCommon.Add, Nouns.Year)]
     public sealed class AddYearCmdlet : FlightLogAddCmdlet<IYear, Year>
     {
-        #region Properties
+        #region Instance Properties
 
         [Parameter(Mandatory = true)]
         public string Name { get; set; }

@@ -7,12 +7,20 @@ namespace Illallangi.FlightLog.PowerShell.City
     [Cmdlet(VerbsCommon.Get, Nouns.City)]
     public sealed class GetCityCmdlet : FlightLogGetCmdlet<ICity, City>
     {
+        #region Parent Properties
+        
         [SupportsWildcards]
         [Parameter(Mandatory = false)]
         public string Country { get; set; }
 
+        #endregion
+
+        #region Instance Properties
+
         [SupportsWildcards]
-        [Parameter(Mandatory = false, Position = 1)]
+        [Parameter(Mandatory = false)]
         public string Name { get; set; }
+
+        #endregion
     }
 }

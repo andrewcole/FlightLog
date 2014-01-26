@@ -1,11 +1,11 @@
-namespace Illallangi.FlightLog.PowerShell.City
+namespace Illallangi.FlightLog.PowerShell.Trip
 {
     using System.Management.Automation;
 
     using Illallangi.FlightLog.Model;
 
-    [Cmdlet(VerbsCommon.Remove, Nouns.City, SupportsShouldProcess = true, ConfirmImpact = ConfirmImpact.High)]
-    public sealed class RemoveCityCmdlet : FlightLogRemoveCmdlet<ICity, City>
+    [Cmdlet(VerbsCommon.Remove, Nouns.Trip, SupportsShouldProcess = true, ConfirmImpact = ConfirmImpact.High)]
+    public sealed class RemoveTripCmdlet : FlightLogRemoveCmdlet<ITrip, Trip>
     {
         #region Primary Key Property
 

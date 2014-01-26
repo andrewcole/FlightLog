@@ -8,7 +8,7 @@ namespace Illallangi.FlightLog.PowerShell.Flight
     [Cmdlet(VerbsCommon.Add, Nouns.Flight)]
     public sealed class AddFlightCmdlet : FlightLogAddCmdlet<IFlight, Flight>
     {
-        #region Properties
+        #region Parent Properties
 
         [Parameter(Mandatory = true)]
         public string Year { get; set; }
@@ -21,6 +21,10 @@ namespace Illallangi.FlightLog.PowerShell.Flight
 
         [Parameter(Mandatory = true)]
         public string Destination { get; set; }
+
+        #endregion
+
+        #region Instance Properties
 
         [Parameter(Mandatory = true)]
         public DateTime Departure { get; set; }

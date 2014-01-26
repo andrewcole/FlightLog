@@ -7,8 +7,9 @@
     [Cmdlet(VerbsCommon.Add, Nouns.Country)]
     public sealed class AddCountryCmdlet : FlightLogAddCmdlet<ICountry, Country>
     {
-        #region Properties
+        #region Instance Properties
 
+        [SupportsWildcards]
         [Parameter(Mandatory = true)]
         public string Name { get; set; }
 

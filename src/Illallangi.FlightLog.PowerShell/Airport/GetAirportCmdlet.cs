@@ -7,24 +7,33 @@ namespace Illallangi.FlightLog.PowerShell.Airport
 
     [Cmdlet(VerbsCommon.Get, Nouns.Airport)]
     public sealed class GetAirportCmdlet : FlightLogGetCmdlet<IAirport, Airport>
-    {[SupportsWildcards]
-        [Parameter(Mandatory = false)]
+    {
+        #region Parent Properties
+
+        [SupportsWildcards]
+        [Parameter(Mandatory = false, ValueFromPipelineByPropertyName = true)]
         public string Country { get; set; }
-        
+
         [SupportsWildcards]
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ValueFromPipelineByPropertyName = true)]
         public string City { get; set; }
-        
+
+        #endregion
+
+        #region Instance Properties
+
         [SupportsWildcards]
-        [Parameter(Mandatory = false, Position = 1)]
+        [Parameter(Mandatory = false, ValueFromPipelineByPropertyName = true)]
         public string Name { get; set; }
-        
+
         [SupportsWildcards]
-        [Parameter(Mandatory = false)]
-        public string Icao { get; set; }
-        
-        [SupportsWildcards]
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ValueFromPipelineByPropertyName = true)]
         public string Iata { get; set; }
+
+        [SupportsWildcards]
+        [Parameter(Mandatory = false, ValueFromPipelineByPropertyName = true)]
+        public string Icao { get; set; }
+
+        #endregion
     }
 }

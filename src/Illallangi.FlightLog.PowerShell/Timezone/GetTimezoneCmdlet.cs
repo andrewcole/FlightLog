@@ -7,5 +7,12 @@ namespace Illallangi.FlightLog.PowerShell.Timezone
     [Cmdlet(VerbsCommon.Get, Nouns.Timezone)]
     public sealed class GetTimezoneCmdlet : FlightLogGetCmdlet<ITimezone, Timezone>
     {
+        #region Instance Properties
+
+        [SupportsWildcards]
+        [Parameter(Mandatory = false, ValueFromPipelineByPropertyName = true)]
+        public string Name { get; set; }
+
+        #endregion
     }
 }

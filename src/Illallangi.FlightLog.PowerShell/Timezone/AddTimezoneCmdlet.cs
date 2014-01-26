@@ -7,7 +7,7 @@
     [Cmdlet(VerbsCommon.Add, Nouns.Timezone)]
     public sealed class AddTimezoneCmdlet : FlightLogAddCmdlet<ITimezone, Timezone>
     {
-        #region Properties
+        #region Instance Properties
 
         [Parameter(Mandatory = true, Position = 1)]
         public string Name { get; set; }
