@@ -48,20 +48,23 @@ namespace Illallangi.FlightLog.Context
         
         #region Methods
 
-        public override ITrip Create(ITrip obj)
+        public override IEnumerable<ITrip> Create(params ITrip[] objs)
         {
-            this.Log.DebugFormat(@"TripRepository.Create(""{0}"")", obj);
+            foreach (var obj in objs)
+            { 
+                this.Log.DebugFormat(@"TripRepository.Create(""{0}"")", obj);
 
-            var year = this.YearRepository.Retrieve(new Year { Name = obj.Year }).Single();
+                var year = this.YearRepository.Retrieve(new Year { Name = obj.Year }).Single();
 
-            var id = this.GetConnection()
-                .InsertInto("Trip")
-                .Values("YearId", year.Id)
-                .Values("TripName", obj.Name)
-                .Values("Description", obj.Description)
-                .Go();
+                var id = this.GetConnection()
+                    .InsertInto("Trip")
+                    .Values("YearId", year.Id)
+                    .Values("TripName", obj.Name)
+                    .Values("Description", obj.Description)
+                    .Go();
 
-            return this.Retrieve(new Trip { Id = id }).Single();
+                yield return this.Retrieve(new Trip { Id = id }).Single();
+            }
         }
 
         public override IEnumerable<ITrip> Retrieve(ITrip obj = null)
@@ -85,17 +88,20 @@ namespace Illallangi.FlightLog.Context
             throw new NotImplementedException();
         }
 
-        public override void Delete(ITrip obj)
+        public override void Delete(params ITrip[] objs)
         {
-            this.Log.DebugFormat(@"TripRepository.Delete(""{0}"")", obj);
+            foreach (var obj in objs)
+            {
+                this.Log.DebugFormat(@"TripRepository.Delete(""{0}"")", obj);
 
-            this.GetConnection()
-                .DeleteFrom("Trip")
-                .Where("TripId", obj.Id)
-                .Where("TripName", obj.Name)
-                .Where("Description", obj.Description)
-                .CreateCommand()
-                .ExecuteNonQuery();
+                this.GetConnection()
+                    .DeleteFrom("Trip")
+                    .Where("TripId", obj.Id)
+                    .Where("TripName", obj.Name)
+                    .Where("Description", obj.Description)
+                    .CreateCommand()
+                    .ExecuteNonQuery();
+            }
         }
 
         #endregion

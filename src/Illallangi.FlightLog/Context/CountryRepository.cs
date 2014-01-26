@@ -30,16 +30,19 @@ namespace Illallangi.FlightLog.Context
 
         #region Methods
 
-        public override ICountry Create(ICountry obj)
+        public override IEnumerable<ICountry> Create(params ICountry[] objs)
         {
-            this.Log.DebugFormat(@"CountryRepository.Create(""{0}"")", obj);
+            foreach (var obj in objs)
+            { 
+                this.Log.DebugFormat(@"CountryRepository.Create(""{0}"")", obj);
             
-            var id = this.GetConnection()
-                .InsertInto("Country")
-                .Values("CountryName", obj.Name)
-                .Go();
+                var id = this.GetConnection()
+                    .InsertInto("Country")
+                    .Values("CountryName", obj.Name)
+                    .Go();
 
-            return this.Retrieve(new Country { Id = id }).Single();
+                yield return this.Retrieve(new Country { Id = id }).Single();
+            }
         }
 
         public override IEnumerable<ICountry> Retrieve(ICountry obj = null)
@@ -61,16 +64,19 @@ namespace Illallangi.FlightLog.Context
             throw new System.NotImplementedException();
         }
 
-        public override void Delete(ICountry obj)
+        public override void Delete(params ICountry[] objs)
         {
-            this.Log.DebugFormat(@"CountryRepository.Delete(""{0}"")", obj);
+            foreach (var obj in objs)
+            {
+                this.Log.DebugFormat(@"CountryRepository.Delete(""{0}"")", obj);
 
-            this.GetConnection()
-                .DeleteFrom("Country")
-                .Where("CountryId", obj.Id)
-                .Where("Country", obj.Name)
-                .CreateCommand()
-                .ExecuteNonQuery();
+                this.GetConnection()
+                    .DeleteFrom("Country")
+                    .Where("CountryId", obj.Id)
+                    .Where("Country", obj.Name)
+                    .CreateCommand()
+                    .ExecuteNonQuery();
+            }
         }
 
         #endregion

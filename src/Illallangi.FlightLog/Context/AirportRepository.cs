@@ -59,26 +59,30 @@ namespace Illallangi.FlightLog.Context
 
         #region Methods
 
-        public override IAirport Create(IAirport obj)
+        public override IEnumerable<IAirport> Create(params IAirport[] objs)
         {
-            this.Log.DebugFormat(@"AirportRepository.Create(""{0}"")", obj);
+            foreach (var obj in objs)
+            {
+                this.Log.DebugFormat(@"AirportRepository.Create(""{0}"")", obj);
 
-            var city = this.CityRepository.Retrieve(new City { Name = obj.City, Country = obj.Country }).Single();
-            var timezone = this.TimezoneRepository.Retrieve(new Timezone { Name = obj.Timezone }).Single();
+                var city = this.CityRepository.Retrieve(new City { Name = obj.City, Country = obj.Country }).Single();
+                var timezone = this.TimezoneRepository.Retrieve(new Timezone { Name = obj.Timezone }).Single();
 
-            var id = this.GetConnection()
-                .InsertInto("Airport")
-                .Values("CityId", city.Id)
-                .Values("TimezoneId", timezone.Id)
-                .Values("AirportName", obj.Name)
-                .Values("Iata", obj.Iata)
-                .Values("Icao", obj.Icao)
-                .Values("Latitude", obj.Latitude)
-                .Values("Longitude", obj.Longitude)
-                .Values("Altitude", obj.Altitude)
-                .Go();
+                var id =
+                    this.GetConnection()
+                        .InsertInto("Airport")
+                        .Values("CityId", city.Id)
+                        .Values("TimezoneId", timezone.Id)
+                        .Values("AirportName", obj.Name)
+                        .Values("Iata", obj.Iata)
+                        .Values("Icao", obj.Icao)
+                        .Values("Latitude", obj.Latitude)
+                        .Values("Longitude", obj.Longitude)
+                        .Values("Altitude", obj.Altitude)
+                        .Go();
 
-            return this.Retrieve(new Airport { Id = id }).Single();
+                yield return this.Retrieve(new Airport { Id = id }).Single();
+            }
         }
 
         public override IEnumerable<IAirport> Retrieve(IAirport obj = null)
@@ -107,22 +111,25 @@ namespace Illallangi.FlightLog.Context
             throw new NotImplementedException();
         }
 
-        public override void Delete(IAirport obj)
+        public override void Delete(params IAirport[] objs)
         {
-            this.Log.DebugFormat(@"AirportRepository.Delete(""{0}"")", obj);
+            foreach (var obj in objs)
+            {
+                this.Log.DebugFormat(@"AirportRepository.Delete(""{0}"")", obj);
 
-            this.GetConnection()
-                .DeleteFrom("Airport")
-                .Where("AirportId", obj.Id)
-                .Where("AirportName", obj.Name)
-                .Where("Iata", obj.Iata)
-                .Where("Icao", obj.Icao)
-                .Where("Latitude", obj.Latitude)
-                .Where("Longitude", obj.Longitude)
-                .Where("Altitude", obj.Altitude)
-                .Where("Timezone", obj.Timezone)
-                .CreateCommand()
-                .ExecuteNonQuery();
+                this.GetConnection()
+                    .DeleteFrom("Airport")
+                    .Where("AirportId", obj.Id)
+                    .Where("AirportName", obj.Name)
+                    .Where("Iata", obj.Iata)
+                    .Where("Icao", obj.Icao)
+                    .Where("Latitude", obj.Latitude)
+                    .Where("Longitude", obj.Longitude)
+                    .Where("Altitude", obj.Altitude)
+                    .Where("Timezone", obj.Timezone)
+                    .CreateCommand()
+                    .ExecuteNonQuery();
+            }
         }
 
         #endregion

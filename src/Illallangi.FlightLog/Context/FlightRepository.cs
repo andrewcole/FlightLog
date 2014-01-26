@@ -59,29 +59,32 @@ namespace Illallangi.FlightLog.Context
 
         #region Methods
 
-        public override IFlight Create(IFlight obj)
+        public override IEnumerable<IFlight> Create(params IFlight[] objs)
         {
-            this.Log.DebugFormat(@"FlightRepository.Create(""{0}"")", obj);
+            foreach (var obj in objs)
+            { 
+                this.Log.DebugFormat(@"FlightRepository.Create(""{0}"")", obj);
 
-            var trip = this.TripRepository.Retrieve(new Trip { Year = obj.Year, Name = obj.Trip }).Single();
-            var origin = this.AirportRepository.Retrieve(new Airport { Icao = obj.Origin }).Single();
-            var destination = this.AirportRepository.Retrieve(new Airport { Icao = obj.Destination }).Single();
+                var trip = this.TripRepository.Retrieve(new Trip { Year = obj.Year, Name = obj.Trip }).Single();
+                var origin = this.AirportRepository.Retrieve(new Airport { Icao = obj.Origin }).Single();
+                var destination = this.AirportRepository.Retrieve(new Airport { Icao = obj.Destination }).Single();
 
-            var id = this.GetConnection()
-                .InsertInto("Flight")
-                .Values("TripId", trip.Id)
-                .Values("OriginId", origin.Id)
-                .Values("DestinationId", destination.Id)
-                .Values("Departure", obj.Departure)
-                .Values("Arrival", obj.Arrival)
-                .Values("Airline", obj.Airline)
-                .Values("Number", obj.Number)
-                .Values("Aircraft", obj.Aircraft)
-                .Values("Seat", obj.Seat)
-                .Values("Note", obj.Note)
-                .Go();
+                var id = this.GetConnection()
+                    .InsertInto("Flight")
+                    .Values("TripId", trip.Id)
+                    .Values("OriginId", origin.Id)
+                    .Values("DestinationId", destination.Id)
+                    .Values("Departure", obj.Departure)
+                    .Values("Arrival", obj.Arrival)
+                    .Values("Airline", obj.Airline)
+                    .Values("Number", obj.Number)
+                    .Values("Aircraft", obj.Aircraft)
+                    .Values("Seat", obj.Seat)
+                    .Values("Note", obj.Note)
+                    .Go();
 
-            return this.Retrieve(new Flight { Id = id }).Single();
+                yield return this.Retrieve(new Flight { Id = id }).Single();
+            }
         }
 
         public override IEnumerable<IFlight> Retrieve(IFlight obj = null)
@@ -118,22 +121,25 @@ namespace Illallangi.FlightLog.Context
             throw new NotImplementedException();
         }
 
-        public override void Delete(IFlight obj)
+        public override void Delete(params IFlight[] objs)
         {
-            this.Log.DebugFormat(@"CountryRepository.Delete(""{0}"")", obj);
+            foreach (var obj in objs)
+            {
+                this.Log.DebugFormat(@"CountryRepository.Delete(""{0}"")", obj);
 
-            this.GetConnection()
-                .DeleteFrom("Flight")
-                .Where("FlightId", obj.Id)
-                .Where("Departure", obj.Departure)
-                .Where("Arrival", obj.Arrival)
-                .Where("Airline", obj.Airline)
-                .Where("Number", obj.Number)
-                .Where("Aircraft", obj.Aircraft)
-                .Where("Seat", obj.Seat)
-                .Where("Note", obj.Note)
-                .CreateCommand()
-                .ExecuteNonQuery();
+                this.GetConnection()
+                    .DeleteFrom("Flight")
+                    .Where("FlightId", obj.Id)
+                    .Where("Departure", obj.Departure)
+                    .Where("Arrival", obj.Arrival)
+                    .Where("Airline", obj.Airline)
+                    .Where("Number", obj.Number)
+                    .Where("Aircraft", obj.Aircraft)
+                    .Where("Seat", obj.Seat)
+                    .Where("Note", obj.Note)
+                    .CreateCommand()
+                    .ExecuteNonQuery();
+            }
         }
 
         #endregion

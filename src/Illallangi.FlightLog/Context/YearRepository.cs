@@ -31,16 +31,19 @@ namespace Illallangi.FlightLog.Context
 
         #region Methods
 
-        public override IYear Create(IYear obj)
+        public override IEnumerable<IYear> Create(params IYear[] objs)
         {
-            this.Log.DebugFormat(@"YearRepository.Create(""{0}"")", obj);
+            foreach (var obj in objs)
+            { 
+                this.Log.DebugFormat(@"YearRepository.Create(""{0}"")", obj);
 
-            var id = this.GetConnection()
-                .InsertInto("Year")
-                .Values("YearName", obj.Name)
-                .Go();
+                var id = this.GetConnection()
+                    .InsertInto("Year")
+                    .Values("YearName", obj.Name)
+                    .Go();
 
-            return this.Retrieve(new Year { Id = id }).Single();
+                yield return this.Retrieve(new Year { Id = id }).Single();
+            }
         }
 
         public override IEnumerable<IYear> Retrieve(IYear obj = null)
@@ -62,16 +65,19 @@ namespace Illallangi.FlightLog.Context
             throw new NotImplementedException();
         }
 
-        public override void Delete(IYear obj)
+        public override void Delete(params IYear[] objs)
         {
-            this.Log.DebugFormat(@"YearRepository.Delete(""{0}"")", obj);
+            foreach (var obj in objs)
+            {
+                this.Log.DebugFormat(@"YearRepository.Delete(""{0}"")", obj);
 
-            this.GetConnection()
-                .DeleteFrom("Year")
-                .Where("YearId", obj.Id)
-                .Where("YearName", obj.Name)
-                .CreateCommand()
-                .ExecuteNonQuery();
+                this.GetConnection()
+                    .DeleteFrom("Year")
+                    .Where("YearId", obj.Id)
+                    .Where("YearName", obj.Name)
+                    .CreateCommand()
+                    .ExecuteNonQuery();
+            }
         }
 
         #endregion

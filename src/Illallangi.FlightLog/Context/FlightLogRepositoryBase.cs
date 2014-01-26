@@ -23,12 +23,12 @@ namespace Illallangi.FlightLog.Context
         {
         }
 
-        public abstract override T Create(T obj);
+        public abstract override IEnumerable<T> Create(params T[] objs);
+
+        public abstract override void Delete(params T[] objs);
 
         public abstract override IEnumerable<T> Retrieve(T obj = null);
 
         public abstract override T Update(T obj);
-
-        public abstract override void Delete(T obj);
     }
 }

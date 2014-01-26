@@ -44,9 +44,9 @@
     <Reference Include="Common.Logging.Log4Net">
       <HintPath>..\packages\Common.Logging.Log4Net.2.0.1\lib\net20\Common.Logging.Log4Net.dll</HintPath>
     </Reference>
-    <Reference Include="Illallangi.LiteOrm, Version=1.0.16.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Illallangi.LiteOrm, Version=1.0.17.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Illallangi.LiteOrm.1.0.16\lib\Illallangi.LiteOrm.dll</HintPath>
+      <HintPath>..\packages\Illallangi.LiteOrm.1.0.17\lib\Illallangi.LiteOrm.dll</HintPath>
     </Reference>
     <Reference Include="Illallangi.NinjectCmdlet">
       <HintPath>..\packages\Illallangi.NinjectPowershell.1.0.3\lib\Illallangi.NinjectCmdlet.dll</HintPath>

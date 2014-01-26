@@ -30,16 +30,19 @@ namespace Illallangi.FlightLog.Context
 
         #region Methods
 
-        public override ITimezone Create(ITimezone obj)
+        public override IEnumerable<ITimezone> Create(params ITimezone[] objs)
         {
-            this.Log.DebugFormat(@"TimezoneRepository.Create(""{0}"")", obj);
+            foreach (var obj in objs)
+            {
+                this.Log.DebugFormat(@"TimezoneRepository.Create(""{0}"")", obj);
             
-            var id = this.GetConnection()
-                .InsertInto("Timezone")
-                .Values("TimezoneName", obj.Name)
-                .Go();
+                var id = this.GetConnection()
+                    .InsertInto("Timezone")
+                    .Values("TimezoneName", obj.Name)
+                    .Go();
 
-            return this.Retrieve(new Timezone { Id = id }).Single();
+                yield return this.Retrieve(new Timezone { Id = id }).Single();
+            }
         }
 
         public override IEnumerable<ITimezone> Retrieve(ITimezone obj = null)
@@ -61,16 +64,19 @@ namespace Illallangi.FlightLog.Context
             throw new System.NotImplementedException();
         }
 
-        public override void Delete(ITimezone obj)
+        public override void Delete(params ITimezone[] objs)
         {
-            this.Log.DebugFormat(@"TimezoneRepository.Delete(""{0}"")", obj);
+            foreach (var obj in objs)
+            {
+                this.Log.DebugFormat(@"TimezoneRepository.Delete(""{0}"")", obj);
 
-            this.GetConnection()
-                .DeleteFrom("Timezone")
-                .Where("TimezoneId", obj.Id)
-                .Where("TimezoneName", obj.Name)
-                .CreateCommand()
-                .ExecuteNonQuery();
+                this.GetConnection()
+                    .DeleteFrom("Timezone")
+                    .Where("TimezoneId", obj.Id)
+                    .Where("TimezoneName", obj.Name)
+                    .CreateCommand()
+                    .ExecuteNonQuery();
+            }
         }
 
         #endregion

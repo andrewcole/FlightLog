@@ -51,19 +51,23 @@ namespace Illallangi.FlightLog.Context
 
         #region Methods
 
-        public override ICity Create(ICity obj)
+        public override IEnumerable<ICity> Create(params ICity[] objs)
         {
-            this.Log.DebugFormat(@"CityRepository.Create(""{0}"")", obj);
+            foreach (var obj in objs)
+            {
+                this.Log.DebugFormat(@"CityRepository.Create(""{0}"")", obj);
 
-            var country = this.CountryRepository.Retrieve(new Country { Name = obj.Country }).Single();
+                var country = this.CountryRepository.Retrieve(new Country { Name = obj.Country }).Single();
 
-            var id = this.GetConnection()
-                .InsertInto("City")
-                .Values("CountryId", country.Id)
-                .Values("CityName", obj.Name)
-                .Go();
+                var id =
+                    this.GetConnection()
+                        .InsertInto("City")
+                        .Values("CountryId", country.Id)
+                        .Values("CityName", obj.Name)
+                        .Go();
 
-            return this.Retrieve(new City { Id = id }).Single();
+                yield return this.Retrieve(new City { Id = id }).Single();
+            }
         }
 
         public override IEnumerable<ICity> Retrieve(ICity obj = null)
@@ -86,16 +90,19 @@ namespace Illallangi.FlightLog.Context
             throw new System.NotImplementedException();
         }
 
-        public override void Delete(ICity obj)
+        public override void Delete(params ICity[] objs)
         {
-            this.Log.DebugFormat(@"CityRepository.Delete(""{0}"")", obj);
+            foreach (var obj in objs)
+            {
+                this.Log.DebugFormat(@"CityRepository.Delete(""{0}"")", obj);
 
-            this.GetConnection()
-                .DeleteFrom("City")
-                .Where("CityId", obj.Id)
-                .Where("City", obj.Name)
-                .CreateCommand()
-                .ExecuteNonQuery();
+                this.GetConnection()
+                    .DeleteFrom("City")
+                    .Where("CityId", obj.Id)
+                    .Where("City", obj.Name)
+                    .CreateCommand()
+                    .ExecuteNonQuery();
+            }
         }
 
         #endregion
