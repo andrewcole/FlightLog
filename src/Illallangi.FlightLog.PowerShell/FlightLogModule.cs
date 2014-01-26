@@ -1,8 +1,11 @@
 namespace Illallangi.FlightLog.PowerShell
 {
+    using System;
     using System.Collections.Specialized;
     using System.Configuration;
     using System.Reflection;
+
+    using AutoMapper;
 
     using Common.Logging;
     using Common.Logging.Log4Net;
@@ -38,15 +41,23 @@ namespace Illallangi.FlightLog.PowerShell
                             ConfigurationManager.OpenExeConfiguration(Assembly.GetExecutingAssembly().Location)
                                 .GetSection("FlightLogConfig")).InSingletonScope();
 
-            this.Bind<IRepository<IYear>>().To<YearRepository>().InSingletonScope();
-            this.Bind<IRepository<ITrip>>().To<TripRepository>().InSingletonScope();
-            this.Bind<IRepository<ICountry>>().To<CountryRepository>().InSingletonScope();
-            this.Bind<IRepository<ICity>>().To<CityRepository>().InSingletonScope();
-            this.Bind<IRepository<IAirport>>().To<AirportRepository>().InSingletonScope();
-            this.Bind<IRepository<IFlight>>().To<FlightRepository>().InSingletonScope();
-            this.Bind<IRepository<ITimezone>>().To<TimezoneRepository>().InSingletonScope();
+            this.BindModel<IAirport, Model.Airport, AirportRepository>();
+            this.BindModel<ICity, Model.City, CityRepository>();
+            this.BindModel<ICountry, Model.Country, CountryRepository>();
+            this.BindModel<IFlight, Model.Flight, FlightRepository>();
+            this.BindModel<ITimezone, Model.Timezone, TimezoneRepository>();
+            this.BindModel<ITrip, Model.Trip, TripRepository>();
+            this.BindModel<IYear, Model.Year, YearRepository>();
 
             this.Bind<ILog>().ToMethod(cx => LogManager.GetLogger(cx.Request.Target.Type));
+        }
+
+        private void BindModel<TInt, TImpl, TRepo>() 
+            where TInt : class 
+            where TRepo : IRepository<TInt>
+        {
+            this.Bind<Func<object, TImpl>>().ToMethod(context => (obj) => Mapper.DynamicMap<TImpl>(obj)).InSingletonScope();
+            this.Bind<IRepository<TInt>>().To<TRepo>().InSingletonScope();
         }
     }
 }

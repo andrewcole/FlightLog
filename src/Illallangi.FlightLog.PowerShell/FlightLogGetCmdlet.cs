@@ -1,6 +1,6 @@
 ﻿namespace Illallangi.FlightLog.PowerShell
 {
-    using AutoMapper;
+    using System;
 
     using Illallangi.LiteOrm;
 
@@ -12,7 +12,7 @@
 
         protected override void ProcessRecord()
         {
-            this.WriteObject(this.Get<IRepository<T>>().Retrieve(Mapper.DynamicMap<Timpl>(this)), true);
+            this.WriteObject(this.Get<IRepository<T>>().Retrieve(this.Get<Func<object, Timpl>>()(this)), true);
         }
 
         #endregion
