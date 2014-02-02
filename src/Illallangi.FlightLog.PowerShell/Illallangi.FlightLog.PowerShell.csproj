@@ -120,10 +120,11 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Log4Net.config" />
+    <EmbeddedResource Include="Web\index.html">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Web\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="App.config" />
     <None Include="Illallangi.FlightLog.psd1">
