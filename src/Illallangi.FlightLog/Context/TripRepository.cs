@@ -6,6 +6,8 @@ using Illallangi.LiteOrm;
 
 namespace Illallangi.FlightLog.Context
 {
+    using System.Data.SQLite;
+
     using Common.Logging;
 
     using Illallangi.FlightLog.Config;
@@ -24,9 +26,9 @@ namespace Illallangi.FlightLog.Context
             IFlightLogConfig flightLogConfig,
             IRepository<IYear> yearRepository,
             ILog log)
-        : base(
-            flightLogConfig,
-            log)
+            : base(
+                flightLogConfig,
+                log)
         {
             this.Log.DebugFormat(
                 @"TimezoneRepository(""{0}"", ""{1}"")",
@@ -45,32 +47,39 @@ namespace Illallangi.FlightLog.Context
         }
 
         #endregion
-        
+
         #region Methods
 
-        public override IEnumerable<ITrip> Create(params ITrip[] objs)
+        protected override int Import(SQLiteConnection cx, SQLiteTransaction tx, params ITrip[] objs)
         {
+            var years = objs.Select(c => c.Year)
+                                .Distinct()
+                                .ToDictionary(year => year, year => this.YearRepository.Retrieve(new Year { Name = year }).Single().Id.Value);
+
             foreach (var obj in objs)
             { 
-                this.Log.DebugFormat(@"TripRepository.Create(""{0}"")", obj);
-
-                var year = this.YearRepository.Retrieve(new Year { Name = obj.Year }).Single();
-
-                var id = this.GetConnection()
-                    .InsertInto("Trip")
-                    .Values("YearId", year.Id)
-                    .Values("TripName", obj.Name)
-                    .Values("Description", obj.Description)
-                    .Go();
-
-                yield return this.Retrieve(new Trip { Id = id }).Single();
+                this.Log.DebugFormat(@"TripRepository.Import(""{0}"")", obj);
+                try
+                {
+                    cx.InsertInto("Trip")
+                        .Values("YearId", years[obj.Year])
+                        .Values("TripName", obj.Name)
+                        .Values("Description", obj.Description)
+                        .Go(tx);
+                }
+                catch (SQLiteException sqe)
+                {
+                    throw new RepositoryException<ITrip>(obj, sqe);
+                }
             }
+
+            return objs.Count();
         }
 
         public override IEnumerable<ITrip> Retrieve(ITrip obj = null)
         {
-            this.Log.DebugFormat(@"TripRepository.Retrieve(""{0}"")", obj); 
-            
+            this.Log.DebugFormat(@"TripRepository.Retrieve(""{0}"")", obj);
+
             return this.GetConnection()
                 .Select<Trip>("Trips")
                 .Column("TripId", (trip, i) => trip.Id = i, null == obj ? null : obj.Id)
@@ -78,6 +87,8 @@ namespace Illallangi.FlightLog.Context
                 .Column("TripName", (trip, s) => trip.Name = s, null == obj ? null : obj.Name)
                 .Column("Description", (trip, s) => trip.Description = s, null == obj ? null : obj.Description)
                 .Column("FlightCount", (trip, i) => trip.FlightCount = i)
+                .Column("Departure", (trip, s) => trip.Departure = s)
+                .Column("Arrival", (trip, s) => trip.Arrival = s)
                 .Go();
         }
 

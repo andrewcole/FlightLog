@@ -5,6 +5,9 @@ using Illallangi.LiteOrm;
 
 namespace Illallangi.FlightLog.Context
 {
+    using System;
+    using System.Data.SQLite;
+
     using Common.Logging;
 
     using Illallangi.FlightLog.Config;
@@ -16,9 +19,9 @@ namespace Illallangi.FlightLog.Context
         public TimezoneRepository(
                 IFlightLogConfig flightLogConfig,
                 ILog log)
-        : base(
-            flightLogConfig,
-            log)
+            : base(
+                flightLogConfig,
+                log)
         {
             this.Log.DebugFormat(
                 @"TimezoneRepository(""{0}"", ""{1}"")",
@@ -30,19 +33,22 @@ namespace Illallangi.FlightLog.Context
 
         #region Methods
 
-        public override IEnumerable<ITimezone> Create(params ITimezone[] objs)
+        protected override int Import(SQLiteConnection cx, SQLiteTransaction tx, params ITimezone[] objs)
         {
             foreach (var obj in objs)
             {
                 this.Log.DebugFormat(@"TimezoneRepository.Create(""{0}"")", obj);
-            
-                var id = this.GetConnection()
-                    .InsertInto("Timezone")
-                    .Values("TimezoneName", obj.Name)
-                    .Go();
-
-                yield return this.Retrieve(new Timezone { Id = id }).Single();
+                try
+                {
+                    cx.InsertInto("Timezone").Values("TimezoneName", obj.Name).Go(tx);
+                }
+                catch (SQLiteException sqe)
+                {
+                    throw new RepositoryException<ITimezone>(obj, sqe);
+                }
             }
+
+            return objs.Count();
         }
 
         public override IEnumerable<ITimezone> Retrieve(ITimezone obj = null)

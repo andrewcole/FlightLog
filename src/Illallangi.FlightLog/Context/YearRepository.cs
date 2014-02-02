@@ -10,16 +10,18 @@ using Illallangi.LiteOrm;
 
 namespace Illallangi.FlightLog.Context
 {
+    using System.Data.SQLite;
+
     public class YearRepository : FlightLogRepositoryBase<IYear>
     {
         #region Constructor
 
         public YearRepository(
-            IFlightLogConfig flightLogConfig, 
+            IFlightLogConfig flightLogConfig,
             ILog log)
-        : base(
-            flightLogConfig,
-            log)
+            : base(
+                flightLogConfig,
+                log)
         {
             this.Log.DebugFormat(
                 @"YearRepository(""{0}"", ""{1}"")",
@@ -31,19 +33,24 @@ namespace Illallangi.FlightLog.Context
 
         #region Methods
 
-        public override IEnumerable<IYear> Create(params IYear[] objs)
+        protected override int Import(SQLiteConnection cx, SQLiteTransaction tx, params IYear[] objs)
         {
             foreach (var obj in objs)
-            { 
-                this.Log.DebugFormat(@"YearRepository.Create(""{0}"")", obj);
-
-                var id = this.GetConnection()
-                    .InsertInto("Year")
-                    .Values("YearName", obj.Name)
-                    .Go();
-
-                yield return this.Retrieve(new Year { Id = id }).Single();
+            {
+                this.Log.DebugFormat(@"YearRepository.Import(""{0}"")", obj);
+                try
+                {
+                    cx.InsertInto("Year")
+                      .Values("YearName", obj.Name)
+                      .Go(tx);
+                }
+                catch (SQLiteException sqe)
+                {
+                    throw new RepositoryException<IYear>(obj, sqe);
+                }
             }
+
+            return objs.Count();
         }
 
         public override IEnumerable<IYear> Retrieve(IYear obj = null)

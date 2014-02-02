@@ -5,6 +5,8 @@ using Illallangi.LiteOrm;
 
 namespace Illallangi.FlightLog.Context
 {
+    using System.Data.SQLite;
+
     using Common.Logging;
 
     using Illallangi.FlightLog.Config;
@@ -30,19 +32,22 @@ namespace Illallangi.FlightLog.Context
 
         #region Methods
 
-        public override IEnumerable<ICountry> Create(params ICountry[] objs)
+        protected override int Import(SQLiteConnection cx, SQLiteTransaction tx, params ICountry[] objs)
         {
             foreach (var obj in objs)
-            { 
-                this.Log.DebugFormat(@"CountryRepository.Create(""{0}"")", obj);
-            
-                var id = this.GetConnection()
-                    .InsertInto("Country")
-                    .Values("CountryName", obj.Name)
-                    .Go();
-
-                yield return this.Retrieve(new Country { Id = id }).Single();
+            {
+                this.Log.DebugFormat(@"CountryRepository.Import(""{0}"")", obj);
+                try
+                {
+                    cx.InsertInto("Country").Values("CountryName", obj.Name).Go(tx);
+                }
+                catch (SQLiteException sqe)
+                {
+                    throw new RepositoryException<ICountry>(obj, sqe);
+                }
             }
+
+            return objs.Count();
         }
 
         public override IEnumerable<ICountry> Retrieve(ICountry obj = null)
@@ -73,7 +78,7 @@ namespace Illallangi.FlightLog.Context
                 this.GetConnection()
                     .DeleteFrom("Country")
                     .Where("CountryId", obj.Id)
-                    .Where("Country", obj.Name)
+                    .Where("CountryName", obj.Name)
                     .CreateCommand()
                     .ExecuteNonQuery();
             }

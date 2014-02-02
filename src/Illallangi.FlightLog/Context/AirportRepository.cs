@@ -10,6 +10,8 @@ using Illallangi.LiteOrm;
 
 namespace Illallangi.FlightLog.Context
 {
+    using System.Data.SQLite;
+
     public class AirportRepository : FlightLogRepositoryBase<IAirport>
     {
         #region Fields
@@ -23,13 +25,13 @@ namespace Illallangi.FlightLog.Context
         #region Constructor
 
         public AirportRepository(
-            IFlightLogConfig flightLogConfig, 
-            IRepository<ICity> cityRepository, 
-            IRepository<ITimezone> timezoneRepository, 
+            IFlightLogConfig flightLogConfig,
+            IRepository<ICity> cityRepository,
+            IRepository<ITimezone> timezoneRepository,
             ILog log = null)
-        : base(
-            flightLogConfig,
-            log)
+            : base(
+                flightLogConfig,
+                log)
         {
             this.Log.DebugFormat(
                 @"AirportRepository(""{0}"", ""{1}"", ""{2}"",  ""{3}"")",
@@ -59,30 +61,39 @@ namespace Illallangi.FlightLog.Context
 
         #region Methods
 
-        public override IEnumerable<IAirport> Create(params IAirport[] objs)
+        protected override int Import(SQLiteConnection cx, SQLiteTransaction tx, params IAirport[] objs)
         {
+            var cities = objs.Select(c => new Tuple<string, string>(c.City, c.Country))
+                             .Distinct()
+                             .ToDictionary(city => city, city => this.CityRepository.Retrieve(new City { Name = city.Item1, Country = city.Item2 }).Single().Id.Value);
+
+            var timezones = objs.Select(c => c.Timezone)
+                                .Distinct()
+                                .ToDictionary(timezone => timezone, timezone => this.TimezoneRepository.Retrieve(new Timezone { Name = timezone }).Single().Id.Value);
+
             foreach (var obj in objs)
             {
                 this.Log.DebugFormat(@"AirportRepository.Create(""{0}"")", obj);
-
-                var city = this.CityRepository.Retrieve(new City { Name = obj.City, Country = obj.Country }).Single();
-                var timezone = this.TimezoneRepository.Retrieve(new Timezone { Name = obj.Timezone }).Single();
-
-                var id =
-                    this.GetConnection()
-                        .InsertInto("Airport")
-                        .Values("CityId", city.Id)
-                        .Values("TimezoneId", timezone.Id)
+                try
+                {
+                    cx.InsertInto("Airport")
+                        .Values("CityId", cities[new Tuple<string, string>(obj.City, obj.Country)])
+                        .Values("TimezoneId", timezones[obj.Timezone])
                         .Values("AirportName", obj.Name)
                         .Values("Iata", obj.Iata)
                         .Values("Icao", obj.Icao)
                         .Values("Latitude", obj.Latitude)
                         .Values("Longitude", obj.Longitude)
                         .Values("Altitude", obj.Altitude)
-                        .Go();
-
-                yield return this.Retrieve(new Airport { Id = id }).Single();
+                        .Go(tx);
+                }
+                catch (SQLiteException sqe)
+                {
+                    throw new RepositoryException<IAirport>(obj, sqe);
+                }
             }
+
+            return objs.Count();
         }
 
         public override IEnumerable<IAirport> Retrieve(IAirport obj = null)
@@ -101,6 +112,7 @@ namespace Illallangi.FlightLog.Context
                 .FloatColumn("Latitude", (airport, value) => airport.Latitude = value)
                 .FloatColumn("Longitude", (airport, value) => airport.Longitude = value)
                 .FloatColumn("Altitude", (airport, value) => airport.Altitude = value)
+                .Column("FlightCount", (airport, value) => airport.FlightCount = value)
                 .Go();
         }
 
@@ -126,7 +138,6 @@ namespace Illallangi.FlightLog.Context
                     .Where("Latitude", obj.Latitude)
                     .Where("Longitude", obj.Longitude)
                     .Where("Altitude", obj.Altitude)
-                    .Where("Timezone", obj.Timezone)
                     .CreateCommand()
                     .ExecuteNonQuery();
             }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Data.SQLite;
 using System.Linq;
 
 using Common.Logging;
@@ -23,9 +24,9 @@ namespace Illallangi.FlightLog.Context
             IFlightLogConfig flightLogConfig,
             IRepository<ICountry> countryRepository,
             ILog log)
-        : base(
-            flightLogConfig,
-            log)
+            : base(
+                flightLogConfig,
+                log)
         {
             this.Log.DebugFormat(
                 @"CityRepository(""{0}"", ""{1}"", ""{2}"")",
@@ -51,23 +52,29 @@ namespace Illallangi.FlightLog.Context
 
         #region Methods
 
-        public override IEnumerable<ICity> Create(params ICity[] objs)
+        protected override int Import(SQLiteConnection cx, SQLiteTransaction tx, params ICity[] objs)
         {
+            var countries = objs.Select(c => c.Country)
+                                .Distinct()
+                                .ToDictionary(country => country, country => this.CountryRepository.Retrieve(new Country { Name = country }).Single().Id.Value);
+
             foreach (var obj in objs)
             {
-                this.Log.DebugFormat(@"CityRepository.Create(""{0}"")", obj);
-
-                var country = this.CountryRepository.Retrieve(new Country { Name = obj.Country }).Single();
-
-                var id =
-                    this.GetConnection()
-                        .InsertInto("City")
-                        .Values("CountryId", country.Id)
+                this.Log.DebugFormat(@"CityRepository.Import(""{0}"")", obj);
+                try
+                {
+                    cx.InsertInto("City")
+                        .Values("CountryId", countries[obj.Country])
                         .Values("CityName", obj.Name)
-                        .Go();
-
-                yield return this.Retrieve(new City { Id = id }).Single();
+                        .Go(tx);
+                }
+                catch (SQLiteException sqe)
+                {
+                    throw new RepositoryException<ICity>(obj, sqe);
+                }
             }
+
+            return objs.Count();
         }
 
         public override IEnumerable<ICity> Retrieve(ICity obj = null)
@@ -99,7 +106,7 @@ namespace Illallangi.FlightLog.Context
                 this.GetConnection()
                     .DeleteFrom("City")
                     .Where("CityId", obj.Id)
-                    .Where("City", obj.Name)
+                    .Where("CityName", obj.Name)
                     .CreateCommand()
                     .ExecuteNonQuery();
             }

@@ -6,6 +6,8 @@ using Illallangi.LiteOrm;
 
 namespace Illallangi.FlightLog.Context
 {
+    using System.Data.SQLite;
+
     using Common.Logging;
 
     using Illallangi.FlightLog.Config;
@@ -59,21 +61,25 @@ namespace Illallangi.FlightLog.Context
 
         #region Methods
 
-        public override IEnumerable<IFlight> Create(params IFlight[] objs)
+        protected override int Import(SQLiteConnection cx, SQLiteTransaction tx, params IFlight[] objs)
         {
+            var trips = objs.Select(c => new Tuple<string, string>(c.Year, c.Trip))
+                             .Distinct()
+                             .ToDictionary(trip => trip, trip => this.TripRepository.Retrieve(new Trip { Year = trip.Item1, Name = trip.Item2 }).Single().Id.Value);
+
+            var airports = objs.SelectMany(c => new[] { c.Origin, c.Destination, })
+                                .Distinct()
+                                .ToDictionary(airport => airport, airport => this.AirportRepository.Retrieve(new Airport { Icao = airport }).Single().Id.Value);
+
             foreach (var obj in objs)
-            { 
+            {
                 this.Log.DebugFormat(@"FlightRepository.Create(""{0}"")", obj);
-
-                var trip = this.TripRepository.Retrieve(new Trip { Year = obj.Year, Name = obj.Trip }).Single();
-                var origin = this.AirportRepository.Retrieve(new Airport { Icao = obj.Origin }).Single();
-                var destination = this.AirportRepository.Retrieve(new Airport { Icao = obj.Destination }).Single();
-
-                var id = this.GetConnection()
-                    .InsertInto("Flight")
-                    .Values("TripId", trip.Id)
-                    .Values("OriginId", origin.Id)
-                    .Values("DestinationId", destination.Id)
+                try
+                {
+                    cx.InsertInto("Flight")
+                    .Values("TripId", trips[new Tuple<string, string>(obj.Year, obj.Trip)])
+                    .Values("OriginId", airports[obj.Origin])
+                    .Values("DestinationId", airports[obj.Destination])
                     .Values("Departure", obj.Departure)
                     .Values("Arrival", obj.Arrival)
                     .Values("Airline", obj.Airline)
@@ -81,10 +87,15 @@ namespace Illallangi.FlightLog.Context
                     .Values("Aircraft", obj.Aircraft)
                     .Values("Seat", obj.Seat)
                     .Values("Note", obj.Note)
-                    .Go();
-
-                yield return this.Retrieve(new Flight { Id = id }).Single();
+                    .Go(tx);
+                }
+                catch (SQLiteException sqe)
+                {
+                    throw new RepositoryException<IFlight>(obj, sqe);
+                }
             }
+
+            return objs.Count();
         }
 
         public override IEnumerable<IFlight> Retrieve(IFlight obj = null)
@@ -125,7 +136,7 @@ namespace Illallangi.FlightLog.Context
         {
             foreach (var obj in objs)
             {
-                this.Log.DebugFormat(@"CountryRepository.Delete(""{0}"")", obj);
+                this.Log.DebugFormat(@"FlightRepository.Delete(""{0}"")", obj);
 
                 this.GetConnection()
                     .DeleteFrom("Flight")
