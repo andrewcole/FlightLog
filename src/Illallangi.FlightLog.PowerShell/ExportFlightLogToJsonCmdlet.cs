@@ -24,6 +24,8 @@ namespace Illallangi.FlightLog.PowerShell
                     {
                         Airports = this.Get<IRepository<IAirport>>()
                             .Retrieve()
+                            .Where(airport => airport.FlightCount > 0)
+                            .OrderBy(airport => airport.Icao)
                             .Select(
                                 airport => new
                                 {
@@ -45,6 +47,7 @@ namespace Illallangi.FlightLog.PowerShell
                                     Title = year.Name,
                                     Trips = this.Get<IRepository<ITrip>>()
                                         .Retrieve(new Model.Trip { Year = year.Name })
+                                        .OrderBy(trip => trip.Departure)
                                         .Select(
                                             trip => new
                                             {
