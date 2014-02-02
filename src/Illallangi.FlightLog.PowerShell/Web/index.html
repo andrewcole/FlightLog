@@ -119,8 +119,9 @@
         $('.panel-group').on('show.bs.collapse', function (e) {
             if ($(e.target).hasClass('loaded')) {
             } else {
-                alert($(e.target).attr('data-href'));
+                //alert($(e.target).attr('data-href'));
                 ajaxObject($(e.target).attr('data-href'));
+                $(e.target).addClase('loaded');
             }
         });
 
