@@ -1,5 +1,7 @@
 ﻿namespace Illallangi.FlightLog.Model
 {
+    using System;
+
     public interface ITrip
     {
         int? Id { get; set; }
@@ -11,6 +13,10 @@
         string Description { get; set; }
 
         int FlightCount { get; set; }
+
+        DateTime? Departure { get; set; }
+
+        DateTime? Arrival { get; set; }
     }
 
     public class Trip : ITrip
@@ -38,6 +44,10 @@
         #region Child Properties
 
         public int FlightCount { get; set; }
+
+        public DateTime? Departure { get; set; }
+
+        public DateTime? Arrival { get; set; }
 
         #endregion
 
