@@ -36,5 +36,14 @@
         #region Calculated Properties
 
         #endregion
+
+        #region Methods
+
+        public override string ToString()
+        {
+            return string.Format("Year {0}", this.Name);
+        }
+
+        #endregion
     }
 }
