@@ -81,10 +81,11 @@
       <Component Id="SQLiteInteropDllC" Directory="SOFTWAREDIR" Guid="{BAD4C637-C327-4B7A-9775-DB37A56BA505}" Permanent="yes" >
         <File Id="SQLiteInteropDllF" KeyPath="yes" Source="$(var.source)\SQLite.Interop.dll" />
       </Component>
+      <!--
       <Component Id="ZumeroDllC" Directory="SOFTWAREDIR" Guid="{92A0DF57-A5CB-4EFD-B312-81D8515B6DCA}" Permanent="yes" >
         <File Id="ZumeroDllF" KeyPath="yes" Source="$(var.source)\zumero.dll" />
       </Component>
-
+      -->
       <Component Id="Log4NetDllC" Directory="SOFTWAREDIR" Guid="{1D114856-0C6F-410A-95DE-92DECB27D18D}" Permanent="yes" >
         <File Id="Log4NetDllF" KeyPath="yes" Source="$(var.source)\log4net.dll" />
       </Component>
