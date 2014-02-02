@@ -194,5 +194,24 @@ namespace Illallangi.FlightLog.Model
         } 
 
         #endregion
+
+        #region Methods
+
+        public override string ToString()
+        {
+            return string.Format(
+                "Flight from {0} to {1}, departing at {2}, arriving at {3}, part of trip {4} ({5}), on {6}{7} (ID {8})",
+                Origin,
+                Destination,
+                Departure,
+                Arrival,
+                Trip,
+                Year,
+                Airline,
+                Number,
+                Id);
+        }
+
+        #endregion
     }
 }
