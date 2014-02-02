@@ -1,14 +1,5 @@
 ﻿namespace Illallangi.FlightLog.Model
 {
-    public interface ITimezone
-    {
-        int? Id { get; set; }
-
-        string Name { get; set; }
-
-        int AirportCount { get; set; }
-    }
-
     public class Timezone : ITimezone
     {
         #region Primary Key Property

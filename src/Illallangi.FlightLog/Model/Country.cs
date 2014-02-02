@@ -1,14 +1,5 @@
 ﻿namespace Illallangi.FlightLog.Model
 {
-    public interface ICountry
-    {
-        int? Id { get; }
-
-        string Name { get; }
-
-        int CityCount { get; }
-    }
-
     public class Country : ICountry
     {
         #region Primary Key Property

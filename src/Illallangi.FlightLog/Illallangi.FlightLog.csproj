@@ -77,6 +77,13 @@
     <Compile Include="Context\YearRepository.cs" />
     <Compile Include="Model\Airport.cs" />
     <Compile Include="Model\City.cs" />
+    <Compile Include="IAirport.cs" />
+    <Compile Include="ICity.cs" />
+    <Compile Include="ICountry.cs" />
+    <Compile Include="IFlight.cs" />
+    <Compile Include="ITimezone.cs" />
+    <Compile Include="ITrip.cs" />
+    <Compile Include="IYear.cs" />
     <Compile Include="Model\Timezone.cs" />
     <Compile Include="Model\Country.cs" />
     <Compile Include="Model\Flight.cs" />
