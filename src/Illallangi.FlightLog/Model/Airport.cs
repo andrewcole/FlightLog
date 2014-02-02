@@ -42,6 +42,8 @@ namespace Illallangi.FlightLog.Model
         /// In feet.
         /// </summary>
         float Altitude { get; }
+
+        int FlightCount { get; set; }
     }
 
     public class Airport : IAirport
@@ -103,7 +105,9 @@ namespace Illallangi.FlightLog.Model
 
         #endregion
 
-        #region Calculated Properties
+        #region Child Properties
+
+        public int FlightCount { get; set; }
 
         #endregion
 
