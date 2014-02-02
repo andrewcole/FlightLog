@@ -1,0 +1,132 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Illallangi FlightLog</title>
+
+        <!-- Bootstrap -->
+        <link href="http://netdna.bootstrapcdn.com/bootswatch/3.0.3/yeti/bootstrap.min.css" rel="stylesheet">
+
+          <!-- Font Awesome -->
+          <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+</head>
+  <body>
+    <div class="navbar navbar-default navbar-static-top">
+      <div class="navbar-header">
+        <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Illallangi FlightLog</a>
+      </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <li class="active">
+            <a href="#">Home</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="panel-group" id="indexGroup"></div>
+        </div>
+      </div>
+    </div>
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+    <script>
+        function domReady() {
+            $.support.cors = true;
+            ajaxObject('index.json');
+        }
+
+        function ajaxObject(href) {
+            $.ajax({
+                crossDomain: true,
+                dataType: "json",
+                async: true,
+                url: href,
+                data: null,
+                success: function (o) {
+                    loadObject(o);
+                }
+            });
+        }
+
+        function loadObject(o) {
+
+            switch (o.type) {
+                case "index":
+                    $.each(o.years, function (id, year) {
+                        $('#' + o.id + 'Group').append('\
+                    <div class="panel panel-default">\
+                      <div class="panel-heading">\
+                        <h4 class="panel-title">\
+                          <a data-toggle="collapse" data-parent="' + o.id + '" href="#' + year.id + '">' + year.name + '</a>\
+                        </h4>\
+                      </div>\
+                      <div id="' + year.id + '" class="panel-collapse collapse" data-href="' + year.id + '.json">\
+                        <div class="panel-body">\
+                          <div class="panel-group" id="' + year.id + 'Group">\
+                          </div>\
+                        </div>\
+                      </div>\
+                    </div>');
+                    });
+                    break;
+                case "year":
+                    $.each(o.trips, function (id, trip) {
+                        $('#' + o.id + 'Group').append('\
+                    <div class="panel panel-default">\
+                      <div class="panel-heading">\
+                        <h4 class="panel-title">\
+                          <a data-toggle="collapse" data-parent="' + o.id + '" href="#' + trip.id + '">' + trip.name + '</a>\
+                        </h4>\
+                      </div>\
+                      <div id="' + trip.id + '" class="panel-collapse collapse" data-href="' + trip.id + '.json">\
+                        <div class="panel-body" id="' + trip.id + 'Panel">\
+                        </div>\
+                        <table class="table table-hover " id="' + trip.id + 'Table">\
+                          <tr><th>#</th><th>Flight</th><th>Origin</th><th>Destination</th></tr>\
+                        </div>\
+                      </div>\
+                    </div>');
+                    });
+                    break;
+                case "trip":
+                    i = 0;
+                    $('#' + o.id + 'Panel').append('<p>' + o.Description + '</p>');
+                    $.each(o.flights, function (id, flight) {
+                        $('#' + o.id + 'Table').append('<tr>\
+                        <td>' + ++i + '</td>\
+                        <td><img src="http://www.gstatic.com/flights/airline_logos/16px/' + flight.Airline + '.png">&nbsp;' + flight.Airline + flight.Number + '</td>\
+                        <td>' + flight.Origin + '</td>\
+                        <td>' + flight.Destination + '</td></tr>');
+                    });
+                    break;
+                default:
+                    alert("Cannot handle " + o.type + " object.");
+                    break;
+            }
+        }
+
+        $('.panel-group').on('show.bs.collapse', function (e) {
+            if ($(e.target).hasClass('loaded')) {
+            } else {
+                alert($(e.target).attr('data-href'));
+                ajaxObject($(e.target).attr('data-href'));
+            }
+        });
+
+        $(domReady);
+
+
+    </script>
+  </body>
+</html>
