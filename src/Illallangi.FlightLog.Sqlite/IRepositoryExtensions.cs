@@ -6,7 +6,7 @@
 
     using Illallangi.LiteOrm;
 
-    public static class IRepositoryExtensions
+    public static class RepositoryExtensions
     {
         public static IEnumerable<T> Retrieve<T>(this IRepository<T> repo, dynamic o) where T : class
         {

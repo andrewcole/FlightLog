@@ -1,7 +1,7 @@
 namespace Illallangi.FlightLog
 {
     using System;
-    using System.Data.SQLite;
+    using System.Globalization;
 
     public class RepositoryException<T> : Exception
     {
@@ -9,11 +9,16 @@ namespace Illallangi.FlightLog
 
         private readonly string currentErrorId;
 
-        public RepositoryException(T target, SQLiteException sqe)
-            : base(sqe.Message, sqe)
+        public RepositoryException(T target, string message, int errorId, Exception innerException)
+            : this(target, message, errorId.ToString(CultureInfo.InvariantCulture), innerException)
+        {
+        }
+
+        public RepositoryException(T target, string message, string errorId, Exception innerException)
+            : base(message, innerException)
         {
             this.currentTarget = target;
-            this.currentErrorId = sqe.ErrorCode.ToString();
+            this.currentErrorId = errorId;
         }
 
         public T Target

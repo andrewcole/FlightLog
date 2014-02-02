@@ -1,8 +1,6 @@
-namespace Illallangi.FlightLog.PowerShell.Country
+namespace Illallangi.FlightLog.PowerShell.Timezone
 {
     using System.Management.Automation;
-
-    
 
     [Cmdlet(VerbsCommon.Remove, Nouns.Timezone, SupportsShouldProcess = true, ConfirmImpact = ConfirmImpact.High)]
     public sealed class RemoveTimezoneCmdlet : FlightLogRemoveCmdlet<ITimezone>

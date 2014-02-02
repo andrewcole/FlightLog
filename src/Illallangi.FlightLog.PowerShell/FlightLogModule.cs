@@ -35,7 +35,7 @@ namespace Illallangi.FlightLog.PowerShell
                             "{0}.Log4Net.config",
                             Assembly.GetExecutingAssembly().GetName().Name)));
 
-            Mapper.CreateMap<string, string>().ConvertUsing((i) => string.IsNullOrWhiteSpace(i) ? null : i);
+            Mapper.CreateMap<string, string>().ConvertUsing(i => string.IsNullOrWhiteSpace(i) ? null : i);
 
             this.Bind<IFlightLogConfig>()
                 .ToMethod(
@@ -67,7 +67,7 @@ namespace Illallangi.FlightLog.PowerShell
             where TRepo : IRepository<TInt>
             where TConstraints : IConstraintsChecker<TInt>
         {
-            this.Bind<Func<object, TInt>>().ToMethod(context => (obj) => Mapper.DynamicMap<TInt>(obj)).InSingletonScope();
+            this.Bind<Func<object, TInt>>().ToMethod(context => obj => Mapper.DynamicMap<TInt>(obj)).InSingletonScope();
             this.Bind<IRepository<TInt>>().To<TRepo>().InSingletonScope();
             this.Bind<IConstraintsChecker<TInt>>().To<TConstraints>().InSingletonScope();
         }

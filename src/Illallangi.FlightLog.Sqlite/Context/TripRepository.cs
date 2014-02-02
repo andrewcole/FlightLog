@@ -68,7 +68,7 @@ namespace Illallangi.FlightLog.Sqlite.Context
                 }
                 catch (SQLiteException sqe)
                 {
-                    throw new RepositoryException<ITrip>(obj, sqe);
+                    throw new RepositoryException<ITrip>(obj, sqe.Message, sqe.ErrorCode, sqe);
                 }
             }
 

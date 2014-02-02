@@ -1,9 +1,6 @@
 namespace Illallangi.FlightLog.PowerShell.Airport
 {
-    using System;
     using System.Management.Automation;
-
-    
 
     [Cmdlet(VerbsCommon.Get, Nouns.Airport)]
     public sealed class GetAirportCmdlet : FlightLogGetCmdlet<IAirport>

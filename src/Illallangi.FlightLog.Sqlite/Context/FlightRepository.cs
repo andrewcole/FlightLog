@@ -66,7 +66,7 @@ namespace Illallangi.FlightLog.Sqlite.Context
                              .Distinct()
                              .ToDictionary(trip => trip, trip => this.TripRepository.Retrieve(new Trip { Year = trip.Item1, Name = trip.Item2 }).Single().Id.Value);
 
-            var airports = objs.SelectMany(c => new[] { c.Origin, c.Destination, })
+            var airports = objs.SelectMany(c => new[] { c.Origin, c.Destination })
                                 .Distinct()
                                 .ToDictionary(airport => airport, airport => this.AirportRepository.Retrieve(new Airport { Icao = airport }).Single().Id.Value);
 
@@ -90,7 +90,7 @@ namespace Illallangi.FlightLog.Sqlite.Context
                 }
                 catch (SQLiteException sqe)
                 {
-                    throw new RepositoryException<IFlight>(obj, sqe);
+                    throw new RepositoryException<IFlight>(obj, sqe.Message, sqe.ErrorCode, sqe);
                 }
             }
 

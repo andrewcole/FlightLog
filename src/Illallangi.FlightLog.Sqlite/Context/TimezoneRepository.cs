@@ -43,7 +43,7 @@ namespace Illallangi.FlightLog.Sqlite.Context
                 }
                 catch (SQLiteException sqe)
                 {
-                    throw new RepositoryException<ITimezone>(obj, sqe);
+                    throw new RepositoryException<ITimezone>(obj, sqe.Message, sqe.ErrorCode, sqe);
                 }
             }
 
@@ -66,7 +66,7 @@ namespace Illallangi.FlightLog.Sqlite.Context
         {
             this.Log.DebugFormat(@"TimezoneRepository.Update(""{0}"")", obj);
 
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public override void Delete(params ITimezone[] objs)

@@ -4,7 +4,6 @@ namespace Illallangi.FlightLog.PowerShell
     using System.IO;
     using System.Linq;
     using System.Management.Automation;
-    using System.Net.Configuration;
     using System.Reflection;
     using System.Text;
 
@@ -67,8 +66,7 @@ namespace Illallangi.FlightLog.PowerShell
                                             .OrderByDescending(count => count.Count())
                                             .Select(count => count.Key)
                                             .Take(5),
-                                 },
-                                 this.IndexJsonFile);
+                                 });
 
             foreach (var year in this.Get<IRepository<IYear>>().Retrieve())
             {
@@ -95,7 +93,7 @@ namespace Illallangi.FlightLog.PowerShell
                     id = Hash(trip),
                     trip.Description,
                     flights = this.Get<IRepository<IFlight>>()
-                        .Retrieve(new { Year = trip.Year, Trip = trip.Name })
+                        .Retrieve(new { trip.Year, Trip = trip.Name })
                         .Select(
                             flight => new
                             {
@@ -108,7 +106,7 @@ namespace Illallangi.FlightLog.PowerShell
             }
         }
 
-        private void WriteJson(dynamic index, string path = null)
+        private void WriteJson(dynamic index)
         {
             File.WriteAllText(Path.Combine(this.Output, Path.ChangeExtension(index.id, "json")), JsonConvert.SerializeObject(index, Formatting.Indented));
         }
@@ -132,13 +130,6 @@ namespace Illallangi.FlightLog.PowerShell
             get
             {
                 return Path.Combine(this.Output, "index.html");
-            }
-        }
-        private string IndexJsonFile
-        {
-            get
-            {
-                return Path.Combine(this.Output, "index.json");
             }
         }
     }
