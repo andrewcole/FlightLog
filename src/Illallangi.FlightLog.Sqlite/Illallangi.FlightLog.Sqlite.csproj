@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{67E9FA77-DAD3-47A5-A229-9069F2DEFD63}</ProjectGuid>
+    <ProjectGuid>{D450E7F1-382A-42F7-9A37-8BEEA88CF391}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Illallangi.FlightLog</RootNamespace>
-    <AssemblyName>Illallangi.FlightLog</AssemblyName>
+    <RootNamespace>Illallangi.FlightLog.Sqlite</RootNamespace>
+    <AssemblyName>Illallangi.FlightLog.Sqlite</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
@@ -32,12 +32,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AutoMapper">
-      <HintPath>..\packages\AutoMapper.3.1.1\lib\net40\AutoMapper.dll</HintPath>
-    </Reference>
-    <Reference Include="AutoMapper.Net4">
-      <HintPath>..\packages\AutoMapper.3.1.1\lib\net40\AutoMapper.Net4.dll</HintPath>
-    </Reference>
     <Reference Include="Common.Logging, Version=2.0.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Common.Logging.2.0.0\lib\2.0\Common.Logging.dll</HintPath>
@@ -46,17 +40,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Illallangi.LiteOrm.1.0.26\lib\Illallangi.LiteOrm.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="NodaTime, Version=1.2.0.0, Culture=neutral, PublicKeyToken=4226afe0d9b296d1, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="NodaTime">
       <HintPath>..\packages\NodaTime.1.2.0\lib\net35-Client\NodaTime.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.SQLite">
+    <Reference Include="System.Data.SQLite, Version=1.0.90.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\System.Data.SQLite.1.0.90.0\lib\net45\System.Data.SQLite.dll</HintPath>
     </Reference>
     <Reference Include="System.Data.SQLite.Linq">
@@ -69,31 +59,33 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Config\IFlightLogConfig.cs" />
-    <Compile Include="Constraints\TripConstraintsChecker.cs" />
-    <Compile Include="Constraints\FlightConstraintsChecker.cs" />
-    <Compile Include="Constraints\AirportConstraintsChecker.cs" />
-    <Compile Include="Constraints\IConstraintsChecker.cs" />
-    <Compile Include="Constraints\NullConstraintsChecker.cs" />
-    <Compile Include="IRepositoryExtensions.cs" />
-    <Compile Include="RepositoryException.cs" />
-    <Compile Include="IAirport.cs" />
-    <Compile Include="ICity.cs" />
-    <Compile Include="ICountry.cs" />
-    <Compile Include="IFlight.cs" />
-    <Compile Include="ITimezone.cs" />
-    <Compile Include="ITrip.cs" />
-    <Compile Include="IYear.cs" />
+    <Compile Include="Context\AirportRepository.cs" />
+    <Compile Include="Context\CityRepository.cs" />
+    <Compile Include="Context\CountryRepository.cs" />
+    <Compile Include="Context\FlightLogRepositoryBase.cs" />
+    <Compile Include="Context\FlightRepository.cs" />
+    <Compile Include="Context\TimezoneRepository.cs" />
+    <Compile Include="Context\TripRepository.cs" />
+    <Compile Include="Context\YearRepository.cs" />
+    <Compile Include="Airport.cs" />
+    <Compile Include="City.cs" />
+    <Compile Include="Country.cs" />
+    <Compile Include="Flight.cs" />
+    <Compile Include="Timezone.cs" />
+    <Compile Include="Trip.cs" />
+    <Compile Include="Year.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\packages\AutoMapper.3.1.1\lib\net40\AutoMapper.Net4.dll">
-      <Link>AutoMapper.Net4.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <ProjectReference Include="..\Illallangi.FlightLog\Illallangi.FlightLog.csproj">
+      <Project>{67e9fa77-dad3-47a5-a229-9069f2defd63}</Project>
+      <Name>Illallangi.FlightLog</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="x64\SQLite.Interop.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

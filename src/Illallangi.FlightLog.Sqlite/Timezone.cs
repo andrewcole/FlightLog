@@ -1,6 +1,6 @@
-﻿namespace Illallangi.FlightLog.Model
+﻿namespace Illallangi.FlightLog.Sqlite
 {
-    public class Country : ICountry
+    public class Timezone : ITimezone
     {
         #region Primary Key Property
 
@@ -20,7 +20,7 @@
 
         #region Child Properties
 
-        public int CityCount { get; set; }
+        public int AirportCount { get; set; }
 
         #endregion
 
@@ -28,13 +28,9 @@
 
         #endregion
 
-        #region Methods
-
         public override string ToString()
         {
             return this.Name;
         }
-
-        #endregion
     }
 }

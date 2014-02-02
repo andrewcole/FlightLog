@@ -1,20 +1,16 @@
 ﻿namespace Illallangi.FlightLog.PowerShell
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
-    using System.Data.SQLite;
     using System.Linq;
     using System.Management.Automation;
 
     using Illallangi.FlightLog.Constraints;
-    using Illallangi.FlightLog.Context;
     using Illallangi.LiteOrm;
 
-    public abstract class FlightLogAddCmdlet<T, Timpl> : NinjectCmdlet<FlightLogModule>
+    public abstract class FlightLogAddCmdlet<T> : NinjectCmdlet<FlightLogModule>
         where T : class
-        where Timpl : T
     {
         #region Fields
 
@@ -32,7 +28,7 @@
 
         protected override void ProcessRecord()
         {
-            var item = this.Get<Func<object, Timpl>>()(this);
+            var item = this.Get<Func<object, T>>()(this);
             if (this.ConstraintsChecker.HasErrors(item, this.Collection, this.Existing))
             {
                 foreach (var error in this.ConstraintsChecker.GetErrors(item, this.Collection, this.Existing))

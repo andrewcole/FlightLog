@@ -5,10 +5,9 @@ using System.Linq;
 using Common.Logging;
 
 using Illallangi.FlightLog.Config;
-using Illallangi.FlightLog.Model;
 using Illallangi.LiteOrm;
 
-namespace Illallangi.FlightLog.Context
+namespace Illallangi.FlightLog.Sqlite.Context
 {
     public sealed class CityRepository : FlightLogRepositoryBase<ICity>
     {

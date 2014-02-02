@@ -2,10 +2,10 @@
 {
     using System.Management.Automation;
 
-    using Illallangi.FlightLog.Model;
+    
 
     [Cmdlet(VerbsCommon.Get, Nouns.Year)]
-    public sealed class GetYearCmdlet : FlightLogGetCmdlet<IYear, Year>
+    public sealed class GetYearCmdlet : FlightLogGetCmdlet<IYear>
     {
         #region Instance Properties
 

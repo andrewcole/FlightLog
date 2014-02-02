@@ -2,10 +2,10 @@ namespace Illallangi.FlightLog.PowerShell.Country
 {
     using System.Management.Automation;
 
-    using Illallangi.FlightLog.Model;
+    
 
     [Cmdlet(VerbsCommon.Remove, Nouns.Country, SupportsShouldProcess = true, ConfirmImpact = ConfirmImpact.High)]
-    public sealed class RemoveCountryCmdlet : FlightLogRemoveCmdlet<ICountry, Country>
+    public sealed class RemoveCountryCmdlet : FlightLogRemoveCmdlet<ICountry>
     {
         #region Primary Key Property
 

@@ -2,10 +2,10 @@
 {
     using System.Management.Automation;
 
-    using Illallangi.FlightLog.Model;
+    
 
     [Cmdlet(VerbsCommon.Add, Nouns.Country)]
-    public class AddCountryCmdlet : FlightLogAddCmdlet<ICountry, Country>
+    public class AddCountryCmdlet : FlightLogAddCmdlet<ICountry>
     {
         #region Instance Properties
 

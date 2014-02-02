@@ -1,8 +1,6 @@
-﻿namespace Illallangi.FlightLog.Model
+namespace Illallangi.FlightLog.Sqlite
 {
-    using System;
-
-    public class Trip : ITrip
+    public class City : ICity
     {
         #region Primary Key Property
 
@@ -12,7 +10,7 @@
 
         #region Parent Properties
 
-        public string Year { get; set; }
+        public string Country { get; set; }
 
         #endregion
 
@@ -20,27 +18,21 @@
 
         public string Name { get; set; }
 
-        public string Description { get; set; }
-
         #endregion
 
         #region Child Properties
 
-        public int FlightCount { get; set; }
-
-        public DateTime? Departure { get; set; }
-
-        public DateTime? Arrival { get; set; }
+        public int AirportCount { get; set; }
 
         #endregion
 
         #region Calculated Properties
 
+        #endregion
+
         public override string ToString()
         {
-            return string.Format("{0} ({1})", this.Name, this.Year);
+            return string.Format(@"{0}, {1}", this.Name, this.Country);
         }
-
-        #endregion
     }
 }

@@ -2,10 +2,10 @@ namespace Illallangi.FlightLog.PowerShell.Year
 {
     using System.Management.Automation;
 
-    using Illallangi.FlightLog.Model;
+    
 
     [Cmdlet(VerbsCommon.Remove, Nouns.Year, SupportsShouldProcess = true, ConfirmImpact = ConfirmImpact.High)]
-    public sealed class RemoveYearCmdlet : FlightLogRemoveCmdlet<IYear, Year>
+    public sealed class RemoveYearCmdlet : FlightLogRemoveCmdlet<IYear>
     {
         #region Primary Key Property
 

@@ -8,9 +8,8 @@ namespace Illallangi.FlightLog.PowerShell
 
     using Illallangi.LiteOrm;
 
-    public abstract class FlightLogRemoveCmdlet<T, Timpl> : NinjectCmdlet<FlightLogModule>
+    public abstract class FlightLogRemoveCmdlet<T> : NinjectCmdlet<FlightLogModule>
         where T : class
-        where Timpl : T
     {
         #region Fields
 
@@ -23,7 +22,7 @@ namespace Illallangi.FlightLog.PowerShell
         protected override void ProcessRecord()
         {
             foreach (var o in this.Get<IRepository<T>>()
-                                  .Retrieve(this.Get<Func<object, Timpl>>()(this))
+                                  .Retrieve(this.Get<Func<object, T>>()(this))
                                   .Where(o => this.ShouldProcess(o.ToString(), VerbsCommon.Remove)))
             {
                 this.Collection.Add(o);

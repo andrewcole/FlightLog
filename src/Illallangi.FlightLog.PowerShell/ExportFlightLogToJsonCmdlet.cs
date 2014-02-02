@@ -4,7 +4,7 @@ namespace Illallangi.FlightLog.PowerShell
     using System.Linq;
     using System.Management.Automation;
 
-    using Illallangi.FlightLog.Model;
+    
     using Illallangi.LiteOrm;
 
     using Newtonsoft.Json;
@@ -46,7 +46,7 @@ namespace Illallangi.FlightLog.PowerShell
                                 {
                                     Title = year.Name,
                                     Trips = this.Get<IRepository<ITrip>>()
-                                        .Retrieve(new Model.Trip { Year = year.Name })
+                                        .Retrieve(new { Year = year.Name })
                                         .OrderBy(trip => trip.Departure)
                                         .Select(
                                             trip => new
@@ -54,7 +54,7 @@ namespace Illallangi.FlightLog.PowerShell
                                                 Title = trip.Name,
                                                 trip.Description,
                                                 Flights = this.Get<IRepository<IFlight>>()
-                                                    .Retrieve(new Model.Flight { Year = year.Name, Trip = trip.Name })
+                                                    .Retrieve(new { Year = year.Name, Trip = trip.Name })
                                                     .OrderBy(flight => flight.Departure)
                                                     .Select(
                                                         flight => new

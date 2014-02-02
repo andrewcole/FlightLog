@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Illallangi.FlightLog.Model;
 using Illallangi.LiteOrm;
 
-namespace Illallangi.FlightLog.Context
+namespace Illallangi.FlightLog.Sqlite.Context
 {
     using System.Data.SQLite;
 
@@ -54,7 +53,7 @@ namespace Illallangi.FlightLog.Context
         {
             var years = objs.Select(c => c.Year)
                                 .Distinct()
-                                .ToDictionary(year => year, year => this.YearRepository.Retrieve(new Year { Name = year }).Single().Id.Value);
+                                .ToDictionary(year => year, year => this.YearRepository.Retrieve(new { Name = year }).Single().Id.Value);
 
             foreach (var obj in objs)
             { 

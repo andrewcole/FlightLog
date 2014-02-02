@@ -2,10 +2,10 @@ namespace Illallangi.FlightLog.PowerShell.City
 {
     using System.Management.Automation;
 
-    using Illallangi.FlightLog.Model;
+    
 
     [Cmdlet(VerbsCommon.Add, Nouns.City)]
-    public class AddCityCmdlet : FlightLogAddCmdlet<ICity, City>
+    public class AddCityCmdlet : FlightLogAddCmdlet<ICity>
     {
         #region Parent Properties
 

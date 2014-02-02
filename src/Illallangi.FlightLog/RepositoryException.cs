@@ -1,4 +1,4 @@
-namespace Illallangi.FlightLog.Context
+namespace Illallangi.FlightLog
 {
     using System;
     using System.Data.SQLite;

@@ -2,10 +2,10 @@ namespace Illallangi.FlightLog.PowerShell.Flight
 {
     using System.Management.Automation;
 
-    using Illallangi.FlightLog.Model;
+    
 
     [Cmdlet(VerbsCommon.Remove, Nouns.Flight, SupportsShouldProcess = true, ConfirmImpact = ConfirmImpact.High)]
-    public sealed class RemoveFlightCmdlet : FlightLogRemoveCmdlet<IFlight, Flight>
+    public sealed class RemoveFlightCmdlet : FlightLogRemoveCmdlet<IFlight>
     {
         #region Primary Key Property
 

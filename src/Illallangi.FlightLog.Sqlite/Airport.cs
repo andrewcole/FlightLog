@@ -1,4 +1,4 @@
-namespace Illallangi.FlightLog.Model
+namespace Illallangi.FlightLog.Sqlite
 {
     public class Airport : IAirport
     {

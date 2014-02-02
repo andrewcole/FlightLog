@@ -2,10 +2,10 @@
 {
     public interface IYear
     {
-        int? Id { get; }
+        int? Id { get; set; }
 
-        string Name { get; }
+        string Name { get; set; }
 
-        int TripCount { get; }
+        int TripCount { get; set; }
     }
 }

@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Illallangi.FlightLog.Model;
 using Illallangi.LiteOrm;
 
-namespace Illallangi.FlightLog.Context
+namespace Illallangi.FlightLog.Sqlite.Context
 {
     using System.Data.SQLite;
 

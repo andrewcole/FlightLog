@@ -3,10 +3,10 @@ namespace Illallangi.FlightLog.PowerShell.Flight
     using System;
     using System.Management.Automation;
 
-    using Illallangi.FlightLog.Model;
+    
 
     [Cmdlet(VerbsCommon.Add, Nouns.Flight)]
-    public class AddFlightCmdlet : FlightLogAddCmdlet<IFlight, Flight>
+    public class AddFlightCmdlet : FlightLogAddCmdlet<IFlight>
     {
         #region Parent Properties
 

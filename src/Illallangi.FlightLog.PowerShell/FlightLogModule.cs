@@ -12,9 +12,9 @@ namespace Illallangi.FlightLog.PowerShell
 
     using Illallangi.FlightLog.Config;
     using Illallangi.FlightLog.Constraints;
-    using Illallangi.FlightLog.Context;
-    using Illallangi.FlightLog.Model;
+    
     using Illallangi.FlightLog.PowerShell.Config;
+    using Illallangi.FlightLog.Sqlite.Context;
     using Illallangi.LiteOrm;
 
     using log4net.Config;
@@ -44,30 +44,30 @@ namespace Illallangi.FlightLog.PowerShell
                             ConfigurationManager.OpenExeConfiguration(Assembly.GetExecutingAssembly().Location)
                                 .GetSection("FlightLogConfig")).InSingletonScope();
 
-            this.BindModel<IAirport, Model.Airport, AirportRepository, AirportConstraintsChecker>();
-            this.BindModel<ICity, Model.City, CityRepository>();
-            this.BindModel<ICountry, Model.Country, CountryRepository>();
-            this.BindModel<IFlight, Model.Flight, FlightRepository, FlightConstraintsChecker>();
-            this.BindModel<ITimezone, Model.Timezone, TimezoneRepository>();
-            this.BindModel<ITrip, Model.Trip, TripRepository>();
-            this.BindModel<IYear, Model.Year, YearRepository>();
+            this.BindModel<IAirport, AirportRepository, AirportConstraintsChecker>();
+            this.BindModel<ICity, CityRepository>();
+            this.BindModel<ICountry, CountryRepository>();
+            this.BindModel<IFlight, FlightRepository, FlightConstraintsChecker>();
+            this.BindModel<ITimezone, TimezoneRepository>();
+            this.BindModel<ITrip, TripRepository>();
+            this.BindModel<IYear, YearRepository>();
 
             this.Bind<ILog>().ToMethod(cx => LogManager.GetLogger(cx.Request.Target.Type));
         }
 
-        private void BindModel<TInt, TImpl, TRepo>() 
+        private void BindModel<TInt, TRepo>() 
             where TInt : class 
             where TRepo : IRepository<TInt>
         {
-            this.BindModel<TInt, TImpl, TRepo, NullConstraintsChecker<TInt>>();
+            this.BindModel<TInt, TRepo, NullConstraintsChecker<TInt>>();
         }
 
-        private void BindModel<TInt, TImpl, TRepo, TConstraints>() 
+        private void BindModel<TInt, TRepo, TConstraints>() 
             where TInt : class 
             where TRepo : IRepository<TInt>
             where TConstraints : IConstraintsChecker<TInt>
         {
-            this.Bind<Func<object, TImpl>>().ToMethod(context => (obj) => Mapper.DynamicMap<TImpl>(obj)).InSingletonScope();
+            this.Bind<Func<object, TInt>>().ToMethod(context => (obj) => Mapper.DynamicMap<TInt>(obj)).InSingletonScope();
             this.Bind<IRepository<TInt>>().To<TRepo>().InSingletonScope();
             this.Bind<IConstraintsChecker<TInt>>().To<TConstraints>().InSingletonScope();
         }

@@ -2,10 +2,10 @@ namespace Illallangi.FlightLog.PowerShell.Trip
 {
     using System.Management.Automation;
 
-    using Illallangi.FlightLog.Model;
+    
 
     [Cmdlet(VerbsCommon.Add, Nouns.Trip)]
-    public class AddTripCmdlet : FlightLogAddCmdlet<ITrip, Trip>
+    public class AddTripCmdlet : FlightLogAddCmdlet<ITrip>
     {
         #region Parent Properties
 

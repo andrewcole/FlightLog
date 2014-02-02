@@ -2,10 +2,10 @@ namespace Illallangi.FlightLog.PowerShell.Country
 {
     using System.Management.Automation;
 
-    using Illallangi.FlightLog.Model;
+    
 
     [Cmdlet(VerbsCommon.Remove, Nouns.Timezone, SupportsShouldProcess = true, ConfirmImpact = ConfirmImpact.High)]
-    public sealed class RemoveTimezoneCmdlet : FlightLogRemoveCmdlet<ITimezone, Timezone>
+    public sealed class RemoveTimezoneCmdlet : FlightLogRemoveCmdlet<ITimezone>
     {
         #region Primary Key Property
 

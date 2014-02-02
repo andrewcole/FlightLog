@@ -4,15 +4,14 @@
 
     using Illallangi.LiteOrm;
 
-    public abstract class FlightLogGetCmdlet<T, Timpl> : NinjectCmdlet<FlightLogModule>
+    public abstract class FlightLogGetCmdlet<T> : NinjectCmdlet<FlightLogModule>
         where T : class
-        where Timpl : T
     {
         #region Methods
 
         protected override void ProcessRecord()
         {
-            this.WriteObject(this.Get<IRepository<T>>().Retrieve(this.Get<Func<object, Timpl>>()(this)), true);
+            this.WriteObject(this.Get<IRepository<T>>().Retrieve(this.Get<Func<object, T>>()(this)), true);
         }
 
         #endregion

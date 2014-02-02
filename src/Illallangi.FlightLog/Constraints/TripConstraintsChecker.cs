@@ -3,8 +3,6 @@ namespace Illallangi.FlightLog.Constraints
     using System.Collections.Generic;
     using System.Linq;
 
-    using Illallangi.FlightLog.Model;
-
     public class TripConstraintsChecker : IConstraintsChecker<ITrip>
     {
         public IEnumerable<string> GetErrors(ITrip newObject, params IEnumerable<ITrip>[] sets)

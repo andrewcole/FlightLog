@@ -3,8 +3,6 @@ namespace Illallangi.FlightLog.Constraints
     using System.Collections.Generic;
     using System.Linq;
 
-    using Illallangi.FlightLog.Model;
-
     public class AirportConstraintsChecker : IConstraintsChecker<IAirport>
     {
         public IEnumerable<string> GetErrors(IAirport newObject, params IEnumerable<IAirport>[] sets)

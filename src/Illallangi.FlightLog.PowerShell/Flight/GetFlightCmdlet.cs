@@ -2,10 +2,10 @@
 {
     using System.Management.Automation;
 
-    using Illallangi.FlightLog.Model;
+    
 
     [Cmdlet(VerbsCommon.Get, Nouns.Flight)]
-    public sealed class GetFlightCmdlet : FlightLogGetCmdlet<IFlight, Flight>
+    public sealed class GetFlightCmdlet : FlightLogGetCmdlet<IFlight>
     {
         #region Parent Properties
 

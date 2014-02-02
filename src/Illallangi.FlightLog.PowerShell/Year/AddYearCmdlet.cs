@@ -2,10 +2,10 @@
 {
     using System.Management.Automation;
 
-    using Illallangi.FlightLog.Model;
+    
 
     [Cmdlet(VerbsCommon.Add, Nouns.Year)]
-    public class AddYearCmdlet : FlightLogAddCmdlet<IYear, Year>
+    public class AddYearCmdlet : FlightLogAddCmdlet<IYear>
     {
         #region Instance Properties
 

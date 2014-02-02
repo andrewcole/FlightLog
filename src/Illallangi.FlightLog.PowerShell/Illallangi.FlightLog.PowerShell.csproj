@@ -114,6 +114,10 @@
     <Compile Include="Year\RemoveYearCmdlet.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Illallangi.FlightLog.Sqlite\Illallangi.FlightLog.Sqlite.csproj">
+      <Project>{D450E7F1-382A-42F7-9A37-8BEEA88CF391}</Project>
+      <Name>Illallangi.FlightLog.Sqlite</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Illallangi.FlightLog\Illallangi.FlightLog.csproj">
       <Project>{67e9fa77-dad3-47a5-a229-9069f2defd63}</Project>
       <Name>Illallangi.FlightLog</Name>

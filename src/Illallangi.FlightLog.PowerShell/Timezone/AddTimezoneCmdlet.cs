@@ -2,10 +2,10 @@
 {
     using System.Management.Automation;
 
-    using Illallangi.FlightLog.Model;
+    
 
     [Cmdlet(VerbsCommon.Add, Nouns.Timezone)]
-    public class AddTimezoneCmdlet : FlightLogAddCmdlet<ITimezone, Timezone>
+    public class AddTimezoneCmdlet : FlightLogAddCmdlet<ITimezone>
     {
         #region Instance Properties
 
