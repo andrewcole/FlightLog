@@ -33,47 +33,128 @@ if ($null -ne (Get-Module PSCompletion))
 	}
 }
 
-Function Get-OpenFlightsSampleData
+Function Get-Data
 {
+    param(
+        [string]$Source,
+		[string]$Destination,
+        [System.Net.WebClient]$WebClient = (New-Object System.Net.WebClient)
+    )
+	Begin
+    {
+        Write-Debug "Get-Data -Source ""$($Source)"" -Destination ""$($Destination)"" -WebClient ""$($WebClient)"""
+
+        if ((Test-Path $Destination) -ne $true)
+		{
+			$WebClient.DownloadFile($Source, $Destination)
+        }
+
+        Import-Csv $Destination
+    }
+}
+
+Function Get-AirportsData
+{
+    param(
+        [string]$Source = "http://sourceforge.net/p/openflights/code/HEAD/tree/openflights/data/airports.dat?format=raw",
+		[string]$Destination = "$($env:temp)\airports.dat",
+        [System.Net.WebClient]$WebClient = (New-Object System.Net.WebClient)
+    )
 	Begin
 	{
-		$source = "http://sourceforge.net/p/openflights/code/HEAD/tree/openflights/data/airports.dat?format=raw"
-		$destination = "$($env:temp)\airports.dat"
+		Write-Debug "Get-AirportsData -Source ""$($Source)"" -Destination ""$($Destination)"" -WebClient ""$($WebClient)"""
 
-		if ((Test-Path $destination) -ne $true)
+        if ((Test-Path $Destination) -ne $true)
 		{
-			Write-Host "Downloading $($source)"
-			$wc = New-Object System.Net.WebClient
-			$wc.DownloadFile($source, $destination)
-			$Airports = (import-csv $destination -Header ("Id","Name","City","Country","IATA","ICAO","Latitude","Longitude","Altitude","Timezone","DST"))
-			$Airports | export-csv $destination
+			$WebClient.DownloadFile($Source, $Destination)
+			$Airports = (import-csv $Destination -Header ("Id","Name","City","Country","Iata","Icao","Latitude","Longitude","Altitude","Timezone","DST"))
+			$Airports | Where-Object { $_.Name -NotMatch "\?" -and $_.City -NotMatch "\?" -and $_.Country -NotMatch "\?" } | export-csv -NoTypeInformation $Destination
 		}
 
-		import-csv $destination
+		Import-Csv $destination
 	}
 }
 
-Function Get-FlightSampleData
+Function Get-FlightsData
 {
-	Begin
-	{
-		$source = "https://gist.github.com/andrewcole/b9aa3ee4eaf0199ca181/raw/54961f6f2dae139a0f7d99fc9e83b1e7cceb9d5d/flights.csv"
-		$destination = "$($env:temp)\flights.csv"
+    param(
+        $Source = [string]"https://gist.github.com/andrewcole/8760689/raw/c8e1cbfa57863cd1df8ffd3d4088c3daf3dc0dde/flights.csv",
+        $Destination = [string]"$($env:temp)\flights.dat"
+    )
+    Begin
+    {
+        Write-Debug "Get-FlightsData -Source ""$($Source)"" -Destination ""$($Destination)"""
 
-		if ((Test-Path $destination) -ne $true)
-		{
-			Write-Host "Downloading $($source)"
-			$wc = New-Object System.Net.WebClient
-			$wc.DownloadFile($source, $destination)
-			$Flights = (import-csv $destination)
-			$Flights | export-csv $destination
-		}
-
-		import-csv $destination
-	}
+        Get-Data -Source $source -Destination $destination
+    }
 }
 
-Function Get-CountrySampleData
+Function Get-AirportTimezonesData
+{
+    param(
+        $Source = [string]"https://gist.github.com/andrewcole/8760689/raw/56f978c5fda691fd86c4c5848c042b33b12bc27c/airportTimezones.csv",
+        $Destination = [string]"$($env:temp)\airportTimezones.dat"
+    )
+    Begin
+    {
+        Write-Debug "Get-AirportTimezonesData -Source ""$($Source)"" -Destination ""$($Destination)"""
+
+        Get-Data -Source $source -Destination $destination
+    }
+}
+
+Function Get-AirportTimezone
+{
+    param(
+		[string]$Icao
+    )
+    Begin
+    {
+        Write-Debug "Get-AirportTimezone -Icao ""$($Icao)"""
+        
+        $result = (Get-AirportTimezonesData | Where-Object { $_.Icao -eq "$($Icao)" }).Timezone
+        if (($null -eq $result) -or ("" -eq $result))
+        {
+            Write-Warning "Airport ""$($Icao)"" not found; returning ""Unknown/Unknown"" timezone"
+            "Unknown/Unknown"
+        }
+        else
+        {
+            $result
+        }
+    }
+}
+
+
+Function Get-TripDescriptionsData
+{
+    param(
+        $Source = [string]"https://gist.github.com/andrewcole/8760689/raw/8375a5eac48e3433b0a85342a68a1c1e57bc7c31/tripDescriptions.csv",
+        $Destination = [string]"$($env:temp)\tripDescriptions.dat"
+    )
+    Begin
+    {
+        Write-Debug "Get-TripDescriptionsData -Source ""$($Source)"" -Destination ""$($Destination)"""
+
+        Get-Data -Source $source -Destination $destination
+    }
+}
+
+Function Get-TripDescription
+{
+    param(
+		[string]$Year,
+        [string]$Trip
+    )
+    Begin
+    {
+        Write-Debug "Get-TripDescription -Year ""$($Year)"" -Trip ""$($Trip)"""
+
+        (Get-TripDescriptionsData | Where-Object { ($_.Year -eq "$($Year)") -and ($_.Trip -eq "$($Trip)") }).Description
+    }
+}
+
+Function Get-CountrySample
 {
 	Begin
 	{
@@ -81,9 +162,7 @@ Function Get-CountrySampleData
 
 		if ((Test-Path $destination) -ne $true)
 		{
-			$airports = (Get-OpenFlightsSampleData)
-			Write-Host "Calculating Unique Countries"
-			$Airports | Select-Object Country -Unique | Export-Csv $destination
+			Get-AirportsData | Select-Object Country | Sort-Object -Unique Country | Where-Object { $_.Country -NotMatch "\?" } | Export-Csv -NoTypeInformation $destination
 		}
 
 		import-csv $destination
@@ -91,7 +170,7 @@ Function Get-CountrySampleData
 }
 
 
-Function Get-CitySampleData
+Function Get-CitySample
 {
 	Begin
 	{
@@ -99,16 +178,14 @@ Function Get-CitySampleData
 
 		if ((Test-Path $destination) -ne $true)
 		{
-			$airports = (Get-OpenFlightsSampleData)
-			Write-Host "Calculating Unique Cities"
-			$Airports | Select-Object Country, City -Unique | Export-Csv $destination
+			Get-AirportsData | Select-Object City, Country | Sort-Object -Unique City, Country | Where-Object { $_.City -NotMatch "\?" -and $_.Country -NotMatch "\?" } | Export-Csv -NoTypeInformation $destination
 		}
 
 		import-csv $destination
 	}
 }
 
-Function Get-AirportSampleData
+Function Get-AirportSample
 {
 	Begin
 	{
@@ -116,80 +193,97 @@ Function Get-AirportSampleData
 
 		if ((Test-Path $destination) -ne $true)
 		{
-			$airports = (Get-OpenFlightsSampleData)
-			Write-Host "Calculating Unique Airports"
-			$Airports | Export-Csv $destination
+			Get-AirportsData | Select-Object Name, City, Country, @{n='Timezone';e={Get-AirportTimezone -Icao $_.Icao}}, Iata, Icao, Latitude, Longitude, Altitude | Sort-Object -Unique Name, City, Country, Iata, Icao, Latitude, Longitude, Altitude, Timezone | Where-Object { $_.Name -NotMatch "\?" -and $_.City -NotMatch "\?" -and $_.Country -NotMatch "\?" -and $_.Icao -Match "...." -and $_.Iata -Match "..." } | Export-Csv -NoTypeInformation $destination
 		}
 
 		import-csv $destination
 	}
 }
 
-Function Import-CountrySampleData
+Function Get-TimezoneSample
 {
-	param(
-		[int]$ParentProgressId = $null,
-		[int]$MyProgressId = $ParentProgressId + 1
-	)
-	Begin
-	{
-		$i = 0
-		$countries = (Get-CountrySampleData)
-		$countryCount = $countries.Count
-		foreach ($country in $countries)
+    Begin
+    {
+        $destination = "$($env:temp)\timezones.csv"
+
+		if ((Test-Path $destination) -ne $true)
 		{
-			$i += 1
-			Write-Progress -Id $MyProgressId -ParentId $ParentProgressId -Activity "Importing Countries" -status "$($country.Country) ($($i) / $($countryCount))" -PercentComplete (($i / $countryCount) * 100)
-			Add-Country -Name $country.Country
+			Get-AirportSample | Select-Object Timezone | Sort-Object -Unique Timezone | Export-Csv -NoTypeInformation $destination
 		}
-	}
+
+		import-csv $destination
+    }
 }
 
-Function Import-CitySampleData
+
+Function Get-YearSample
 {
-	param(
-		[int]$ParentProgressId = $null,
-		[int]$MyProgressId = $ParentProgressId + 1
-	)
-	Begin
-	{
-		$i = 0
-		$cities = (Get-CitySampleData)
-		$cityCount = $cities.Count
-		foreach ($city in $cities)
+    Begin
+    {
+        $destination = "$($env:temp)\years.csv"
+
+		if ((Test-Path $destination) -ne $true)
 		{
-			$i += 1
-			Write-Progress -Id $MyProgressId -ParentId $ParentProgressId -Activity "Importing Cities" -status "$($city.City), $($city.Country) ($($i) / $($cityCount))" -PercentComplete (($i / $cityCount) * 100)
-			Add-City -Name $city.City -Country $city.Country
+			Get-FlightsData | Select-Object Year | Sort-Object -Unique Year | Export-Csv -NoTypeInformation $destination
 		}
+
+		import-csv $destination
+    }
+}
+
+Function Get-TripSample
+{
+    Begin
+    {
+        $destination = "$($env:temp)\trips.csv"
+
+		if ((Test-Path $destination) -ne $true)
+		{
+            Get-FlightsData | Select-Object Year, Trip, @{n='Description';e={Get-TripDescription -Year $_.Year -Trip $_.Trip}} | Sort-Object -Unique Year, Trip, Description | Export-Csv -NoTypeInformation $destination
+		}
+
+        import-csv $destination
+    }
+}
+
+
+Function Get-FlightSample
+{
+	Begin
+	{
+		$destination = "$($env:temp)\flights.csv"
+        
+		if ((Test-Path $destination) -ne $true)
+		{
+            Get-FlightsData | Select-Object Year, Trip, Origin, Destination, Departure, Arrival, Airline, Number, Aircraft, Seat, Comment | Sort-Object -Unique Year, Trip, Origin, Destination, Departure, Arrival, Airline, Number, Aircraft, Seat, Comment | Export-Csv -NoTypeInformation $destination
+		}
+
+        import-csv $destination
 	}
 }
 
-Function Import-AirportSampleData
-{
-	param(
-		[int]$ParentProgressId = $null,
-		[int]$MyProgressId = $ParentProgressId + 1
-	)
-	Begin
-	{
-		Get-AirportSampleData |%{ Add-Airport -Name $_.Name -City $_.City -Country $_.Country -Altitude $_.Altitude -Longitude $_.Longitude -Latitude $_.Latitude -Icao $_.Icao -Iata $_.Iata  }
-	}
-}
 
-Function Import-OpenFlightsSampleData
+
+
+Function Import-FlightLogSampleData
 {
-	param(
-		[int]$ParentProgressId = $null,
-		[int]$MyProgressId = $ParentProgressId + 1
-	)
 	Begin
 	{
-		Write-Progress -Id $MyProgressId -ParentId $ParentProgressId -Activity "Importing Sample Data" -Status "Importing Countries" -PercentComplete 0
-		Import-CountrySampleData -ParentProgressId $MyProgressId
-		Write-Progress -Id $MyProgressId -ParentId $ParentProgressId -Activity "Importing Sample Data" -Status "Importing Cities" -PercentComplete 33
-		Import-CitySampleData -ParentProgressId $MyProgressId
-		Write-Progress -Id $MyProgressId -ParentId $ParentProgressId -Activity "Importing Sample Data" -Status "Importing Airports" -PercentComplete 67
-		Import-AirportSampleData -ParentProgressId $MyProgressId
+        Remove-Flight -Confirm:$false
+        Remove-Trip -Confirm:$false
+        Remove-Year -Confirm:$false
+        Remove-Airport -Confirm:$false
+        Remove-City -Confirm:$false
+        Remove-Country -Confirm:$false
+        Remove-Timezone -Confirm:$false
+
+        
+        Get-TimezoneSample | Import-Timezone
+		Get-CountrySample | Import-Country
+        Get-CitySample | Import-City
+        Get-AirportSample | Import-Airport
+        Get-YearSample | Import-Year
+        Get-TripSample | Import-Trip
+        Get-FlightSample | Import-Flight
 	}
 }
