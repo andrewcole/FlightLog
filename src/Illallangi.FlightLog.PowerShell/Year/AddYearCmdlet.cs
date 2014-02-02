@@ -5,13 +5,26 @@
     using Illallangi.FlightLog.Model;
 
     [Cmdlet(VerbsCommon.Add, Nouns.Year)]
-    public sealed class AddYearCmdlet : FlightLogAddCmdlet<IYear, Year>
+    public class AddYearCmdlet : FlightLogAddCmdlet<IYear, Year>
     {
         #region Instance Properties
 
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, Position = 1)]
+        [Alias("Year")]
         public string Name { get; set; }
 
         #endregion
+    }
+
+    [Cmdlet(VerbsData.Import, Nouns.Year)]
+    public sealed class ImportYearCmdlet : AddYearCmdlet
+    {
+        protected override InsertMode Mode
+        {
+            get
+            {
+                return InsertMode.Import;
+            }
+        }
     }
 }

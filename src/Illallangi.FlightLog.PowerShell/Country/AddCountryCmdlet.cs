@@ -5,14 +5,26 @@
     using Illallangi.FlightLog.Model;
 
     [Cmdlet(VerbsCommon.Add, Nouns.Country)]
-    public sealed class AddCountryCmdlet : FlightLogAddCmdlet<ICountry, Country>
+    public class AddCountryCmdlet : FlightLogAddCmdlet<ICountry, Country>
     {
         #region Instance Properties
 
-        [SupportsWildcards]
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, Position = 1)]
+        [Alias("Country")]
         public string Name { get; set; }
 
         #endregion
+    }
+
+    [Cmdlet(VerbsData.Import, Nouns.Country)]
+    public sealed class ImportCountryCmdlet : AddCountryCmdlet
+    {
+        protected override InsertMode Mode
+        {
+            get
+            {
+                return InsertMode.Import;
+            }
+        }
     }
 }
