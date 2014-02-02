@@ -36,9 +36,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Common.Logging.2.0.0\lib\2.0\Common.Logging.dll</HintPath>
     </Reference>
-    <Reference Include="Illallangi.LiteOrm, Version=1.0.17.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Illallangi.LiteOrm, Version=1.0.26.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Illallangi.LiteOrm.1.0.17\lib\Illallangi.LiteOrm.dll</HintPath>
+      <HintPath>..\packages\Illallangi.LiteOrm.1.0.26\lib\Illallangi.LiteOrm.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -64,7 +64,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\IFlightLogConfig.cs" />
+    <Compile Include="Constraints\TripConstraintsChecker.cs" />
+    <Compile Include="Constraints\FlightConstraintsChecker.cs" />
+    <Compile Include="Constraints\AirportConstraintsChecker.cs" />
+    <Compile Include="Constraints\IConstraintsChecker.cs" />
     <Compile Include="Context\FlightLogRepositoryBase.cs" />
+    <Compile Include="Constraints\NullConstraintsChecker.cs" />
+    <Compile Include="Context\RepositoryException.cs" />
     <Compile Include="Context\TimezoneRepository.cs" />
     <Compile Include="Context\FlightRepository.cs" />
     <Compile Include="Context\TripRepository.cs" />
